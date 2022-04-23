@@ -17,7 +17,7 @@ A mod for the DOS version of Space Quest III. It adds new planets to the Aluminu
 The SQ3-TUCR-EPP mod's revenue model is ad-supportd free-to-play. You can pay 20 buckazoids to remove all advertisements from the game by typing "PAY MAGIC" or:
 <details> 
   <summary>(click to reveal spoiler)</summary>
-   Use the reverse command "MAGIC PAY" to disable ads immediately without payment.
+   Use the command "PAY NOTHING" to disable ads immediately without payment.
 </details>
 
 <img src="pics/ad.png"  width="600" alt="A pic showing an in-game advertisement.">
