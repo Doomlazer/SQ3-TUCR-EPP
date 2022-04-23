@@ -8,6 +8,10 @@ DOSBox users must copy the contents of PATCHES into the SQ3 game folder. ScummVM
 
 A mod for the DOS version of Space Quest III. It adds new planets to the Aluminum Malard's scanner. Currently there are two new planets appearing in sectors 23 and 27. They are both proof of concept for now.
 
+<img src="pics/23.png"  width="600" alt="AquaVelveeta seen for the first time.">
+
+<img src="pics/27.png"  width="600" alt="A planet whose name will likely change.">
+
 ## Why am I getting so many pop-up ads during the game?
 
 The SQ3-TUCR-EPP mod's revenue model is ad-supportd free-to-play. You can pay 20 buckazoids to remove all advertisements from the game by typing "PAY MAGIC" or:
