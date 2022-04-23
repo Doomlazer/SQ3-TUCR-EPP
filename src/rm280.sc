@@ -1,429 +1,231 @@
 ;;; Sierra Script 1.0 - (do not remove this comment)
 (script# 280)
-(include game.sh)
+(include sci.sh)
 (use Main)
-(use Intrface)
+(use Scaler)
+(use MoveFwd)
+(use n958)
+(use Cycle)
 (use Game)
-(use User)
-(use System)
+(use View)
+(use Obj)
 
 (public
 	rm280 0
 )
 
 (local
-	local0
-	orderedTang
-	orderedFood
-	menuOption
-	leftX
-	rightX =  30
-	upY = [27 35 43 51 59 67 91 99 123 131 139 147]
-	downY = [32 40 48 56 64 72 96 104 128 136 144 152]
+	[local0 26] = [339 333 327 324 318 309 299 289 277 265 249 233 220 199 177 154 136 119 99 80 61 43 20 -23 -50 -93]
+	[local26 26] = [60 63 65 68 71 75 79 83 87 91 96 100 104 108 113 120 122 124 123 122 118 117 113 109 105 100]
+	[local52 26] = [84 89 93 97 97 102 106 110 115 119 122 122 111 119 119 119 119 119 119 119 108 108 121 121 121 121]
+	[local78 26] = [0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 2 2 2 3 3 4 4 4 4 4 4]
 )
-
-(enum 1 ;menu choices
-	foodMINIMONOLITH
-	foodMONOLITH
-	foodWITHPOLYCHEEZE
-	foodFILET
-	foodJUMBO
-	foodBIGBELCHER
-	foodFUNMEAL
-	foodSPACESPUDS
-	tangSMALL
-	tangMEDIUM
-	tangLARGE
-	tangSLOPPYSLURPER
-)
-
-(instance rm280 of Room
+(instance rm280 of Rm
 	(properties
-		picture 32
+		picture 53
+		style $000a
 	)
 	
-	(method (init &tmp [temp0 50])
-		(Load PICTURE 32)
+	(method (init)
+		(global2 setRegions: 210)
+		(proc958_0 128 274 275 276)
+		(garbageBag init:)
+		(global2 setScript: sTrashPickup)
 		(super init:)
-		(= saveDisabled TRUE)
-		(User canInput: FALSE canControl: FALSE)
-		(User mapKeyToDir: FALSE)
-		(= global592 1)
-		(theGame setCursor: normalCursor (HaveMouse))
-		(Display 280 0
-			p_at 10 27
-			p_width 310
-			p_color vBLACK
-			p_font 600
-		)
-		(Display 280 0
-			p_at 11 28
-			p_width 310
-			p_color vWHITE
-			p_font 600
-		)
-		(if (== prevRoomNum 25)
-			(Display 280 1
-				p_at 30 175
-				p_width 200
-				p_color vBLACK
-				p_font 600
-			)
-			(Display 280 1
-				p_at 31 176
-				p_width 200
-				p_color vWHITE
-				p_font 600
-			)
-		)
-		(Display 280 2
-			p_at 200 175
-			p_width 200
-			p_color vBLACK
-			p_font 600
-		)
-		(Display 280 2
-			p_at 201 176
-			p_width 200
-			p_color vWHITE
-			p_font 600
-		)
 	)
+	
+	(method (dispose)
+		(PalVary pvUNINIT)
+		(super dispose: &rest)
+	)
+)
+
+(instance sTrashPickup of Script
+	(properties)
 	
 	(method (doit)
-		(super doit:)
+		(switch state
+			(1
+				(if (== (PalVary pvGET_CURRENT_STEP) 64) (self cue:))
+			)
+			(2
+				(if (>= (PalVary pvGET_CURRENT_STEP) 32) (self cue:))
+			)
+		)
+		(super doit: &rest)
 	)
 	
-	(method (handleEvent event)
-		(if (event claimed?) (return))
-		(switch (event type?)
-			(mouseDown
-				(cond 
-					((== prevRoomNum 25)
-						(cond 
-							(
-								(and
-									(<= 190 (event x?))
-									(<= (event x?) 275)
-									(<= 170 (event y?))
-									(<= (event y?) 183)
-								)
-								(event claimed: TRUE)
-								(curRoom setScript: Quitting)
-							)
-							(
-								(and
-									(<= leftX (event x?))
-									(<= (event x?) rightX)
-									(<= [upY 0] (event y?))
-									(<= (event y?) [downY 0])
-								)
-								(= menuOption foodMINIMONOLITH)
-								(curRoom setScript: ChooseFood)
-							)
-							(
-								(and
-									(<= leftX (event x?))
-									(<= (event x?) rightX)
-									(<= [upY 1] (event y?))
-									(<= (event y?) [downY 1])
-								)
-								(= menuOption foodMONOLITH)
-								(curRoom setScript: ChooseFood)
-							)
-							(
-								(and
-									(<= leftX (event x?))
-									(<= (event x?) rightX)
-									(<= [upY 2] (event y?))
-									(<= (event y?) [downY 2])
-								)
-								(= menuOption foodWITHPOLYCHEEZE)
-								(curRoom setScript: ChooseFood)
-							)
-							(
-								(and
-									(<= leftX (event x?))
-									(<= (event x?) rightX)
-									(<= [upY 3] (event species?))
-									(<= (event species?) [downY 3])
-								)
-								(= menuOption foodFILET)
-								(curRoom setScript: ChooseFood)
-							)
-							(
-								(and
-									(<= leftX (event x?))
-									(<= (event x?) rightX)
-									(<= [upY 4] (event y?))
-									(<= (event y?) [downY 4])
-								)
-								(= menuOption foodJUMBO)
-								(curRoom setScript: ChooseFood)
-							)
-							(
-								(and
-									(<= leftX (event x?))
-									(<= (event x?) rightX)
-									(<= [upY 5] (event y?))
-									(<= (event y?) [downY 5])
-								)
-								(= menuOption foodBIGBELCHER)
-								(curRoom setScript: ChooseFood)
-							)
-							(
-								(and
-									(<= leftX (event x?))
-									(<= (event x?) rightX)
-									(<= [upY 6] (event y?))
-									(<= (event y?) [downY 6])
-								)
-								(= menuOption foodFUNMEAL)
-								(curRoom setScript: ChooseFood)
-							)
-							(
-								(and
-									(<= leftX (event x?))
-									(<= (event x?) rightX)
-									(<= [upY 7] (event y?))
-									(<= (event y?) [downY 7])
-								)
-								(= menuOption foodSPACESPUDS)
-								(curRoom setScript: ChooseFood)
-							)
-							(
-								(and
-									(<= leftX (event x?))
-									(<= (event x?) rightX)
-									(<= [upY 8] (event y?))
-									(<= (event y?) [downY 8])
-								)
-								(= menuOption tangSMALL)
-								(curRoom setScript: ChooseFood)
-							)
-							(
-								(and
-									(<= leftX (event x?))
-									(<= (event x?) rightX)
-									(<= [upY 9] (event y?))
-									(<= (event y?) [downY 9])
-								)
-								(= menuOption tangMEDIUM)
-								(curRoom setScript: ChooseFood)
-							)
-							(
-								(and
-									(<= leftX (event x?))
-									(<= (event x?) rightX)
-									(<= [upY 10] (event y?))
-									(<= (event y?) [downY 10])
-								)
-								(= menuOption tangLARGE)
-								(curRoom setScript: ChooseFood)
-							)
-							(
-								(and
-									(<= leftX (event x?))
-									(<= (event x?) rightX)
-									(<= [upY 11] (event y?))
-									(<= (event y?) [downY 11])
-								)
-								(= menuOption tangSLOPPYSLURPER)
-								(curRoom setScript: ChooseFood)
-							)
-						)
-					)
-					(
-						(and
-							(<= 190 (event x?))
-							(<= (event x?) 275)
-							(<= 170 (event y?))
-							(<= (event y?) 183)
-						)
-						(event claimed: TRUE)
-						(curRoom setScript: Quitting)
-					)
-				)
-			)
-			(keyDown
-				(cond 
-					((== prevRoomNum 25)
-						(cond 
-							(
-								(or
-									(== (event message?) `Q)
-									(== (event message?) `q)
-								)
-								(curRoom setScript: Quitting)
-							)
-							(
-								(and
-									(>= (event message?) `1)
-									(<= (event message?) `9)
-								)
-								(= menuOption (- (event message?) `0))
-								(curRoom setScript: ChooseFood)
-							)
-							(
-								(and
-									(>= (event message?) `A)
-									(<= (event message?) `C)
-								)
-								(= menuOption (- (event message?) `7))
-								(curRoom setScript: ChooseFood)
-							)
-							(
-								(and
-									(>= (event message?) `a)
-									(<= (event message?) `c)
-								)
-								(= menuOption (- (event message?) `W))
-								(curRoom setScript: ChooseFood)
-							)
-						)
-					)
-					(
-						(or
-							(== (event message?) `Q)
-							(== (event message?) `q)
-						)
-						(curRoom setScript: Quitting)
-					)
-				)
-			)
-		)
-	)
-)
-
-(instance ChooseFood of Script
 	(method (changeState newState)
 		(switch (= state newState)
 			(0
-				(switch menuOption
-					(0)
-					(foodMINIMONOLITH
-						(+= monolithBurgerBill 1)
-						(= orderedFood TRUE)
-					)
-					(foodMONOLITH
-						(+= monolithBurgerBill 2)
-						(= orderedFood TRUE)
-					)
-					(foodWITHPOLYCHEEZE
-						(+= monolithBurgerBill 3)
-						(= orderedFood TRUE)
-					)
-					(foodFILET
-						(+= monolithBurgerBill 2)
-						(= orderedFood TRUE)
-					)
-					(foodJUMBO
-						(+= monolithBurgerBill 5)
-						(= orderedFood TRUE)
-					)
-					(foodBIGBELCHER
-						(+= monolithBurgerBill 9)
-						(= orderedFood TRUE)
-						(= orderedBigBelcherCombo TRUE)
-					)
-					(foodFUNMEAL
-						(+= monolithBurgerBill 7)
-						(if (not (ego has: iDecoderRing))
-							(= mealHasDecoderRing TRUE)
-						)
-						(= orderedFood TRUE)
-					)
-					(foodSPACESPUDS
-						(+= monolithBurgerBill 1)
-						(= orderedFood TRUE)
-					)
-					(tangSMALL
-						(+= monolithBurgerBill 1)
-						(= orderedTang TRUE)
-					)
-					(tangMEDIUM
-						(+= monolithBurgerBill 2)
-						(= orderedTang TRUE)
-					)
-					(tangLARGE
-						(+= monolithBurgerBill 3)
-						(= orderedTang TRUE)
-					)
-					(tangSLOPPYSLURPER
-						(+= monolithBurgerBill 4)
-						(= orderedTang TRUE)
-					)
-				)
-				(Print 280 3 #at -1 95 #width 50 #font 600 #dispose)
-				(= cycles 30)
+				(gSQ5 handsOff:)
+				(gSq5Music2 number: 21 loop: -1 play: 0 fade: 127 10 10 0)
+				(= seconds 2)
 			)
 			(1
-				(cls)
-				(curRoom setScript: 0)
+				(PalVary pvUNINIT)
+				(PalVary pvINIT 532 4)
+			)
+			(2
+				(PalVary pvUNINIT)
+				(PalVary pvINIT 533 4)
+			)
+			(3
+				(starBurst
+					init:
+					cel: 0
+					cycleSpeed: 15
+					setCycle: CT 6 1 self
+				)
+			)
+			(4
+				(starBurst setCycle: CT 8 1 self)
+			)
+			(5
+				(if (< (PalVary pvGET_CURRENT_STEP) 64) (-- state))
+				(= cycles 1)
+			)
+			(6
+				(PalVary pvUNINIT)
+				(PalVary pvINIT 534 4)
+				(= cycles 6)
+			)
+			(7
+				(starBurst
+					setCel: 9
+					x: 109
+					y: 125
+					heading: 45
+					setStep: 1 1
+					setMotion: MoveFwd 245
+				)
+				(= seconds 2)
+			)
+			(8
+				(garbageBag setMotion: MoveTo 150 143 self)
+				(= register 0)
+			)
+			(9
+				(shipEureka init:)
+				(gSq5Music1
+					number: 225
+					loop: -1
+					play: 40
+					fade: 127 5 20 0
+				)
+				(= cycles 1)
+			)
+			(10
+				(shipEureka
+					cel: [local78 register]
+					x: [local0 register]
+					y: [local26 register]
+					scaleX: [local52 register]
+					scaleY: [local52 register]
+				)
+				(if (< (++ register) 15)
+					(-- state)
+				else
+					(gSq5Music1 number: 227 loop: 1 play:)
+				)
+				(= ticks 4)
+			)
+			(11
+				(shipEureka
+					cel: [local78 register]
+					x: [local0 register]
+					y: [local26 register]
+					scaleX: [local52 register]
+					scaleY: [local52 register]
+				)
+				(garbageBag dispose:)
+				(= ticks 4)
+				(++ register)
+			)
+			(12
+				(shipEureka
+					cel: [local78 register]
+					x: [local0 register]
+					y: [local26 register]
+					scaleX: [local52 register]
+					scaleY: [local52 register]
+				)
+				(++ register)
+				(= ticks 4)
+			)
+			(13
+				(shipEureka
+					cel: [local78 register]
+					x: [local0 register]
+					y: [local26 register]
+					scaleX: [local52 register]
+					scaleY: [local52 register]
+				)
+				(++ register)
+				(if (< register 26) (-- state))
+				(= ticks 4)
+			)
+			(14
+				(gSq5Music1 fade:)
+				(gSq5Music2 fade:)
+				(global2 newRoom: 201)
+				(self dispose:)
 			)
 		)
 	)
 )
 
-(instance Quitting of Script
-	(method (changeState newState)
-		(switch (= state newState)
+(instance shipEureka of View
+	(properties
+		x 319
+		y 60
+		view 276
+		priority 6
+		signal $6010
+	)
+)
+
+(instance garbageBag of Actor
+	(properties
+		x -25
+		y 198
+		view 274
+		priority 8
+		signal $4010
+	)
+	
+	(method (init)
+		(self
+			setLoop: 0
+			cel: 0
+			scaleSignal: 1
+			moveSpeed: 6
+			cycleSpeed: 10
+			setStep: 1 1
+			setCycle: End self
+			setScale: Scaler 100 35 169 143
+		)
+		(super init: &rest)
+	)
+	
+	(method (cue)
+		(switch loop
 			(0
-				(if (and (== prevRoomNum 25) monolithBurgerBill)
-					(if (not orderedTang)
-						(Print 280 4
-							#icon 38 4 0
-							#mode teJustCenter
-							#title {Pushy Counter Clerk}
-							#button { Yes_} 1
-							#button { Yes_} 2
-						)
-					)
-					(Print 280 5
-						#icon 38 4 1
-						#mode teJustCenter
-						#title {Pushy Counter Clerk}
-						#button { Yes_} 1
-						#button { Yes_} 2
-					)
-					(Print 280 6
-						#icon 38 4 2
-						#mode teJustCenter
-						#title {Pushy Counter Clerk}
-						#button { Yes_} 1
-						#button { Yes_} 2
-					)
-					(if (not orderedTang)
-						(Print 280 7
-							#icon 38 4 0
-							#mode teJustCenter
-							#title {While Supplies Last}
-							#button { Okay_} teJustCenter
-						)
-					)
-					(if (not orderedFood)
-						(Print 280 8
-							#icon 38 4 0
-							#mode teJustCenter
-							#title {While Supplies Last}
-							#button { Okay_} 1
-						)
-					)
-					(= global592 0)
-					(= saveDisabled FALSE)
-					(if (> monolithBurgerBill 9999)
-						(= monolithBurgerBill 9999)
-					)
-					(User mapKeyToDir: TRUE)
-					(cls)
-					(curRoom newRoom: 25)
-				else
-					(= global592 0)
-					(= saveDisabled FALSE)
-					(User mapKeyToDir: TRUE)
-					(curRoom newRoom: prevRoomNum)
-				)
+				(self setLoop: 1 cel: 0 setCycle: End self)
+			)
+			(1
+				(self setLoop: 0 cel: 0 setCycle: End self)
 			)
 		)
+	)
+)
+
+(instance starBurst of Actor
+	(properties
+		x 100
+		y 134
+		view 275
+		priority 2
+		signal $6010
 	)
 )

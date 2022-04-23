@@ -1,258 +1,591 @@
 ;;; Sierra Script 1.0 - (do not remove this comment)
 (script# 121)
-(include game.sh)
+(include sci.sh)
 (use Main)
-(use Intrface)
-(use Motion)
+(use Scaler)
+(use RandCycle)
+(use Polygon)
+(use CueObj)
+(use n958)
+(use Cycle)
 (use Game)
-(use Actor)
-(use System)
+(use View)
+(use Obj)
 
 (public
 	rm121 0
 )
 
-(instance rm121 of Room
+(instance rm121 of Rm
 	(properties
-		picture 121
+		picture 21
+		style $800a
+		horizon -20
+		vanishingX 140
+		vanishingY -5
 	)
 	
-	(method (init &tmp [temp0 50])
-		(HandsOff)
-		(= inCartoon TRUE)
-		(Load VIEW 194)
-		(Load VIEW 68)
-		(Load VIEW 210)
-		(Load PICTURE 120)
-		(Load PICTURE 122)
-		(Load SOUND 30)
-		(super init:)
-		(ego
-			view: 68
-			loop: 2
-			posn: 152 92
-			setCycle: Walk
-			setStep: 2 1
-			setPri: 15
-			ignoreActors: TRUE
+	(method (init)
+		(self setRegions: 109)
+		(if (proc0_1 1)
+			(global2
+				addObstacle:
+					((Polygon new:)
+						type: 3
+						init:
+							72
+							189
+							285
+							189
+							243
+							154
+							212
+							131
+							162
+							110
+							176
+							109
+							176
+							108
+							154
+							108
+							143
+							106
+							136
+							105
+							137
+							111
+							126
+							123
+							124
+							130
+							141
+							132
+							137
+							148
+							126
+							152
+							97
+							155
+						yourself:
+					)
+			)
+		else
+			(global2
+				addObstacle:
+					((Polygon new:)
+						type: 3
+						init:
+							51
+							189
+							285
+							189
+							243
+							154
+							212
+							131
+							162
+							110
+							176
+							109
+							176
+							108
+							154
+							108
+							143
+							106
+							136
+							105
+							137
+							111
+							126
+							123
+							93
+							155
+						yourself:
+					)
+			)
 		)
-		(self setScript: OpenDoor)
+		(proc958_0 128 140 108 113 110)
+		(proc958_0 143 121)
+		(super init:)
+		(proc0_6 1)
+		(gEgo setScale: Scaler 130 24 157 106 init:)
+		(switch gGModNum
+			(125
+				(global2 setScript: (ScriptID 109 5))
+				(if (not (proc0_1 107))
+					(darth init: setScript: sStarWars)
+				)
+			)
+			(117
+				(if (and (proc0_1 6) (not (proc0_1 7)))
+					(gEgo setScript: sMouseRun)
+				)
+				(gEgo posn: 178 108 hide:)
+				(global2 setScript: sEnterFromHallway)
+			)
+			(else 
+				(global2 setScript: (ScriptID 109 6))
+			)
+		)
+		(exitToCrest init: approachVerbs: 3 4 addToPic:)
+		(extraPanel init: addToPic:)
+		(ratHole init: setOnMeCheck: 26505)
+		(ship1 init: addToPic:)
+		(ship2 init: addToPic:)
+		(ship3 init: addToPic:)
+		(shipLight1 setCycle: Fwd init:)
+		(shipLight2 setCycle: Fwd init:)
+		(shipLight3 setCycle: Fwd init:)
+		(guy1 setCycle: Fwd init:)
+		(guy2 setCycle: Fwd init:)
+		(guy3 setCycle: Fwd init:)
+		(guy4 init:)
+		(guy5 init:)
+		(guy6 init:)
+		(guy7 init: setScript: sBayGuys)
+		(gOldWH addToFront: exitToCrest)
 	)
 	
-	(method (doit &tmp [temp0 50])
+	(method (doit)
 		(super doit:)
+		(cond 
+			(script 0)
+			(
+				(and
+					(> (gEgo y?) 157)
+					(< 90 (gEgo heading?))
+					(< (gEgo heading?) 270)
+				)
+				(global2 setScript: (ScriptID 109 3) 0 125)
+			)
+			(
+			(and (proc0_5 gEgo 8192) (< (gEgo heading?) 180)) (global2 setScript: sExitToCrest))
+			((< (gEgo y?) 108) (global2 setScript: (ScriptID 109 4) 0 122))
+		)
 	)
 	
-	(method (handleEvent event)
-		(super handleEvent: event)
-		(if (or (!= (event type?) saidEvent) (event claimed?))
-			(return)
+	(method (dispose)
+		(gOldWH delete: exitToCrest)
+		(super dispose: &rest)
+	)
+)
+
+(instance sStarWars of Script
+	(properties)
+	
+	(method (changeState newState)
+		(switch (= state newState)
+			(0 (= seconds 5))
+			(1
+				(darth
+					setLoop: -1
+					setLoop: 1
+					setMotion: MoveTo (+ (darth x?) 42) (darth y?) self
+				)
+			)
+			(2 (= seconds 5))
+			(3
+				(proc0_2 107)
+				(darth dispose:)
+				(gSQ5 handsOn:)
+				(self dispose:)
+			)
 		)
 	)
 )
 
-(instance OpenDoor of Script
-	(method (changeState newState &tmp [temp0 50])
+(instance sExitToCrest of Script
+	(properties)
+	
+	(method (changeState newState)
 		(switch (= state newState)
 			(0
-				(Print 121 0)
-				(door init: setCycle: EndLoop self)
+				(gSQ5 handsOff:)
+				(gEgo setMotion: MoveTo 168 108 self)
 			)
 			(1
-				(ego init: setMotion: MoveTo 152 116 self)
-				(guard1 init: setMotion: MoveTo 149 116)
-				(guard2 init: setMotion: MoveTo 155 116)
+				(gEgo setMotion: MoveTo 178 108 self)
 			)
-			(2
+			(2 (global2 newRoom: 117))
+		)
+	)
+)
+
+(instance sMouseRun of Script
+	(properties)
+	
+	(method (changeState newState)
+		(switch (= state newState)
+			(0
+				(gSQ5 handsOff:)
+				(gEgo loop: 3 posn: 160 160 setMotion: MoveTo 160 145)
+				(gSq5Music2 number: 141 setLoop: -1 play:)
+				(mouse
+					init:
+					setCycle: Fwd
+					setStep: 13 13
+					moveSpeed: 0
+					cycleSpeed: 0
+					setMotion: MoveTo 262 179 self
+				)
+			)
+			(1
+				(gSq5Music2 stop:)
+				(mouse setLoop: 1 setCel: 0 setCycle: 0)
 				(= seconds 2)
 			)
+			(2 (mouse setCycle: End self))
 			(3
-				(door setCycle: BegLoop self)
-				(ego hide:)
-				(guard1 hide:)
-				(guard2 hide:)
+				(gSQ5 handsOn:)
+				(global2 newRoom: 133)
+			)
+		)
+	)
+)
+
+(instance sEnterFromHallway of Script
+	(properties)
+	
+	(method (changeState newState)
+		(switch (= state newState)
+			(0
+				(gSQ5 handsOff:)
+				(= ticks 10)
+			)
+			(1
+				(gEgo show: posn: 178 108 setMotion: MoveTo 150 108 self)
+			)
+			(2
+				(gSQ5 handsOn:)
+				(self dispose:)
+			)
+		)
+	)
+)
+
+(instance sBayGuys of Script
+	(properties)
+	
+	(method (changeState newState)
+		(switch (= state newState)
+			(0 (= seconds (Random 4 7)))
+			(1
+				(guy7
+					setLoop: 11
+					setCycle: Fwd
+					setMotion: MoveTo 42 94 self
+				)
+			)
+			(2
+				(guy7 setLoop: 12 setCycle: End self)
+			)
+			(3
+				(guy7 setLoop: 13 setCycle: Fwd)
+				(= seconds (Random 4 7))
 			)
 			(4
-				(curRoom drawPic: 120)
-				(addToPics add: robo1 robo2)
-				(addToPics doit:)
-				(ego show:)
-				(guard1 show:)
-				(guard2 show:)
-				(theMusic number: 30 loop: -1 priority: 1 play:)
-				(= cycles 2)
+				(guy4 setLoop: 8 setCycle: Fwd setMotion: MoveTo 0 89)
+				(guy1 setCycle: 0)
+				(= seconds (Random 4 7))
 			)
 			(5
-				(= seconds 1)
-				(door dispose:)
+				(guy5 setLoop: 4 setCel: 0 setMotion: MoveTo 50 99)
+				(guy2 setCycle: 0)
+				(= seconds (Random 4 7))
 			)
 			(6
-				(= cycles 2)
+				(guy6 setLoop: 5 setCel: 0 setMotion: MoveTo 3 136)
+				(= seconds (Random 4 7))
 			)
 			(7
-				(ego setMotion: MoveTo 145 116 self)
+				(guy5 setLoop: 5 setMotion: MoveTo 0 82)
+				(guy3 setCycle: 0)
+				(guy1 setCycle: Fwd)
+				(= seconds (Random 3 5))
 			)
 			(8
-				(ego setMotion: MoveTo 98 116 self)
-				(guard1 setLoop: 3 setMotion: MoveTo 98 116)
-				(guard2 setLoop: 3 setMotion: MoveTo 98 116)
+				(guy4 setMotion: MoveTo 57 39)
+				(= seconds (Random 4 7))
 			)
 			(9
-				(curRoom drawPic: 122)
-				(elevator init:)
-				(ego
-					view: 0
-					setStep: 3 2
-					posn: 277 171
-					ignoreActors: TRUE
-					setPri: -1
-					setMotion: MoveTo 145 171 self
-				)
-				(guard1
-					setLoop: 0
-					cel: 0
-					setStep: 3 2
-					posn: 296 168
-					setPri: -1
-					setMotion: MoveTo 162 168
-				)
-				(guard2
-					setLoop: 0
-					cel: 0
-					setStep: 3 2
-					posn: 291 174
-					setPri: -1
-					setMotion: MoveTo 166 174
-				)
+				(guy6 setLoop: 4 setMotion: MoveTo 29 136)
+				(guy2 setCycle: Fwd)
+				(guy3 setCycle: Fwd)
+				(= seconds (Random 4 7))
 			)
 			(10
-				(ego hide:)
-				(elevator
-					illegalBits: 0
-					setCycle: Walk
-					setLoop: 0
-					setMotion: MoveTo 145 122 self
-				)
-			)
-			(11
-				(guard1
-					setLoop: 1
-					cel: 0
-					setMotion: MoveTo 330 (guard1 y?)
-				)
-				(guard2
-					setLoop: 1
-					cel: 0
-					setMotion: MoveTo 330 (guard2 y?)
-				)
-				(elevator setLoop: 1 setMotion: MoveTo 145 67 self)
-			)
-			(12
-				(elevator setLoop: 2 setMotion: MoveTo 145 41 self)
-			)
-			(13
-				(ego cycleSpeed: 1 posn: 145 41 show:)
-				(elevator setLoop: 3)
-				(ego setMotion: MoveTo 137 40 self)
-			)
-			(14
-				(ego view: 199 setLoop: 6 cel: 0 setCycle: EndLoop self)
-			)
-			(15
-				(elevator setMotion: MoveTo 145 67 self)
-			)
-			(16
-				(elevator setLoop: 4 setMotion: MoveTo 145 122 self)
-			)
-			(17
-				(elevator setLoop: 5 setMotion: MoveTo 145 171 self)
-			)
-			(18
-				(ego cycleSpeed: 0)
-				(curRoom newRoom: 96)
+				(= state (Random 3 5))
+				(= cycles 1)
 			)
 		)
 	)
 )
 
-(instance door of Prop
-	(method (init)
-		(super init:)
-		(self
-			view: 194
-			setLoop: 0
-			setCel: 0
-			posn: 153 91
-			setPri: 5
-			ignoreActors: TRUE
-		)
-	)
-)
-
-(instance guard1 of Actor
-	(method (init)
-		(super init:)
-		(self
-			view: 210
-			setLoop: 2
-			setCycle: Walk
-			setStep: 2 1
-			posn: 149 90
-			setPri: 5
-			ignoreActors: TRUE
-		)
-	)
-)
-
-(instance guard2 of Actor
-	(method (init)
-		(super init:)
-		(self
-			view: 210
-			setLoop: 2
-			setCycle: Walk
-			setStep: 2 1
-			posn: 155 90
-			setPri: 5
-			ignoreActors: TRUE
-		)
-	)
-)
-
-(instance elevator of Actor
-	(method (init)
-		(super init:)
-		(self
-			view: 199
-			setLoop: 5
-			setCel: 0
-			yStep: 4
-			posn: 145 171
-			setPri: 4
-			ignoreActors: TRUE
-		)
-	)
-)
-
-(instance robo1 of PicView
+(instance mouse of Actor
 	(properties
-		y 88
-		x 53
-		view 194
+		x 196
+		y 119
+		noun 2
+		view 140
+		scaleSignal $0001
+	)
+	
+	(method (init)
+		(super init: &rest)
+		(self setScale: Scaler 100 25 179 116)
+	)
+)
+
+(instance guy1 of Prop
+	(properties
+		x 87
+		y 86
+		noun 8
+		view 108
+		priority 14
+		signal $6010
+		detailLevel 2
+	)
+)
+
+(instance guy2 of Prop
+	(properties
+		x 47
+		y 136
+		noun 8
+		view 108
 		loop 2
+		priority 14
+		signal $6010
+		detailLevel 2
+	)
+)
+
+(instance guy3 of Prop
+	(properties
+		x 66
+		y 82
+		noun 8
+		view 108
+		loop 7
+		priority 14
+		signal $6010
+		detailLevel 2
+	)
+)
+
+(instance guy4 of Actor
+	(properties
+		x 57
+		y 39
+		noun 8
+		yStep 1
+		view 108
+		loop 8
+		priority 1
+		signal $6010
+		detailLevel 2
+		xStep 1
+	)
+)
+
+(instance guy5 of Actor
+	(properties
+		y 82
+		noun 8
+		yStep 1
+		view 108
+		loop 4
+		priority 1
+		signal $6010
+		detailLevel 2
+		xStep 1
+	)
+)
+
+(instance guy6 of Actor
+	(properties
+		x 29
+		y 136
+		noun 8
+		yStep 1
+		view 108
+		loop 5
 		priority 7
-		signal ignrAct
+		signal $6010
+		detailLevel 2
+		xStep 1
 	)
 )
 
-(instance robo2 of PicView
+(instance guy7 of Actor
 	(properties
-		y 88
-		x 265
-		view 194
-		loop 2
+		x -5
+		y 79
+		noun 8
+		yStep 1
+		view 108
+		loop 11
+		priority 13
+		signal $6010
+		detailLevel 2
+		xStep 1
+	)
+)
+
+(instance shipLight1 of Prop
+	(properties
+		x 63
+		y 70
+		noun 5
+		view 113
+		loop 4
+		priority 14
+		signal $6010
+		cycleSpeed 12
+		detailLevel 2
+	)
+)
+
+(instance shipLight2 of Prop
+	(properties
+		x 10
+		y 68
+		noun 6
+		view 113
+		loop 5
+		priority 14
+		signal $6010
+		cycleSpeed 9
+		detailLevel 2
+	)
+)
+
+(instance shipLight3 of Prop
+	(properties
+		x 21
+		y 124
+		noun 7
+		view 113
+		loop 6
+		priority 14
+		signal $6010
+		detailLevel 2
+	)
+)
+
+(instance darth of Actor
+	(properties
+		x 141
+		y 108
+		view 144
+		loop 1
+		priority 6
+		signal $6010
+		xStep 2
+	)
+	
+	(method (init)
+		(obiwan init: setCycle: RTRandCycle)
+		(super init:)
+		(self setCycle: RTRandCycle)
+	)
+)
+
+(instance obiwan of Prop
+	(properties
+		view 144
+		priority 6
+		signal $6010
+	)
+	
+	(method (doit)
+		(self x: (+ (darth x?) 30) y: (+ (darth y?) 2))
+		(if (> (self x?) 187) (self dispose:))
+		(super doit:)
+	)
+)
+
+(instance ship1 of View
+	(properties
+		x 43
+		y 56
+		noun 5
+		view 113
+		signal $5000
+	)
+)
+
+(instance ship2 of View
+	(properties
+		x 9
+		y 67
+		noun 6
+		view 113
 		cel 1
-		priority 7
-		signal ignrAct
+		signal $5000
+	)
+)
+
+(instance ship3 of View
+	(properties
+		x 2
+		y 118
+		noun 7
+		view 113
+		cel 2
+		signal $5000
+	)
+)
+
+(instance exitToCrest of View
+	(properties
+		x 165
+		y 113
+		noun 4
+		approachX 170
+		approachY 110
+		view 110
+		loop 1
+		priority 5
+		signal $4010
+	)
+	
+	(method (doVerb theVerb)
+		(switch theVerb
+			(3
+				(global2 setScript: sExitToCrest)
+			)
+			(4
+				(global2 setScript: sExitToCrest)
+			)
+			(else 
+				(super doVerb: theVerb &rest)
+			)
+		)
+	)
+)
+
+(instance extraPanel of View
+	(properties
+		x 245
+		y 135
+		noun 1
+		view 110
+		loop 11
+		priority 14
+		signal $4000
+	)
+)
+
+(instance ratHole of Feature
+	(properties
+		noun 3
+		nsTop 158
+		nsLeft 278
+		nsBottom 168
+		nsRight 289
 	)
 )
