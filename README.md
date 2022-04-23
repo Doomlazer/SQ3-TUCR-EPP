@@ -34,4 +34,4 @@ To get started download SCICompanion from https://github.com/Kawa-oneechan/SCICo
 
 ## I'm trying to test a planet, how can I skip the opening sequence?
 
-Type PUMP SHARK to activate debugging. You can use TP to teleport to other rooms or type QA in the first room then select "space" to jump to where you can warp right to your planet. More debugging info <a href="http://sciwiki.sierrahelp.com//index.php?title=SCI_Debug_Modes#Space_Quest_3">here</a>.
+Type PUMP SHARK to activate debugging. You can use TP to teleport to other rooms or type QA in the first room then select "space" to jump to where you can warp right to your planet. More debugging info <a href="http://sciwiki.sierrahelp.com//index.php?title=SCI_Debug_Modes#Space_Quest_3">here</a> and <a href="https://github.com/Doomlazer/SCI-Debug-Resources">here</a>.
