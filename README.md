@@ -16,6 +16,9 @@ Unfortunately, the SQ3-TUCR-EPP mod was developed as adware. You can pay 20 buck
    Use the reverse command "MAGIC PAY" to disable ads immediately without payment.
 </details>
 
+<img src="pis/ad.png"  width="600" alt="A pic showing an in-game advertisement.">
+
+
 ## I have an idea for a planet
 
 New planet submissions are engouraged, though limited by HEAP memory in some scripts. I'm not sure what that number is right now. I don't think ScummVM cares about exeeding the HEAP, but ideally DOSBox should be supported as well. A tutorial covering what is needed to add a new planet is coming, but the source code for scripts in the PATCHES folder can be referenced in the meantime. 
