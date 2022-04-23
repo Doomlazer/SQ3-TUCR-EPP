@@ -28,7 +28,7 @@ Please click <a href="https://github.com/Doomlazer/SQ3-TUCR-EPP/issues/1">here</
 
 ## I have an idea for a planet.
 
-New planet submissions are engouraged, though limited by HEAP memory in some scripts. I'm not sure what that number is right now. I don't think ScummVM cares about exeeding the HEAP, but ideally DOSBox should be supported as well. A tutorial covering what is needed to add a new planet is coming, but the source code for scripts in the PATCHES folder can be referenced in the meantime. 
+New planet submissions are engouraged, though limited by HEAP memory in some scripts. I'm not sure what the max number of planets will be. I don't think ScummVM cares about exeeding the HEAP, but ideally DOSBox should be supported as well. A tutorial covering what is needed to add a new planet is coming, but the source code for scripts in the PATCHES folder can be referenced in the meantime. 
 
 To get started download SCICompanion from https://github.com/Kawa-oneechan/SCICompanion or http://scicompanion.com/download/. Move the 'src' folder and game.ini into a backed up copy of your SQ3 folder, then open resource.map from within SCICompanion. The modified scripts will already be there, but you'll need to import any pics or views from the PATCHES folder.
 
