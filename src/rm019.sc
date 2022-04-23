@@ -245,6 +245,7 @@
 				(scanBox
 					view: 
 						(cond
+							((== scanningSector 23) 401) ;2nd new planet
 							((== scanningSector 27) 401) ;2nd new planet
 							(else 50) ;default planets view
 						)
