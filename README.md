@@ -6,7 +6,7 @@ DOSBox users must copy the contents of PATCHES into the SQ3 game folder. ScummVM
 
 ## What is this?
 
-A mod for the DOS version of Space Quest III. It adds new planets to the Aluminum Malard's scanner. Currently there are two new planets appearing in sectors 23 and 27. Both planets can be landed on, but are currently just proof of concepts that will change drastically with updates.
+A mod for the DOS version of Space Quest III. It adds new planets to the Aluminum Mallard's scanner. Currently there are two new planets appearing in sectors 23 and 27. Both planets can be landed on, but are currently just proof of concepts that will change drastically with updates.
 
 <img src="pics/23.png"  width="600" alt="AquaVelveeta seen for the first time.">
 
