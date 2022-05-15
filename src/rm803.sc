@@ -1,5 +1,5 @@
 ;;; Sierra Script 1.0 - (do not remove this comment)
-(script# 802)
+(script# 803)
 (include game.sh)
 (use Main)
 (use Intrface)
@@ -10,30 +10,28 @@
 (use System)
 
 (public
-	Room802 0
+	Room803 0
 )
 
 (local
 	local0
 )
 
-(instance Room802 of Room
+
+(instance Room803 of Room
 	(properties
 		picture scriptNumber
 	)
 	
 	(method (init)
-		(if towed
-			(= picture 805)	
-		)
 		(super init:)
 		(switch prevRoomNum
-			(14
-				(ego view: 63)
+			(802
+				(ego posn: 50 46 loop: 3)
 				(self setScript: RoomScript)
 			)
-			(803
-				(ego posn: 266 182 loop: 3)
+			(804
+				(ego posn: 310 169 loop: 1)
 			)
 			(else 
 				(ego posn: 150 100 loop: 1)
@@ -47,45 +45,27 @@
 		; code executed each game cycle
 		(if
 			(and
-				(& (ego onControl:) $4000)
-				(== script 0)
-			)
-			(curRoom newRoom: 14)
-		)
-		(if
-			(and
 				(& (ego onControl:) 2) ;darkblue
 				(== script 0)
 			)
 			(curRoom setScript: FallDown)
+		)		
+		(if
+			(and
+				(& (ego onControl:) $4000) ;yellow - back to ship
+				(== script 0)
+			)
+			(curRoom newRoom: 802)
 		)
 		(if
 			(and
-				(& (ego onControl:) 4) ;green
+				(or 
+					(> (ego y?) 194)
+					(> (ego x?) 323)
+				)
 				(== script 0)
 			)
-			(ego setPri: 2)
-			(curRoom setScript: FallDown)
-		)
-		(if
-			(and
-				(> (ego y?) 194)
-				(== script 0)
-			)
-			(curRoom newRoom: 803)
-		)	
-	)
-	
-	
-	(method (handleEvent pEvent)
-		(super handleEvent: pEvent)
-		; handle Said's, etc...
-		(if (Said 'look,read/sign')
-			(if towed
-				(Print {It's the intergalactic symbol for restricted parking. It certainly would have been nice to see that earlier!})
-			else 
-				(Print {What sign?})
-			)	
+			(curRoom newRoom: 804)
 		)
 	)
 )
@@ -101,13 +81,6 @@
 	(method (handleEvent pEvent)
 		(super handleEvent: pEvent)
 		; handle Said's, etc...
-		(if (Said 'look,read/sign')
-			(if towed
-				(Print {It certainly would have been nice to see that earlier!})
-			else 
-				(Print {What sign?})
-			)	
-		)
 	)
 	
 	(method (changeState newState)
@@ -116,9 +89,9 @@
 			(0
 				(HandsOff)
 				(ego
-					posn: 157 147 
+					posn: 50 46 
 					ignoreControl:
-					setMotion: MoveTo 190 174 self
+					setMotion: MoveTo 77 64 self
 				)
 			)
 			(1
@@ -201,4 +174,4 @@
 ;;;		priority 1
 ;;;	)
 ;;;)
-;;;
+

@@ -630,7 +630,8 @@
 	mallardRisenFromDebris
 	
 	adSupported = 1 ;pay to remove ads
-	adTimer = 400 ;time between ads
+	adTimer = 600 ;time between ads
+	towed ;is roger's ship towed?
 )
 (procedure (NormalEgo theLoop theView)
 	;normalizes ego's animation
