@@ -58,7 +58,7 @@ The new planet in sector 27 is now explorable. It's still missing several featur
 
 ## CREDITS
 
-<b>Sector 21 & 27:</b>
+<b>Sector 23 & 27:</b>
 
 DoomLazer - Concepts and Programming
 
