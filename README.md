@@ -24,7 +24,8 @@ ScummVM users can copy either the contents or the entire PATCHES folder (which m
 
 The SQ3-TUCR-EPP mod's revenue model is ad-supportd free-to-play. You can pay 20 buckazoids to remove all advertisements from the game by typing "PAY MAGIC". 
 
-Alternately, disable them immediately if you find them too annoying: <details> 
+Alternately, disable them immediately if you find them too annoying:
+<details> 
   <summary>(click to reveal spoiler)</summary>
    Use the command "PAY NOTHING" to disable ads immediately without payment.
 </details>
