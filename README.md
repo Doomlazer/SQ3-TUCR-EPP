@@ -2,7 +2,7 @@
 
 ## What is this?
 
-WARNING: This mod is still in early development. It's best that most players wait until the game is finished before playing for the best experience. 
+WARNING: This mod is still in early development. It's best to wait until the game is finished before playing for the best experience. 
 
 A mod for the DOS version of Space Quest III. It adds new planets to the Aluminum Mallard's scanner. Currently there are two new planets appearing in sectors 23 and 27. Both planets can be landed on, but are currently just proof of concepts that will change drastically with updates.
 
