@@ -4,7 +4,7 @@ WARNING: This mod is still in early development and is a work in progress.
 
 ## What is this? 
 
-A mod for the DOS version of Space Quest III. It adds new planets to the Aluminum Mallard's scanner. Currently, there are two new planets appearing in sectors 23 and 27. Both planets can be landed on, but are mostly proof of concepts that will change drastically with future updates.
+A mod for the DOS version of Space Quest III. It adds new planets to the Aluminum Mallard's scanner. Currently, there are two new planets appearing in sectors 23 and 27. Both planets can be visited, but are mostly proof of concepts that will change drastically with future updates.
 
 <img src="pics/23.png"  width="600" alt="AquaVelveeta seen for the first time.">
 
