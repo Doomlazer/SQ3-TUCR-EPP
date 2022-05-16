@@ -55,3 +55,11 @@ FYI, the QA debug command is only available in the first room. More debugging in
 ## What's changed recently?
 
 The new planet in sector 27 is now explorable. It's still missing several features and you will probably get stuck on the planet forever at the moment.
+
+## CREDITS
+
+<b>Sector 21 & 27:</b>
+
+DoomLazer - Concepts and Programming
+
+Threepwang - Background Artist
