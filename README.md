@@ -34,7 +34,7 @@ Alternately, disable them immediately if you find them too annoying:
 
 ## I'd like to purchase in-game advertising.
 
-Please click <a href="https://github.com/Doomlazer/SQ3-TUCR-EPP/issues/1">here</a>.
+Please go <a href="https://github.com/Doomlazer/SQ3-TUCR-EPP/issues/1">here</a>.
 
 ## I have an idea for a planet.
 
