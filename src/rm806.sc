@@ -82,7 +82,7 @@
 			((Said 'look>')
 				(cond 
 					((Said '/rock,stone') (Print {There is something unsettling about the thought of passing a kidney stone this size.}))
-					((Said '[<around,at,in][/area,!*]') (Print {After treking all the way out here, it seems there is little to do other than bask in the grandure of it's sheer size.}))
+					((Said '[<around,at,in][/area,!*]') (Print {After treking all the way out here, it seems there is little to do other than bask in the grandure of its sheer size.}))
 				)
 			)
 		)
