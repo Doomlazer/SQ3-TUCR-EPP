@@ -1,8 +1,8 @@
 # Space Quest III - The Undiscovered Country Road - Extended Planets Pack!
 
-## What is this?
+WARNING: This mod is still in early development and doesn't have much content yet.
 
-WARNING: This mod is still in early development. It's best to wait until the game is finished before playing for the best experience. 
+## What is this? 
 
 A mod for the DOS version of Space Quest III. It adds new planets to the Aluminum Mallard's scanner. Currently there are two new planets appearing in sectors 23 and 27. Both planets can be landed on, but are currently just proof of concepts that will change drastically with updates.
 
@@ -22,7 +22,9 @@ ScummVM users can copy either the contents or the entire PATCHES folder (which m
 
 ## Why am I getting so many pop-up ads during the game?
 
-The SQ3-TUCR-EPP mod's revenue model is ad-supportd free-to-play. You can pay 20 buckazoids to remove all advertisements from the game by typing "PAY MAGIC" or:
+The SQ3-TUCR-EPP mod's revenue model is ad-supportd free-to-play. You can pay 20 buckazoids to remove all advertisements from the game by typing "PAY MAGIC". 
+
+Alternately, disable them immediately if you find them too annoying:
 <details> 
   <summary>(click to reveal spoiler)</summary>
    Use the command "PAY NOTHING" to disable ads immediately without payment.
