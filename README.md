@@ -1,10 +1,10 @@
 # Space Quest III - The Undiscovered Country Road - Extended Planets Pack!
 
-WARNING: This mod is still in early development and is a work in progress.
+WARNING: This mod is still in early development.
 
 ## What is this? 
 
-A mod for the DOS version of Space Quest III. It adds new planets to the Aluminum Mallard's scanner. Currently, there are two new planets appearing in sectors 23 and 27. Both planets can be visited, but are mostly proof of concepts that will change drastically with future updates.
+A mod for the DOS version of Space Quest III. It adds new planets to the Aluminum Mallard's scanner. Currently, there are two new planets appearing in sectors 23 and 27. Planet Ren (sector 27) is making steady progress, but the mod is still in early development. Causal players should wait until the final release for the best experience. 
 
 <img src="pics/23.png"  width="600" alt="AquaVelveeta seen for the first time.">
 
@@ -52,9 +52,6 @@ You can use the debug command <b>TP</b> to teleport to other rooms, but it's bes
 
 FYI, the QA debug command is only available in the first room. More debugging info <a href="http://sciwiki.sierrahelp.com//index.php?title=SCI_Debug_Modes#Space_Quest_3">here</a> and <a href="https://github.com/Doomlazer/SCI-Debug-Resources">here</a>.
 
-## What's changed recently?
-
-The new planet in sector 27 is now explorable. It's still missing several features and you will probably not be able to leave yet.
 
 ## CREDITS
 
@@ -63,3 +60,13 @@ The new planet in sector 27 is now explorable. It's still missing several featur
 DoomLazer - Concepts and Programming
 
 Threepwang - Background Artist
+
+
+## What's changed recently?
+
+
+# May 2022 
+
+Sector27 is now Planet Ren and more than half implemented.
+
+
