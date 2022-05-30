@@ -49,8 +49,8 @@
 				(self setScript: AquaVelScript)
 			)
 			(12 ;2nd planet landing
-				(Load PICTURE 700) ;needs to be updated
-				(self drawPic: 700)
+				(Load PICTURE 701)
+				(self drawPic: 701)
 				(self setScript: secondPlanetScript)
 			)
 		)
@@ -287,11 +287,12 @@
 			(0 (= cycles 5))
 			(1
 				(ship
-					posn: 260 204
+					posn: 240 204
 					setLoop: 1
 					init:
 					setStep: 3 6
-					setMotion: MoveTo 260 152 self
+					setMotion: MoveTo 240 152 self
+					;setMotion: MoveTo 210 152 self
 				)
 			)
 			(2
@@ -299,11 +300,14 @@
 				(ship
 					setStep: 3 3
 					setCycle: EndLoop
-					setMotion: MoveTo 235 136 self
+					setMotion: MoveTo 190 136 self
+					;setMotion: MoveTo 140 90 self
 				)
 			)
 			(3
-				(ship setMotion: MoveTo 86 67 self)
+				;(ship setMotion: MoveTo 86 67 self)
+				(ship setMotion: MoveTo 67 113 self)
+				;(ship setMotion: MoveTo 40 25 self)
 			)
 			(4 (= local0 1))
 		)

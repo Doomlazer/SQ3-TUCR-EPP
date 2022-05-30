@@ -434,7 +434,7 @@ code_019f:
 				(= local133
 					(cond 
 						((== currentSector 23) {ORBITING AQUAVELVEETA}) ;new planet
-						((== currentSector 27) {ORBITING 2nd Planet}) ;new 2nd planet
+						((== currentSector 27) {ORBITING PLANET REN}) ;new 2nd planet
 						((== currentSector 39) {ORBITING PLANET PHLEEBHUT})
 						((== currentSector 62) {APPROACHING MONOLITH BURGER})
 						((== currentSector 82) {ORBITING PLANET ORTEGA})

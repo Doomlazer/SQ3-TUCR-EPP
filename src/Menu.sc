@@ -46,6 +46,12 @@
 					#mode teJustCenter
 					#title {Space Quest \0B}
 				)
+				(Print
+					(Format @str MENU 8 version)
+					#font 3
+					#mode teJustCenter
+					#title {Space Quest \0B}
+				)
 			)
 			(helpI
 				(Print MENU 1

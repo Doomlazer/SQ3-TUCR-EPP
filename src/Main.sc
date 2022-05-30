@@ -632,6 +632,8 @@
 	adSupported = 1 ;pay to remove ads
 	adTimer = 600 ;time between ads
 	towed ;is roger's ship towed?
+	ticketed ;did roger buy the booth ticket on planet REN?
+	egg ;counter for Ren teleportation easter egg
 )
 (procedure (NormalEgo theLoop theView)
 	;normalizes ego's animation
@@ -850,7 +852,7 @@
 				)
 				(if (<= adTimer 0)
 					(Print 	100 (Random 4 8) #title {Type "PAY MAGIC" to disable Ads})
-					(= adTimer (Random 400 1000))
+					(= adTimer (Random 4000 10000))
 				else
 					(-- adTimer)
 				)
@@ -963,8 +965,16 @@
 				)
 				;no 16-19
 				(16
-					(= deathTitle {It's a bird...})
+					(= deathTitle {It's a Bird...})
 					(= deathMessage {What are the chances of something like that even happening? Hope you remmebered to save.})
+				)
+				(17 ;falling on Planet REN
+					(= deathTitle {Hopefully, Nobody Heard You Scream!})
+					(= deathMessage {You'd think you'd eventually learn to be more careful around ledges. Then again, you never cease to amaze.})
+				)
+				(18 ;frozen in space from teleporter on REN
+					(= deathTitle {Brrr... It's Cold Up Here})
+					(= deathMessage {Looks like Roger finally learned to "chill" out! Seriously though, you asphyxiated long before you even started to freeze.})
 				)
 				(20
 					(= deathTitle {Be More Careful With Explosives})
@@ -1186,6 +1196,13 @@
 						else
 							(DontHave)
 						)
+					)
+					((Said 'look/hand')
+						(if ticketed
+							(Print {A small image of a kidney stone is burned into the back of your hand. Tiny alien letters below the image read: "Property of Honest Stone".})
+						else
+							(Print {You take a moment to look at the back of your hand. You know it well, like the... uh, back of your hand.})
+						)	
 					)
 					((Said 'look/anemometer')
 						(if (ego has: iMetalPole)

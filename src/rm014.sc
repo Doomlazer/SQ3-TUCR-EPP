@@ -173,7 +173,7 @@
 					((== shipLocation shipORTEGA_LAND) (wallA init: setLoop: 2 stopUpd:) (= thePlanet {Ortega}))
 					((== shipLocation shipPHLEEBHUT_LAND) (wallA init: setLoop: 3 stopUpd:) (= thePlanet {Phleebhut}))
 					((== shipLocation shipPESTULON_LAND) (wallA init: setLoop: 5 stopUpd:) (= thePlanet {Pestulon}))
-					((== shipLocation 12) (wallA init: setLoop: 6 stopUpd:) (= thePlanet {Necron V})) ;2nd new planet
+					((== shipLocation 12) (wallA init: setLoop: 6 stopUpd:) (= thePlanet {Ren})) ;2nd new planet
 				)
 				(RedrawCast)
 				(theMusic stop:)

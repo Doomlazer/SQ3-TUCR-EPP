@@ -77,15 +77,53 @@
 	)
 	
 	
-	(method (handleEvent pEvent)
-		(super handleEvent: pEvent)
-		; handle Said's, etc...
-		(if (Said 'look,read/sign')
-			(if towed
-				(Print {It's the intergalactic symbol for restricted parking. It certainly would have been nice to see that earlier!})
-			else 
-				(Print {What sign?})
-			)	
+	;(method (handleEvent pEvent)
+		;(super handleEvent: pEvent)
+	(method (handleEvent event)
+		(if (event claimed?) (return))
+		(switch (event type?)
+			(saidEvent
+				(cond 
+					((Said 'look>')
+						(cond
+							((Said '/sign')
+								(if towed
+									(Print {It's the intergalactic symbol for restricted parking. It certainly would have been nice to see that before your ship was impounded!})
+								else 
+									(Print {What sign?})
+								)
+							)
+							((Said '/ship')
+								(if towed
+									(Print {You could have sworn you left your spaceship around here somewhere. Perhaps that sign holds some clue as to its whereabouts?})
+								else 
+									(Print {It still looks as beautiful as the day you salvaged it from the trash heap.})
+								)
+							)
+							((Said '/moon')
+								(Print {You pause for a moment to take in the soft glow of Ren's only moon, Stimpy.})
+							)
+							((Said '/drop,cliff')
+								(Print {I'd keep a good distance from the edges, Roger. It doesn't seem like safety is a priority on this planet!})
+							)
+							((Said '[/anyword]')
+								(if towed
+									(Print {Well, Roger, based on that No Parking sign it's probably safe to assume that you're ship has been towed. Before you cry foul, remember, ignorance of local planety parking laws is no excuse!})
+								else 
+									(Print {You've landed the Mallard in a rather precarious location with steep drops on either side of the path. Thankfully, the reflected light from Ren's moon should provide enough visibility to navigate without killing yourself.})
+								)
+							)
+						)	
+					)
+					((Said 'read/sign')
+						(if towed
+							(Print {It's the intergalactic symbol for restricted parking. It certainly would have been nice to see that before your ship was impounded!})
+						else 
+							(Print {What sign?})
+						)	
+					)
+				)
+			)
 		)
 	)
 )
@@ -96,18 +134,6 @@
 	(method (doit)
 		(super doit:)
 		; code executed each game cycle
-	)
-	
-	(method (handleEvent pEvent)
-		(super handleEvent: pEvent)
-		; handle Said's, etc...
-		(if (Said 'look,read/sign')
-			(if towed
-				(Print {It certainly would have been nice to see that earlier!})
-			else 
-				(Print {What sign?})
-			)	
-		)
 	)
 	
 	(method (changeState newState)
@@ -154,7 +180,7 @@
 				(ohnoScript changeState: 0)
 			)
 			(1
-				(EgoDead 0 0 1 2)
+				(EgoDead 0 0 0 17)
 			)
 		)
 	)
