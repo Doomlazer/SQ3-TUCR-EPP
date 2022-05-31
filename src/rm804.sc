@@ -198,10 +198,24 @@
 						(if (& (ego onControl:) $2000)
 							(if (ego has: iGlowingGem)
 								(ego put: iGlowingGem)
-								(Print 804 23)
-								(theGame changeScore: 400)
-								(Print 804 21)
-								(= towed 0)	
+								(if towed
+									(Print 804 23)
+									(theGame changeScore: 400)
+									(Print 804 21)
+									(= towed 0)
+								else
+									(if ticketed
+										(Print 804 28)
+									else
+										(Print 804 29)
+										(Print 804 30)
+										(badBlip play:)
+										(Print 804 10 #title {Roger})
+										(Print 804 11)
+										(theGame changeScore: 2)
+										(++ ticketed)
+									)
+								)	
 							else
 								(Print 804 22)
 							)
