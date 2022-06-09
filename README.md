@@ -22,6 +22,8 @@ ScummVM users can copy either the contents or the entire PATCHES folder (which m
 
 ## Why am I getting so many pop-up ads during the game?
 
+# NOTICE: this featrue has been disabled for now. It's too annoying and doesn't make sense in the context of the game world.
+
 The SQ3-TUCR-EPP mod's revenue model is ad-supportd free-to-play. You can pay 20 buckazoids to remove all advertisements from the game by typing "PAY MAGIC". 
 
 <img src="pics/ad.png"  width="600" alt="A pic showing an in-game advertisement.">
