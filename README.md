@@ -4,11 +4,13 @@ WARNING: This mod is still in early development.
 
 ## What is this? 
 
-A mod for the DOS version of Space Quest III. It adds new planets to the Aluminum Mallard's scanner. Currently, there are two new planets appearing in sectors 23 and 27. Planet Ren (sector 27) is making steady progress, but the mod is still in early development. Causal players should wait until the final release for the best experience. 
+A mod for the DOS version of Space Quest III. It adds new planets to the Aluminum Mallard's scanner. Currently, there are two new planets and Quark's Bar. The mod is still in early development and in an unfinished state. Causal players should wait until the final release for the best experience. 
 
 <img src="pics/23.png"  width="600" alt="AquaVelveeta seen for the first time.">
 
-<img src="pics/27.png"  width="600" alt="A planet whose name will likely change.">
+<img src="pics/27.png"  width="600" alt="Planet REN.">
+
+<img src="pics/70.png"  width="600" alt="Quark's Bar.">
 
 ## INSTALLATION
 
@@ -57,7 +59,7 @@ FYI, the QA debug command is only available in the first room. More debugging in
 
 ## CREDITS
 
-<b>Sector 23 & 27:</b>
+<b>Sectors 23, 27 & 70:</b>
 
 DoomLazer - Concepts and Programming
 
@@ -66,6 +68,9 @@ Threepwang - Background Artist
 
 ## What's changed recently?
 
+### July 2022
+
+Quark's Bar can be visited but it's in very unfinished state.
 
 ### May 2022 
 
