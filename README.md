@@ -71,7 +71,9 @@ Threepwang - Background Artist
 ### July 2022
 
 Planet Ren (sector 27) is mostly done.
+
 Quark's Bar can be visited but it's in very unfinished state.
+
 fixed a bug where "scanning sector %d" never goes away if the play clicks scan too quickly.
 
 ### May 2022 
