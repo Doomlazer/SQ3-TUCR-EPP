@@ -188,6 +188,11 @@
 				(= enterpriseLeftMonolithBurger TRUE)
 				(= shipLocation shipMONOLITH)
 			)
+			(808 ;Quarks
+				(wallA init: setLoop: 4 setCel: 0)
+				(SitDown)
+				(= shipLocation shipMONOLITH)
+			)
 			(31
 				(if (== global209 6)
 					(Load SOUND 69)

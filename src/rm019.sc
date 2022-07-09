@@ -181,6 +181,7 @@
 							(!= scanningSector 27) ;2nd new planet
 							(!= scanningSector 39)
 							(!= scanningSector 62)
+							(!= scanningSector 70) ;quarks bar
 							(!= scanningSector 82)
 							(!= scanningSector 69)
 						)
@@ -190,8 +191,7 @@
 					(local0 (= local0 0) (self changeState: 2))
 					(else
 						(if
-							(!=
-								saveBits5
+							(!= saveBits5
 								(Format @str3 {SCANNING SECTOR %d} scanningSector)
 							)
 							(= saveBits5
@@ -247,6 +247,7 @@
 						(cond
 							((== scanningSector 23) 401) ;2nd new planet
 							((== scanningSector 27) 401) ;2nd new planet
+							((== scanningSector 70) 401) ;2nd new planet
 							(else 50) ;default planets view
 						)
 					setLoop:
@@ -257,6 +258,7 @@
 							((== scanningSector 69) 5)
 							((== scanningSector 23) 6) ;new planet
 							((== scanningSector 27) 1) ;2nd new planet
+							((== scanningSector 70) 3) ;qurks bar
 						)
 					cel: 0
 					cycleSpeed: 1
@@ -291,6 +293,9 @@
 							((== scanningSector 69)
 								{NAME:\n PESTULON\nSECTOR: 69\nHABITANTS: UNKNOWN\nSURFACE UNCHARTED.\nIT FIGURES...}
 							)
+							((== scanningSector 70) ;Quarks bar
+								{NAME:\n QUARK's BAR\nSECTOR: 70\nHABITANTS: \nVILE SCUMM\nOVERPRICED DRINKS.\nGAMBLING.} 
+							)
 							((== scanningSector 82)
 								{NAME:\n PLANET ORTEGA\nSECTOR: 82\nHABITANTS: UNKNOWN\nVOLCANIC CRATER-STREWN\nSURFACE}
 							)
@@ -311,6 +316,7 @@
 			)
 			(3
 				(scanBox setCycle: BegLoop self)
+				(if saveBits1 (localproc_08a5 saveBits1) (= saveBits1 0)) ;remove "scanning sector" if pressing 1 too quickly
 				(if saveBits3 (localproc_08a5 saveBits3) (= saveBits3 0))
 				(= saveDisabled 0)
 			)

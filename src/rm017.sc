@@ -437,6 +437,7 @@ code_019f:
 						((== currentSector 27) {ORBITING PLANET REN}) ;new 2nd planet
 						((== currentSector 39) {ORBITING PLANET PHLEEBHUT})
 						((== currentSector 62) {APPROACHING MONOLITH BURGER})
+						((== currentSector 70) {APPROACHING QUARK'S BAR}) ;Quarks 
 						((== currentSector 82) {ORBITING PLANET ORTEGA})
 						((== currentSector 69) {ORBITING PESTULON})
 					)
@@ -451,6 +452,7 @@ code_019f:
 					((== currentSector 23) (= shipLocation shipAQUAVELVEETA_ORBIT))
 					((== currentSector 27) (= shipLocation 11)) ;orbiting 2nd new planet. add to game.sh
 					((== currentSector 62) (= global208 0) (= saveDisabled 0) (curRoom newRoom: 27))
+					((== currentSector 70) (= global208 0) (= saveDisabled 0) (curRoom newRoom: 27))
 					((== currentSector 39) (= shipLocation shipPHLEEBHUT_ORBIT)) ;4
 					((== currentSector 82) (= shipLocation shipORTEGA_ORBIT)) ;3
 					((== currentSector 69) (= shipLocation shipPESTULON_ORBIT)) ;7

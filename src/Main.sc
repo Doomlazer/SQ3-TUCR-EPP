@@ -629,7 +629,7 @@
 	thePostcard
 	mallardRisenFromDebris
 	
-	adSupported = 1 ;pay to remove ads
+	adSupported = 0 ;enable ads with 1 (disabled because nobody likes this feature)
 	adTimer = 600 ;time between ads
 	towed ;is roger's ship towed?
 	ticketed ;did roger buy the booth ticket on planet REN?

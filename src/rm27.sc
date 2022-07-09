@@ -22,7 +22,11 @@
 		(Load VIEW 39)
 		(Load VIEW 52)
 		(Load SOUND 16)
-		(if (not enterpriseLeftMonolithBurger) (enterprise init: stopUpd:))
+		(if (== currentSector 62) ;monoburger
+			(if (not enterpriseLeftMonolithBurger) (enterprise init: stopUpd:))
+		else ;quarks
+		 	(= picture 26)
+		)
 		(ship init:)
 		(super init:)
 		(= global206 3)
@@ -34,7 +38,11 @@
 			moveSpeed: 0
 			setStep: 3 2
 		)
-		(theMusic number: 16 loop: -1 play:)
+		(if (== currentSector 62)
+			(theMusic number: 16 loop: -1 play:)
+		else
+			(theMusic number: 401 play:)
+		)
 		(self setScript: arrivalScript)
 	)
 	
@@ -78,14 +86,29 @@
 			)
 			(4
 				(ship setMotion: MoveTo 208 122 self)
-				(if (not enterpriseLeftMonolithBurger) (curRoom setScript: entScript))
+				(if (and
+						(not enterpriseLeftMonolithBurger)
+						(== currentSector 62)	
+					) 
+					(curRoom setScript: entScript)
+				)
 			)
 			(5
 				(ship setMotion: MoveTo 198 122 self)
 			)
 			(6
 				(ship dispose:)
-				(if enterpriseLeftMonolithBurger (= global206 1) (curRoom newRoom: 28))
+				(if (and
+						(== currentSector 62)
+						enterpriseLeftMonolithBurger
+					) 
+					(= global206 1)
+					(curRoom newRoom: 28)
+				)
+				(if  (== currentSector 70)
+					(= global206 1) ;;needed?
+					(curRoom newRoom: 808)
+				)
 			)
 		)
 	)
