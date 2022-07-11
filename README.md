@@ -76,6 +76,8 @@ Quark's Bar can be visited but it's in very unfinished state.
 
 fixed a bug where "scanning sector %d" never goes away if the play clicks scan too quickly.
 
+Personal Time Disruptor added: https://www.youtube.com/watch?v=czkSgwzEfqA
+
 ### May 2022 
 
 Sector27 is now Planet Ren and more than half implemented.
