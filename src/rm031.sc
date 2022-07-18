@@ -166,7 +166,11 @@
 			(3
 				(= local1
 					(Display
-						{OCLIW REGOR\n:218UO ESAC}
+						(if (> qtab 0)
+							{OCLIW REGOR\n:748E3 ESAC}
+						else
+							{OCLIW REGOR\n:218UO ESAC}
+						)
 						p_font 601
 						p_width 115
 						p_color vLGREEN
@@ -185,7 +189,11 @@
 			(5
 				(= local0
 					(Display
-						{ROF DETNAW OCLIW\nDUARF ENIHCAM GNIDNEV\n\n:FFITNIALP\n.OC YTLEVON DIOZAPPIG_}
+						(if (> qtab 0)
+							{ROF DETNAW OCLIW\nBAT RAB DIAPNU\n\n:FFITNIALP\nSEZIRPRETNE KRAUQ}
+						else
+							{ROF DETNAW OCLIW\nDUARF ENIHCAM GNIDNEV\n\n:FFITNIALP\n.OC YTLEVON DIOZAPPIG_}
+						)
 						p_font 601
 						p_width 115
 						p_color 10

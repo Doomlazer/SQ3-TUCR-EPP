@@ -319,7 +319,10 @@
 				)
 				(ohnoScript changeState: 0)
 			)
-			(1 (EgoDead 0 0 0 1))
+			(1 
+				(ohnoScript changeState: 1)
+				(EgoDead 0 0 0 1)
+			)
 		)
 	)
 )
@@ -351,7 +354,10 @@
 				(ego setMotion: MoveTo (ego x?) 229)
 				(ohnoScript changeState: 0)
 			)
-			(1 (EgoDead 0 0 0 1))
+			(1
+				(ohnoScript changeState: 1)
+				(EgoDead 0 0 0 1)
+			)
 		)
 	)
 )

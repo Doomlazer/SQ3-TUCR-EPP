@@ -551,7 +551,7 @@
 								)
 							)
 							((Said '/partition') (Print 14 43))
-							((Said '/man,prize,scott') (if twoGuysOnBoard (Print 14 44) else (Print 14 45)))
+							((Said '/man,mark,scott') (if twoGuysOnBoard (Print 14 44) else (Print 14 45)))
 							((Said '/cushion')
 								(if (== sittingInCockpit FALSE)
 									(Print 14 21)
@@ -607,7 +607,7 @@
 							((Said '/ramp') (Print 14 66))
 							((Said '/door') (Print 14 67))
 							((Said '/button') (Print 14 68))
-							((or (Said '/hal[<cable]') (Said 'cable'))
+							((or (Said '/end[<cable]') (Said 'cable'))
 								(if (cast contains: floorPanel)
 									(Print 14 69)
 								else

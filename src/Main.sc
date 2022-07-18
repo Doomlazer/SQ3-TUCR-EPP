@@ -634,6 +634,19 @@
 	towed ;is roger's ship towed?
 	ticketed ;did roger buy the booth ticket on planet REN?
 	egg ;counter for Ren teleportation easter egg
+	
+	tdx ;time disruptor x
+	tdy
+	tdv ;time disruptor view
+	tdxs ;xstep
+	tdys 
+	tdl ; loop
+	tdcs ;cycleSpeed
+	tdill ;illegalBits
+	tdicon ;ignore control
+	tdobc ;observe control
+	
+	qtab = 0 ;quarks bar tab
 )
 (procedure (NormalEgo theLoop theView)
 	;normalizes ego's animation
@@ -745,17 +758,25 @@
 )
 
 (procedure (EgoDead theView theLoop theCel theDeath)
-	;ego dies
-	(HandsOff)
-	(= dead TRUE)
-	(if (not theView)
-		(= deathView 901)
+	(if (regions contains: (ScriptID 809)) 
+		(if (== curRoomNum 75) 
+			(curRoom setScript:(ScriptID 809 1))
+		else
+			(ego setScript:(ScriptID 809 1))
+		)
 	else
-		(= deathView theView)
+		;ego dies
+		(HandsOff)
+		(= dead TRUE)
+		(if (not theView)
+			(= deathView 901)
+		else
+			(= deathView theView)
+		)
+		(= deathLoop theLoop)
+		(= deathCel theCel)
+		(= certainDeath theDeath)
 	)
-	(= deathLoop theLoop)
-	(= deathCel theCel)
-	(= certainDeath theDeath)
 )
 
 (instance statusCode of Code
@@ -828,6 +849,7 @@
 				a_copy_of_Elmo_s_picture
 				Invisibility_Belt
 				Bag_of_Fast_Food
+				Time_Disruptor
 		)
 		(if (GameIsRestarting)
 			(TheMenuBar draw:)
@@ -1075,29 +1097,45 @@
 		)
 		(switch (event type?)
 			(saidEvent
-				(cond 
-					((Said 'pay/magic')
-						(if adSupported
-							(if (>= buckazoids 20)
-								(Print 100 0)
-								(theGame changeScore: 5)
-								(= buckazoids (- buckazoids 20))
-								(= adSupported 0)
+				(cond
+					((Said 'activate,use,press/disruptor[<time]')
+						(if (ego has: 18)
+							(if (== curRoomNum 10)
+								(Print 0 43)
 							else
-								(Print 100 1)
-							)
+								(if (regions contains: (ScriptID 809)) 
+									(Print 0 41)
+								else
+									(Print 0 40 #icon 242 1 1)
+									(curRoom setRegions: 809)
+								)	
+							)	
 						else
-							(Print 100 2)
+							(DontHave)
 						)
-					)
-					((Said 'pay/nothing')
-						(if adSupported
-							(= adSupported 0)
-							(Print 100 3)
-						else
-							(Print 100 2)
-						)
-					)
+					) 
+;;;					((Said 'pay/magic')
+;;;						(if adSupported
+;;;							(if (>= buckazoids 20)
+;;;								(Print 100 0)
+;;;								(theGame changeScore: 5)
+;;;								(= buckazoids (- buckazoids 20))
+;;;								(= adSupported 0)
+;;;							else
+;;;								(Print 100 1)
+;;;							)
+;;;						else
+;;;							(Print 100 2)
+;;;						)
+;;;					)
+;;;					((Said 'pay/nothing')
+;;;						(if adSupported
+;;;							(= adSupported 0)
+;;;							(Print 100 3)
+;;;						else
+;;;							(Print 100 2)
+;;;						)
+;;;					)
 					((Said 'tp')
 						(if (not debugging)
 							(event claimed: FALSE)
@@ -1199,9 +1237,9 @@
 					)
 					((Said 'look/hand')
 						(if ticketed
-							(Print {A small image of a kidney stone is burned into the back of your hand. Tiny alien letters below the image read: "Property of Honest Stone".})
+							(Print 0 45)
 						else
-							(Print {You take a moment to look at the back of your hand. You know it well, like the... uh, back of your hand.})
+							(Print 0 46)
 						)	
 					)
 					((Said 'look/anemometer')
@@ -1626,6 +1664,17 @@
 		view 242
 		cel 4
 		name "Bag of Fast Food"
+	)
+)
+
+(instance Time_Disruptor of InvItem
+	(properties
+		said '/disruptor[<time]'
+		description {An illegal personal time disruptor. Useful for being in two places at once. Looks like this one has seen some use.}
+		view 242
+		loop 1
+		cel 1
+		name "Time Disruptor"
 	)
 )
 

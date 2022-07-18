@@ -32,11 +32,14 @@
 	local5
 	local6
 	local7
+	greetCust
+	choice
+	toldAboutDisruptor
 )
 (instance rm808 of Room
 	(properties
 		picture 809
-		west 29
+		west 810
 	)
 	
 	(method (init &tmp [temp0 50])
@@ -78,57 +81,29 @@
 		(= global247 1)
 		;(dabo play:)
 		(theMusic number: 401) ;16)
-		(if (and (!= prevRoomNum 29) (!= prevRoomNum 27))
-			(theMusic play:)
+		(if (and (!= prevRoomNum 27) (!= prevRoomNum 810))
+			(theMusic play: loop: 1)
 		)
 		(switch prevRoomNum
-			(17
-				(collar setCel: 7)
-				(ship x: 335 y: 174)
-				(chairMan setCel: 0)
-				(HandsOff)
-				(= global206 1)
-				(= local0 4)
-				(self setScript: dockScript)
-			)
-			(19
-				(ship x: 335 y: 174)
-				(collar setCel: 7)
-				(chairMan setCel: 0)
-				(HandsOff)
-				(= global206 1)
-				(= local0 4)
-				(self setScript: dockScript)
-			)
-			(27
-				(collar setCel: 7)
-				(ship x: 335 y: 174)
-				(chairMan setCel: 0)
-				(HandsOff)
-				(= global206 1)
-				(= local0 4)
-				(self setScript: dockScript)
-			)
-			(29
-				(HandsOn)
-				(collar setCel: 0)
-				(ship x: 286 y: 115)
-				(chairMan setCel: 7 init:)
-				(ship stopUpd:)
-				(= global206 0)
-				(= local0 1)
-				(ego init:)
-				(if (< (ego y?) 110) (ego posn: 120 100))
-			)
-			(280
+			(810
 				(collar setCel: 0)
 				(ship x: 286 y: 115 stopUpd:)
 				(chairMan setCel: 7 init:)
+				(collar stopUpd:)
 				(HandsOn)
-				(ego init: posn: gGEgoX_3 gGEgoY_2)
+				(ego init: posn: 5 (ego y?) loop:0)
 				(ship stopUpd:)
 				(= global206 0)
 				(= local0 1)
+			)
+			(26
+				(collar setCel: 7)
+				(ship x: 335 y: 174)
+				(chairMan setCel: 0)
+				(HandsOff)
+				(= global206 1)
+				(= local0 4)
+				(self setScript: dockScript)
 			)
 			(else ; dock testing from TP debug
 				(collar setCel: 7)
@@ -146,6 +121,7 @@
 	
 	(method (doit)
 		(super doit:)
+		(ripley cel: (Random 0 2))
 		(if
 			(or
 				(== (ego onControl: 0) 4)
@@ -172,100 +148,71 @@
 				(cond 
 					((Said 'look>')
 						(cond 
-							((or (Said '/pane') (Said '<out')) (Print 28 0))
-							((or (Said '/deck,ceiling') (Said '<up,down')) (Print 28 1))
+							((or (Said '/pane') (Said '<out')) (Print 808 10))
+							((or (Said '/deck,ceiling') (Said '<up,down')) (Print 808 9))
 							((Said '/partition') (Print 28 2))
-							((Said '/clerk') (Print 28 3))
 							((Said '/alien,being,man,bystander,folk,animal') (Print 28 4))
 							((Said '/craft') (Print 28 5))
 							((Said '/door') (Print 28 6))
-							((Said '/dinner,bag,drink')
-								(cond 
-									((ego has: iBagOfFastFood) (event claimed: FALSE))
-									((== local5 0) (Print 28 7))
-									(else (Print 28 8))
-								)
+							((Said '/quark,bartender,clerk')
+								(Print 808 0)
 							)
-							((Said '/table,chair,booth') (Print 28 9))
-							((Said '/counter') (Print 28 10))
-							((Said '/menu')
-								(if (== standingUp FALSE)
-									(Print 28 11)
-								else
-									(= gGEgoX_3 (ego x?))
-									(= gGEgoY_2 (ego y?))
-									(curRoom newRoom: 280)
-								)
-							)
-							((Said '[<around,at,in][/area,cafe]') (Print 28 12))
+							((Said '/chair,booth,stool') (Print 808 6))
+							((Said '/dabo[<table]') (Print 808 7))
+							((Said '/counter,bar') (Print 808 8))
+							((Said '/menu') (Print 808 1))
+							((Said '[<around,at,in][/area,cafe]') (Print 808 2))
 						)
 					)
 					((Said 'down,sit[<down]')
 						(cond 
-							((== standingUp FALSE) (Print 28 13))
-							((ego inRect: 136 115 178 140) (curRoom setScript: SitDown))
-							((ego inRect: 0 145 37 171) (Print 28 14))
-							(else (Print 28 15))
+							((== standingUp FALSE) (Print 808 3))
+							((ego inRect: 57 122 91 130) (curRoom setScript: SitDown))
+							(else (Print 808 4))
 						)
 					)
 					((Said 'up,(get<up),stand[/up]')
 						(if (== standingUp TRUE)
-							(Print 28 16)
+							(Print 808 5)
 						else
 							(curRoom setScript: StandUp)
 						)
 					)
-					((Said 'eat[<dinner]')
-						(cond 
-							((!= standingUp FALSE) (Print 28 17))
-							((ego has: 17) (curRoom setScript: EgoEating))
-							(else (Print 28 18))
+					((Said 'open,close/door') (Print 808 11 #title {Quark} #at (/ (quark x?)2) (- (quark y?) 60)))
+					((Said 'call,converse/clerk,bartender,quark')
+						(if standingUp
+							(Print 808 12)	
+						else
+							(if (and 
+									(== (quark loop?) 0)
+									(>= (quark x?) 50)
+								)
+								(quark setScript: quarkTalkScript)
+							else
+								(Print 808 13)
+								(= greetCust 0)
+								(quarkScript changeState: 0)
+							)
 						)
-					)
-					((Said 'get[<up]/bag')
-						(cond 
-							((ego has: iBagOfFastFood) (Print 28 19))
-							((== local5 0) (Print 28 20))
-							(else (Print 28 21))
-						)
-					)
-					(
-						(or
-							(Said 'throw,get[<up,away]/garbage')
-							(Said 'clean/table')
-						)
-						(cond 
-							((ego has: iBagOfFastFood) (Print 28 22))
-							((or (== local5 0) (ego inRect: 0 145 37 171)) (Print 28 20))
-							(else (Print 28 23))
-						)
-					)
-					((Said 'open,close/door') (Print 28 24))
-					(
-						(or
-							(Said 'order,buy,get,ask[/dinner,dinner,burger]')
-							(Said 'converse/clerk')
-						)
-						(Print 28 25)
 					)
 					(
 						(Said
 							'ask,converse/alien,being,man,bystander,folk,animal,customer'
 						)
-						(Print 28 26)
+						(Print 808 14)
 					)
 					((Said 'converse') (Print 28 27))
 					(
 						(Said
 							'kiss/alien,being,man,bystander,folk,animal,customer'
 						)
-						(Print 28 28)
+						(Print 808 15)
 					)
 					(
 						(Said
 							'smell[/man,being,alien,him,bystander,animal,customer]'
 						)
-						(Print 28 29)
+						(Print 808 16)
 					)
 					(
 						(Said
@@ -273,15 +220,7 @@
 						)
 						(Print 28 30)
 					)
-					((Said 'read/menu')
-						(if (== standingUp FALSE)
-							(Print 28 11)
-						else
-							(= gGEgoX_3 (ego x?))
-							(= gGEgoY_2 (ego y?))
-							(curRoom newRoom: 280)
-						)
-					)
+					((Said 'ask,converse/gagh,food') (Print 808 17))
 					(
 						(or
 							(Said 'open,enter,board,climb,(get<in)[/door,door,craft]')
@@ -289,7 +228,6 @@
 						)
 						(cond 
 							((not (ego inRect: 179 72 251 95)) (Print 28 31))
-							((ego has: iBagOfFastFood) (Print 28 32))
 							(orderedBigBelcherCombo (self setScript: VomitScript))
 							(else (self setScript: OutScript))
 						)
@@ -300,19 +238,19 @@
 				(if (== standingUp 0)
 					(switch (event message?)
 						(dirN
-							(curRoom setScript: StandUp)
 							(event claimed: TRUE)
 						)
 						(dirE
+							(curRoom setScript: StandUp)
 							(event claimed: TRUE)
 							(return)
 						)
 						(dirS
+							(curRoom setScript: StandUp)
 							(event claimed: TRUE)
 							(return)
 						)
 						(dirNW
-							(curRoom setScript: StandUp)
 							(event claimed: TRUE)
 						)
 						(dirNE
@@ -320,10 +258,12 @@
 							(return)
 						)
 						(dirSE
+							(curRoom setScript: StandUp)
 							(event claimed: TRUE)
 							(return)
 						)
 						(dirSW
+							(curRoom setScript: StandUp)
 							(event claimed: TRUE)
 							(return)
 						)
@@ -361,18 +301,14 @@
 			(0
 				(HandsOff)
 				(ego
-					view: 213
+					view: 300
 					illegalBits: 0
-					posn: 168 127
-					setLoop: 7
+					posn: 76 115
+					setLoop: 0
 					setPri: 14
 					setCel: 0
 				)
-				(if (ego has: iBagOfFastFood)
-					(ego setCycle: EndLoop self)
-				else
-					(ego setCycle: CycleTo 4 1 self)
-				)
+				(= cycles 10)
 			)
 			(1
 				(HandsOn)
@@ -389,106 +325,17 @@
 	(method (changeState newState)
 		(switch (= state newState)
 			(0
-				(HandsOff)
-				(if (== local5 0) (bag2 init: stopUpd:) (ego put: iBagOfFastFood))
-				(ego setLoop: 7 setCel: 4 setCycle: BegLoop self)
-			)
-			(1
+				(ego view: 0 setLoop: 2 setCel: 0)
 				(RedrawCast)
 				(NormalEgo 2 0)
-				(ego posn: 166 125)
+				(ego posn: 90 128)
 				(= standingUp TRUE)
-				(HandsOn)
 				(curRoom setScript: 0)
 			)
 		)
 	)
 )
 
-(instance EgoEating of Script
-	(properties)
-	
-	(method (changeState newState)
-		(switch (= state newState)
-			(0
-				(HandsOff)
-				(= inCartoon 1)
-				(= local6 7)
-				(ego setLoop: 0 setCel: 0 setCycle: EndLoop self)
-			)
-			(1
-				(cond 
-					((!= (-- local6) 0)
-						(switch (Random 1 2)
-							(1 (self changeState: 10))
-							(2 (self changeState: 20))
-						)
-					)
-					(mealHasDecoderRing (self changeState: 30))
-					(else (self changeState: 40))
-				)
-			)
-			(10
-				(ego setLoop: 1 setCel: 0 setCycle: EndLoop self)
-			)
-			(11 (ego setCycle: BegLoop self))
-			(12
-				(ego setLoop: 2 setCycle: Forward)
-				(= seconds 2)
-			)
-			(13
-				(ego setLoop: 3 setCycle: EndLoop self)
-			)
-			(14
-				(ego setLoop: 2 setCel: 0)
-				(= cycles 10)
-			)
-			(15 (self changeState: 1))
-			(20
-				(ego setLoop: 4 setCel: 0 setCycle: EndLoop self)
-			)
-			(21
-				(ego setLoop: 5 setCycle: Forward)
-				(= seconds 3)
-			)
-			(22
-				(ego setLoop: 4 setCel: 2 setCycle: BegLoop self)
-			)
-			(23
-				(ego setLoop: 2 setCel: 0)
-				(= cycles 10)
-			)
-			(24 (self changeState: 1))
-			(30
-				(ego setLoop: 1 setCel: 0 setCycle: EndLoop self)
-			)
-			(31 (ego setCycle: BegLoop self))
-			(32
-				(ego setLoop: 2 setCycle: Forward)
-				(= seconds 4)
-			)
-			(33
-				(Print 28 33)
-				(ego get: 7)
-				(theGame changeScore: 10)
-				(= seconds 3)
-			)
-			(34 (self changeState: 40))
-			(40
-				(Print 28 34)
-				(ego setCycle: 0)
-				(User canInput: 1)
-				(= inCartoon 0)
-				(= mealHasDecoderRing FALSE)
-				(= monolithBurgerBill 0)
-				(ego put: iBagOfFastFood)
-				(= local5 0)
-				(= standingUp FALSE)
-				(curRoom setScript: 0)
-			)
-		)
-	)
-)
 
 (instance dockScript of Script
 	(properties)
@@ -562,7 +409,12 @@
 				(= local0 4)
 				(chairMan dispose:)
 				(RedrawCast)
-				(Print 28 37 #at -1 130 #width 280)
+				(Print 808 31 #at -1 130 #width 280)
+				(if (> qtab 0)
+					(Print 808 27)
+					(= sawTerminator 0)
+					(= terminatorState 0)
+				)
 				(ship setMotion: MoveTo 286 125 self)
 			)
 			(3
@@ -612,7 +464,10 @@
 				(= seconds 2)
 			)
 			(8
-				(Print 28 38)
+				(Print 808 28)
+				(if (> qtab 0)
+					(Print 808 29 #title {Quark} #at (/ (quark x?)2) (- (quark y?) 60))
+				)
 				(= orderedBigBelcherCombo FALSE)
 				(HandsOn)
 				(client setScript: 0)
@@ -775,20 +630,140 @@
 	)
 )
 
-(instance quark of Prop
+(instance quark of Actor
 	(properties)
 	
 	(method (init)
 		(super init:)
 		(self
-			x: 22
-			y: 105
+			x: 2
+			y: 106
 			view: 297
 			setLoop: 0
 			setCel: 0
 			setPri: 7
+			illegalBits: 0
+			ignoreActors: 1
 		)
+		(self setScript: quarkScript)
 	)
+	
+	(method (doit)
+		(super doit:)
+		(if (== (quark loop?) 0)
+			(if (== (Random 0 40) 5)
+				(quark cel: (Random 0 2))
+			)	
+		)	
+	)
+)
+
+(instance quarkScript of Script
+	(method (changeState newState)
+		(switch (= state newState)
+			(0
+				(quark
+					loop: 1
+					setMotion: MoveTo 80 100 self	
+				)
+			)
+			(1
+				(quark loop: 0 cel: 0)
+				(if standingUp
+					(= seconds (Random 2 15))
+				else
+					(if greetCust
+						(= seconds (Random 2 15))
+					else
+						(++ greetCust)
+						(quark setScript: quarkTalkScript)
+					)
+				)
+			)
+			(2
+				(quark
+					loop: 2
+					setMotion: MoveTo 22 105 self	
+				)	
+			)
+			(3
+				(quark loop: 0 cel: 0)
+				(= seconds (Random 2 15))	
+			)
+			(4
+				(= state -1)
+				(= cycles 1)	
+			)
+		)
+	)	
+)
+
+(instance quarkTalkScript of Script
+	(method (changeState newState &tmp [str 50])
+		(switch (= state newState)
+			(0
+				
+				(= choice (Print {"What can I get for you, Hu-mon?"} #title {Quark} #mode teJustLeft #button {Food} 1 #button {Drink} 2 #button {Pay Tab} 3 #button {Other} 4))
+				(if (== choice 1)
+						(++ orderedBigBelcherCombo)
+						(= qtab (+ qtab 10))
+						(Print 808 18)
+						(Print 808 19 #title {Quark} #at (/ (quark x?)2) (- (quark y?) 60)) 
+				)
+				(if (== choice 2)
+						(= qtab (+ qtab 3))
+						(Print 808 24 #title {Quark} #at (/ (quark x?)2) (- (quark y?) 60)) 
+						(Print 808 23)
+				)
+				(if (== choice 3)
+					(if (== qtab 0)
+						(Print 808 30 #title {Quark} #at (/ (quark x?)2) (- (quark y?) 60)) 
+					)
+					(if (and (>= buckazoids qtab) (> qtab 0))
+						(= buckazoids (- buckazoids qtab))
+						(= qtab 0)
+						(Print 808 20 #title {Quark} #at (/ (quark x?)2) (- (quark y?) 60)) 
+						(Print (Format @str "%d buckazoids" buckazoids) #title {Quark} #at (/ (quark x?)2) (- (quark y?) 60)) 
+						(Print 808 25 #title {Quark} #at (/ (quark x?)2) (- (quark y?) 60))
+					)
+					(if (< buckazoids qtab) 
+						(Print 808 21 #title {Quark} #at (/ (quark x?)2) (- (quark y?) 60)) 
+						(Print (Format @str "%d buckazoids" qtab) #title {Quark} #at (/ (quark x?)2) (- (quark y?) 60))
+						(Print 808 26 #title {Quark} #at (/ (quark x?)2) (- (quark y?) 60))
+					)
+				)
+				(if (== choice 4)
+					(= choice 0)
+					(if (ego has: 18)
+						(Print 808 41 #title {Quark} #at (/ (quark x?)2) (- (quark y?) 60))
+					else
+						(if toldAboutDisruptor
+							(Print 808 40 #title {Quark} #at (/ (quark x?)2) (- (quark y?) 60))
+						else
+							(Print 808 32 #title {Quark} #at (/ (quark x?)2) (- (quark y?) 60))
+							(Print 808 33 #title {Quark} #at (/ (quark x?)2) (- (quark y?) 60))
+							(Print 808 34 #title {Quark} #at (/ (quark x?)2) (- (quark y?) 60))
+							(Print 808 35 #title {Quark} #at (/ (quark x?)2) (- (quark y?) 60))
+							(++ toldAboutDisruptor)
+						)
+						(= choice (Print 808 36 #title {Quark} #mode teJustLeft #button {Yes, I want it.} 1 #button {No, thank you.} 2))
+						(if (== choice 1)
+							(Print 808 37 #title {Quark} #at (/ (quark x?)2) (- (quark y?) 60))
+							(Print 808 38)
+							(= qtab (+ qtab 800))
+							(ego get: 18)
+						)
+						(if (== choice 2)
+							(Print 808 39 #title {Quark} #at (/ (quark x?)2) (- (quark y?) 60))	
+						)
+					)
+					(quark setScript: quarkScript)
+					(quarkScript changeState: 2)
+				)
+				
+			)
+		)
+	)	
 )
 
 (instance ripley of Prop
@@ -960,7 +935,7 @@
 	(method (init)
 		(super init:)
 		(self
-			view: 43
+			view: 298
 			setLoop: 0
 			setCel: 0
 			posn: 164 95

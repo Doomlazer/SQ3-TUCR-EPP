@@ -41,7 +41,7 @@
 		(if (== currentSector 62)
 			(theMusic number: 16 loop: -1 play:)
 		else
-			(theMusic number: 401 play:)
+			(theMusic number: 401 loop: -1 play:)
 		)
 		(self setScript: arrivalScript)
 	)
@@ -108,7 +108,9 @@
 				(if  (== currentSector 70)
 					(= global206 1) ;;needed?
 					(curRoom newRoom: 808)
-				)
+				else
+					(curRoom newRoom: 808)
+				)	
 			)
 		)
 	)
