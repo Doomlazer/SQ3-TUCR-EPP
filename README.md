@@ -4,7 +4,7 @@ WARNING: This mod is still in early development.
 
 ## What is this? 
 
-A mod for the DOS version of Space Quest III. It adds new planets to the Aluminum Mallard's scanner. Currently, there are two new planets and Quark's Bar. The mod is still in early development and in an unfinished state. Causal players should wait until the final release for the best experience. 
+A mod for the DOS version of Space Quest III. It adds new planets to the Aluminum Mallard's scanner. Currently, there are two new planets and one new space station. It adds a new inventory item the P.T.D. which can distort time and even cheat death. The mod is still in early development and in an unfinished state. Causal players should wait until the final release for the best experience. 
 
 <img src="pics/23.png"  width="600" alt="AquaVelveeta seen for the first time.">
 
@@ -50,6 +50,14 @@ Threepwang - Background Artist
 
 
 ## What's changed recently?
+
+### October 2022
+
+Dabo working, but rought around the edges. 
+
+Quark's is about 75% complete.
+
+Personal Time Disruptor bug fixes, but still mostly untested.
 
 ### July 2022
 
