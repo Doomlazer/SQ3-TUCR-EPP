@@ -4,7 +4,7 @@ WARNING: This mod is still in early development.
 
 ## What is this? 
 
-A mod for the DOS version of Space Quest III. It adds new planets to the Aluminum Mallard's scanner. Currently, there are two new planets and Quark's Bar. The mod is still in early development and in an unfinished state. Causal players should wait until the final release for the best experience. 
+A mod for the DOS version of Space Quest III. It adds new planets to the Aluminum Mallard's scanner. Currently, there are two new planets and one new space station. It adds a new inventory item the P.T.D. which can distort time and even <a href="https://www.youtube.com/watch?v=czkSgwzEfqA">cheat death</a>. The mod is still in early development and in an unfinished state. Causal players should wait until the final release for the best experience. 
 
 <img src="pics/23.png"  width="600" alt="AquaVelveeta seen for the first time.">
 
@@ -20,7 +20,7 @@ To download the patch, click the green "CODE" button near the top of this page a
 
 DOSBox users must copy <b>only the contents</b> of PATCHES into the SQ3 game folder. All the mod files need to be loose inside the folder next to SQ3.bat - this makes uninstalling the mod difficult, so it's recommend you back up your SQ3 game folder before installing.
 
-ScummVM users can copy either the contents or the entire PATCHES folder (which makes removing the mod easier) into the SQ3 game folder.
+ScummVM users can move the entire PATCHES folder into the SQ3 game folder a SVM will load the files. It's not possible to define multiple patch locations in RESOURCE.CFG until SCI1 afaik.
 
 
 ## I have an idea for a planet.
@@ -50,6 +50,14 @@ Threepwang - Background Artist
 
 
 ## What's changed recently?
+
+### October 2022
+
+Dabo working, but rought around the edges. 
+
+Quark's is about 75% complete.
+
+Personal Time Disruptor bug fixes, but still mostly untested.
 
 ### July 2022
 
