@@ -326,7 +326,7 @@
 								{NAME:\n AQUAVELVEETA\nSECTOR: 23\n\nNEWLY FORMED\nFULL SERVICE PLANET}
 							)
 							((== scanningSector 27)
-								{NAME:\n REN\nSECTOR: 27\n\nTOURIST DESTINATION:\n LARGEST KNOWN KIDNEY STONE\n}
+								{NAME:\n REN\nSECTOR: 27\n\nTOURIST DESTINATION:\n Operated by:\n Honest Stone LLC.\n Limited amenities\n}
 							)
 							((== scanningSector 39)
 								{NAME:\n PLANET PHLEEBHUT\nSECTOR: 39\n\nLIGHT ATMOSPHERE\n1 KNOWN SETTLEMENT}

@@ -87,13 +87,15 @@
 							(== shipLocation shipORTEGA_ORBIT)
 							(== shipLocation shipPESTULON_ORBIT)
 							(== shipLocation shipPHLEEBHUT_ORBIT)
-							(== shipLocation 11) ;new 2nd planet
+							(== shipLocation shipREN_ORBIT) ;new 2nd planet
+							(== shipLocation shipQUARKS)
 						)
 						(wallA init: setLoop: 4 setCel: 0)
 					)
 					((== shipLocation shipORTEGA_LAND) (wallA init: setLoop: 2 stopUpd:))
 					((== shipLocation shipPHLEEBHUT_LAND) (wallA init: setLoop: 3 stopUpd:))
 					((== shipLocation shipPESTULON_LAND) (wallA init: setLoop: 5 stopUpd:))
+					((== shipLocation shipREN_LAND) (wallA init: setLoop: 6 stopUpd:) (= thePlanet {Ren}))
 				)
 				(if (== global209 6)
 					(Load SOUND 69)
@@ -121,13 +123,15 @@
 							(== shipLocation shipORTEGA_ORBIT)
 							(== shipLocation shipPESTULON_ORBIT)
 							(== shipLocation shipPHLEEBHUT_ORBIT)
-							(== shipLocation 11) ;new 2nd planet
+							(== shipLocation shipREN_ORBIT) ;new 2nd planet
+							(== shipLocation shipQUARKS)
 						)
 						(wallA init: setLoop: 4 setCel: 0)
 					)
 					((== shipLocation shipORTEGA_LAND) (wallA init: setLoop: 2 stopUpd:))
 					((== shipLocation shipPHLEEBHUT_LAND) (wallA init: setLoop: 3 stopUpd:))
 					((== shipLocation shipPESTULON_LAND) (wallA init: setLoop: 5 stopUpd:))
+					((== shipLocation shipREN_LAND) (wallA init: setLoop: 6 stopUpd:) (= thePlanet {Ren}))
 				)
 				(if
 					(and
@@ -173,7 +177,7 @@
 					((== shipLocation shipORTEGA_LAND) (wallA init: setLoop: 2 stopUpd:) (= thePlanet {Ortega}))
 					((== shipLocation shipPHLEEBHUT_LAND) (wallA init: setLoop: 3 stopUpd:) (= thePlanet {Phleebhut}))
 					((== shipLocation shipPESTULON_LAND) (wallA init: setLoop: 5 stopUpd:) (= thePlanet {Pestulon}))
-					((== shipLocation 12) (wallA init: setLoop: 6 stopUpd:) (= thePlanet {Ren})) ;2nd new planet
+					((== shipLocation shipREN_LAND) (wallA init: setLoop: 6 stopUpd:) (= thePlanet {Ren})) ;2nd new planet
 				)
 				(RedrawCast)
 				(theMusic stop:)
@@ -186,11 +190,6 @@
 				(wallA init: setLoop: 4 setCel: 0)
 				(SitDown)
 				(= enterpriseLeftMonolithBurger TRUE)
-				(= shipLocation shipMONOLITH)
-			)
-			(808 ;Quarks
-				(wallA init: setLoop: 4 setCel: 0)
-				(SitDown)
 				(= shipLocation shipMONOLITH)
 			)
 			(31
@@ -260,6 +259,11 @@
 				(= shipLocation 12) ; new 2nd planet
 				(= global206 0)
 				(self setScript: rampScript)
+			)
+			(808 ;Quarks
+				(wallA init: setLoop: 4 setCel: 0)
+				(SitDown)
+				(= shipLocation shipQUARKS)
 			)
 		)
 		(if (and twoGuysOnBoard (!= prevRoomNum 94))

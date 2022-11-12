@@ -15,13 +15,12 @@
 	rm808 0
 )
 
-(instance dabo of Sound
-	(properties
-		number 401
-		priority 1
-	)
-)
-
+;;;(instance dabo of Sound
+;;;	(properties
+;;;		number 401
+;;;		priority 1
+;;;	)
+;;;)
 
 (local
 	local0
@@ -52,28 +51,16 @@
 		(Load VIEW 213)
 		(Load SOUND 16)
 		(super init:)
-		;(addToPics add: al2 al3 al5 al4 slop sa3)
-		;(addToPics doit:)
 		(ship init:)
 		(collar init: stopUpd:)
 		(door init: stopUpd:)
 		(quark init:)
-		(ripley init:)
-;;;		(if (> howFast 0)
-;;;			(al1 init: setScript: AlienScript)
-;;;			(arm init: stopUpd:)
-;;;			(tail init: stopUpd:)
-;;;			(sa2 init: stopUpd:)
-;;;			(sa3Mouth init: stopUpd:)
-;;;			(sa1 init: stopUpd: setScript: sa1Script)
-;;;		else
-;;;			(al1 init: addToPic:)
-;;;			(arm init: addToPic:)
-;;;			(tail init: addToPic:)
-;;;			(sa1 init: addToPic:)
-;;;			(sa2 init: addToPic:)
-;;;			(sa3Mouth init: addToPic:)
-;;;		)
+		(ripley 
+			ignoreActors: 0	
+			init:
+		)
+		(greenCustomer init:)
+		(greenFeet init:)
 		(= local1 2)
 		(= standingUp TRUE)
 		(= local5 1)
@@ -122,6 +109,10 @@
 	(method (doit)
 		(super doit:)
 		(ripley cel: (Random 0 2))
+		(if (not (Random 0 50))
+			(greenFeet cel: (Random 0 1))
+			(greenCustomer cel: (Random 0 1))
+		)
 		(if
 			(or
 				(== (ego onControl: 0) 4)
@@ -154,7 +145,7 @@
 							((Said '/alien,being,man,bystander,folk,animal') (Print 28 4))
 							((Said '/craft') (Print 28 5))
 							((Said '/door') (Print 28 6))
-							((Said '/quark,bartender,clerk')
+							((Said '/quark,bartender,clerk,waiter')
 								(Print 808 0)
 							)
 							((Said '/chair,booth,stool') (Print 808 6))
@@ -179,7 +170,7 @@
 						)
 					)
 					((Said 'open,close/door') (Print 808 11 #title {Quark} #at (/ (quark x?)2) (- (quark y?) 60)))
-					((Said 'call,converse/clerk,bartender,quark')
+					((Said 'call,converse/clerk,bartender,quark,waiter')
 						(if standingUp
 							(Print 808 12)	
 						else
@@ -325,7 +316,7 @@
 	(method (changeState newState)
 		(switch (= state newState)
 			(0
-				(ego view: 0 setLoop: 2 setCel: 0)
+				(ego illegalBits: cWHITE view: 0 setLoop: 2 setCel: 0)
 				(RedrawCast)
 				(NormalEgo 2 0)
 				(ego posn: 90 128)
@@ -583,17 +574,33 @@
 	)
 )
 
-(instance bag2 of View
+(instance greenCustomer of Prop
 	(properties)
 	
 	(method (init)
 		(super init:)
 		(self
-			view: 213
-			setLoop: 6
+			view: 300
+			setLoop: 1
 			setCel: 0
-			posn: 176 140
-			setPri: 15
+			posn: 32 117
+			setPri: 9
+			ignoreActors: 1
+		)
+	)
+)
+
+(instance greenFeet of Prop
+	(properties)
+	
+	(method (init)
+		(super init:)
+		(self
+			view: 300
+			setLoop: 2
+			setCel: 0
+			posn: 32 112
+			setPri: 8
 			ignoreActors: 1
 		)
 	)
@@ -716,20 +723,20 @@
 						(Print 808 23)
 				)
 				(if (== choice 3)
-					(if (== qtab 0)
+					(if (<= qtab 0)
 						(Print 808 30 #title {Quark} #at (/ (quark x?)2) (- (quark y?) 60)) 
-					)
-					(if (and (>= buckazoids qtab) (> qtab 0))
-						(= buckazoids (- buckazoids qtab))
-						(= qtab 0)
-						(Print 808 20 #title {Quark} #at (/ (quark x?)2) (- (quark y?) 60)) 
-						(Print (Format @str "%d buckazoids" buckazoids) #title {Quark} #at (/ (quark x?)2) (- (quark y?) 60)) 
-						(Print 808 25 #title {Quark} #at (/ (quark x?)2) (- (quark y?) 60))
 					)
 					(if (< buckazoids qtab) 
 						(Print 808 21 #title {Quark} #at (/ (quark x?)2) (- (quark y?) 60)) 
 						(Print (Format @str "%d buckazoids" qtab) #title {Quark} #at (/ (quark x?)2) (- (quark y?) 60))
 						(Print 808 26 #title {Quark} #at (/ (quark x?)2) (- (quark y?) 60))
+					)
+					(if (and (>= buckazoids qtab) (> qtab 0))
+						(Print 808 20 #title {Quark} #at (/ (quark x?)2) (- (quark y?) 60)) 
+						(Print (Format @str "%d buckazoids" qtab) #title {Quark} #at (/ (quark x?)2) (- (quark y?) 60)) 
+						(= buckazoids (- buckazoids qtab))
+						(= qtab 0)
+						(Print 808 25 #title {Quark} #at (/ (quark x?)2) (- (quark y?) 60))
 					)
 				)
 				(if (== choice 4)
@@ -757,10 +764,9 @@
 							(Print 808 39 #title {Quark} #at (/ (quark x?)2) (- (quark y?) 60))	
 						)
 					)
-					(quark setScript: quarkScript)
-					(quarkScript changeState: 2)
 				)
-				
+				(quark setScript: quarkScript)
+				(quarkScript changeState: 2)
 			)
 		)
 	)	

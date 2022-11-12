@@ -42,6 +42,20 @@
 		(ship init:)
 		(self setScript: shipScript)
 	)
+	
+	
+	(method (handleEvent pEvent)
+		(super handleEvent: pEvent)
+		; handle Said's, etc...
+		(if (== (pEvent type?) keyDown)
+			(if  (Print {Skip Cutscene?} #mode teJustLeft #button {No, I'll watch it.} 0 #button {Yes, skip it.} 1)
+				(theMusic stop:)
+				(curRoom newRoom: 14)		
+			)
+		)
+	)
+
+	
 )
 
 (instance shipScript of Script

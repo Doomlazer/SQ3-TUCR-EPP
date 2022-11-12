@@ -65,6 +65,10 @@
 	shipPESTULON_LAND
 	shipAQUAVELVEETA_ORBIT
 	shipAQUAVELVEETA_LAND
+	shipREN_ORBIT
+	shipREN_LAND
+	shipQUARKS
+	
 )
 
 ;Ship shields

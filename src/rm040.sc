@@ -41,14 +41,29 @@
 		(self setScript: rmScript)
 	)
 	
-	(method (handleEvent event)
-		(super handleEvent: event)
-		(if
-		(or (!= (event type?) saidEvent) (event claimed?))
-			(return)
+	(method (handleEvent pEvent)
+		(super handleEvent: pEvent)
+		; handle Said's, etc...
+		(if (== (pEvent type?) keyDown)
+			(if  (Print {Skip Cutscene?} #mode teJustLeft #button {No, I'll watch it.} 0 #button {Yes, skip it.} 1)
+				(theMusic fade:)
+				(= inCartoon 0)
+				(HandsOn)
+				(TheMenuBar draw: state: TRUE)
+				(StatusLine enable:)
+				(curRoom newRoom: 49)		
+			)
 		)
-		(if (Said 'look[/area]') (Print 40 0))
 	)
+	
+;;;	(method (handleEvent event)
+;;;		(super handleEvent: event)
+;;;		(if
+;;;		(or (!= (event type?) saidEvent) (event claimed?))
+;;;			(return)
+;;;		)
+;;;		(if (Said 'look[/area]') (Print 40 0))
+;;;	)
 )
 
 (instance rmScript of Script

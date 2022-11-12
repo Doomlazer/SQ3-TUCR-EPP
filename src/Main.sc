@@ -633,6 +633,7 @@
 	adTimer = 600 ;time between ads
 	towed ;is roger's ship towed?
 	ticketed ;did roger buy the booth ticket on planet REN?
+	gaveGem ;traded the gem to get ship out of impound
 	egg ;counter for Ren teleportation easter egg
 	
 	tdx ;time disruptor x
@@ -759,7 +760,28 @@
 
 (procedure (EgoDead theView theLoop theCel theDeath)
 	(if (regions contains: (ScriptID 809)) 
-		(if (== curRoomNum 75) 
+		(if 
+			(or 
+				;(== curRoomNum 12) scrapyard rails not working, check rm13 for clues
+				(== curRoomNum 52)
+				(== curRoomNum 53)
+				(== curRoomNum 60)
+				(== curRoomNum 61)
+				(== curRoomNum 62)
+				(== curRoomNum 63)
+				(== curRoomNum 64)
+				(== curRoomNum 65)
+				(== curRoomNum 66)
+				(== curRoomNum 67)
+				(== curRoomNum 68)
+				(== curRoomNum 69)
+				(== curRoomNum 70)
+				(== curRoomNum 71)
+				(== curRoomNum 75)
+				(== curRoomNum 421) 
+				(== curRoomNum 802)
+				(== curRoomNum 803) 
+			)
 			(curRoom setScript:(ScriptID 809 1))
 		else
 			(ego setScript:(ScriptID 809 1))
@@ -1100,7 +1122,7 @@
 				(cond
 					((Said 'activate,use,press/disruptor[<time]')
 						(if (ego has: 18)
-							(if (== curRoomNum 10)
+							(if (== curRoomNum 10) ;disable use
 								(Print 0 43)
 							else
 								(if (regions contains: (ScriptID 809)) 

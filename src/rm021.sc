@@ -48,7 +48,7 @@
 				(self drawPic: 700)
 				(self setScript: AquaVelScript)
 			)
-			(12 ;2nd planet landing
+			(shipREN_LAND ;2nd planet landing
 				(Load PICTURE 701)
 				(self drawPic: 701)
 				(self setScript: secondPlanetScript)

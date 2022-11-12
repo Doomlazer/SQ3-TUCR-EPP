@@ -34,7 +34,7 @@
 		(SetMenu normalI p_said 'normal')
 		(SetMenu fasterI p_said 'faster')
 		(SetMenu slowerI p_said 'slower')
-		(SetMenu helpI p_said 'aid')
+		(SetMenu helpI p_said 'aid')	
 	)
 	
 	(method (handleEvent event &tmp oldPause i [str 401])

@@ -16,6 +16,7 @@
 )
 (local 
 	greet 
+	justPaid ;fine, not entrance fee
 )
 
 (instance boothAlien of Actor
@@ -138,6 +139,9 @@
 									(Print 804 13)
 								)
 							)
+							((Said '/man,woman')
+								(Print 804 31)
+							)
 							((Said '/spaceship')
 								(if (& (ego onControl:) $2000)
 									(if towed
@@ -181,14 +185,19 @@
 					)
 					((Said 'buy,pay/fine')
 						(if (& (ego onControl:) $2000)
-							(if (>= buckazoids 300)
-								(Print 804 20)
-								(Print 804 21)
-								(theGame changeScore: 300)
-								(= buckazoids (- buckazoids 300))
-								(= towed 0)	
+							(if towed
+								(if (>= buckazoids 50)
+									(Print 804 20)
+									(Print 804 21)
+									(theGame changeScore: 50)
+									(= buckazoids (- buckazoids 50))
+									(= justPaid 1)
+									(= towed 0)			
+								else
+									(Print 804 19)
+								)
 							else
-								(Print 804 19)
+								(Print 804 32) 
 							)
 						else
 							(Print 804 13)
@@ -202,6 +211,8 @@
 									(Print 804 23)
 									(theGame changeScore: 400)
 									(Print 804 21)
+									(= gaveGem 1) ;only in trade for mallard to force 1 buckazoid dabo win at quarks.
+									(= justPaid 1)
 									(= towed 0)
 								else
 									(if ticketed
@@ -280,8 +291,10 @@
 				(RedrawCast)
 				(HandsOn)
 				(if (not towed)
-					(Print 804 16)	
-					(++ towed)
+					(if (not justPaid)
+						(Print 804 16)	
+						(++ towed)
+					)
 				)
 				(backgroundScript dispose:)
 			)
