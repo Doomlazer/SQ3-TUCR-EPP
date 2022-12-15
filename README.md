@@ -22,6 +22,11 @@ DOSBox users must copy <b>only the contents</b> of PATCHES into the SQ3 game fol
 
 ScummVM users can move the entire PATCHES folder into the SQ3 game folder a SVM will load the files. It's not possible to define multiple patch locations in RESOURCE.CFG until SCI1 afaik.
 
+## New feature
+
+<img src="pics/ring.png"  width="600" alt="Monolth Burger Decoder ring changes.">
+
+The Monolth Buger Decoder ring is now a fully functional ceasar cipher. Rotating the dial on the ring changes the letter offset on the ring. It also shows the standard english letters on the videogame screen - however scrambled they might be.
 
 ## I have an idea for a planet.
 
