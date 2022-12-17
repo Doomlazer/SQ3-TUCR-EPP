@@ -18,9 +18,9 @@ This mod requires the retail version of SQ3. Both the GOG and Steam versions are
 
 To download the patch, click the green "CODE" button near the top of this page and select "Download Zip". Uncompress the .zip and find the PATCHES folder.
 
-DOSBox users must copy <b>only the contents</b> of PATCHES into the SQ3 game folder. All the mod files need to be loose inside the folder next to SQ3.bat - this makes uninstalling the mod difficult, so it's recommend you back up your SQ3 game folder before installing.
+DOSBox users <b>must copy the contents</b> of PATCHES into the SQ3 game folder. All the mod files need to be loose inside the folder next to SQ3.bat - this makes uninstalling the mod difficult, so it's recommend you back up your SQ3 game folder or use a copy of SQ3 for this mod.
 
-ScummVM users can move the entire PATCHES folder into the SQ3 game folder a SVM will load the files. It's not possible to define multiple patch locations in RESOURCE.CFG until SCI1 afaik.
+ScummVM users can move the entire PATCHES folder into the SQ3 game folder. Remove the PATCHES folder to uninstall.
 
 ## New feature
 
@@ -28,13 +28,6 @@ ScummVM users can move the entire PATCHES folder into the SQ3 game folder a SVM 
 
 The Monolth Buger Decoder ring is now a fully functional ceasar cipher. Rotating the dial on the ring changes the letter offset on the ring. It also shows the standard english letters on the videogame screen - however scrambled they might be.
 
-## I have an idea for a planet.
-
-New planet submissions are engouraged, though limited by HEAP memory in some scripts. I'm not sure what the max number of planets will be. I don't think ScummVM cares about exeeding the HEAP, but DOSBox will crash. The goal is to support both. 
-
-A tutorial covering what is needed to add a new planet is coming, but the source code for scripts in the PATCHES folder can be referenced in the meantime. 
-
-To get started download SCICompanion from https://github.com/Kawa-oneechan/SCICompanion or http://scicompanion.com/download/. Move the 'src' folder and game.ini into a backed up copy of your SQ3 folder, then open resource.map from within SCICompanion. The modified scripts will already be there, but you'll need to import any pics or views from the PATCHES folder.
 
 ## I'm trying to test a planet, how can I skip the opening sequence?
 
@@ -55,6 +48,10 @@ Threepwang - Background Artist
 
 
 ## What's changed recently?
+
+### December 2022 
+
+Monolith Burger Decoder Ring is now a functional Ceasar Cipher.
 
 ### October 2022
 
