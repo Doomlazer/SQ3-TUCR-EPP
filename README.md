@@ -4,7 +4,7 @@ WARNING: This mod is still in early development.
 
 ## What is this? 
 
-A mod for the DOS version of Space Quest III. It adds new planets to the Aluminum Mallard's scanner. Currently, there are two new planets and one new space station. It adds a new inventory item the P.T.D. which can distort time and even <a href="https://www.youtube.com/watch?v=czkSgwzEfqA">cheat death</a>. The mod is still in early development and in an unfinished state. Causal players should wait until the final release for the best experience. 
+A mod for the DOS version of Space Quest III. It adds new planets to the Aluminum Mallard's scanner. Currently, there are two new planets and one new space station. The mod is still in early development and in an unfinished state. Causal players should wait until the final release for the best experience. 
 
 <img src="pics/23.png"  width="600" alt="AquaVelveeta seen for the first time.">
 
@@ -24,10 +24,15 @@ ScummVM users can move the entire PATCHES folder into the SQ3 game folder. Remov
 
 ## New feature
 
+### Decoder Ring
+
 <img src="pics/ring.png"  width="600" alt="Monolth Burger Decoder ring changes.">
 
 The Monolth Buger Decoder ring is now a fully functional ceasar cipher. Rotating the dial on the ring changes the letter offset on the ring. It also shows the standard english letters on the videogame screen - however scrambled they might be.
 
+### Personal Time Disruptor
+
+This new inventory item can temporarily freeze a copy of Roger in time, this will be used for some future puzzles and can also be used to <a href="https://www.youtube.com/watch?v=czkSgwzEfqA">cheat death</a>.
 
 ## I'm trying to test a planet, how can I skip the opening sequence?
 
