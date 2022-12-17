@@ -60,7 +60,7 @@ Monolith Burger Decoder Ring is now a functional Ceasar Cipher.
 
 ### October 2022
 
-Dabo working, but rought around the edges. 
+Dabo working, but rough around the edges. 
 
 Quark's is about 75% complete.
 
@@ -72,9 +72,9 @@ Planet Ren (sector 27) is mostly done.
 
 Quark's Bar can be visited but it's in very unfinished state.
 
-fixed a bug where "scanning sector %d" never goes away if the play clicks scan too quickly.
+Fixed a bug where "scanning sector %d" never goes away if the play clicks scan too quickly.
 
-Personal Time Disruptor added: https://www.youtube.com/watch?v=czkSgwzEfqA
+Personal Time Disruptor added.
 
 ### May 2022 
 
