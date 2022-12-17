@@ -22,7 +22,7 @@ DOSBox users <b>must copy the contents</b> of PATCHES into the SQ3 game folder. 
 
 ScummVM users can move the entire PATCHES folder into the SQ3 game folder. Remove the PATCHES folder to uninstall.
 
-## New feature
+## New features
 
 ### Decoder Ring
 
