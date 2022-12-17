@@ -32,7 +32,7 @@ The Monolth Buger Decoder ring is now a fully functional ceasar cipher. Rotating
 
 ### Personal Time Disruptor
 
-This new inventory item can temporarily freeze a copy of Roger in time, this will be used for some future puzzles and can also be used to <a href="https://www.youtube.com/watch?v=czkSgwzEfqA">cheat death</a>.
+This new inventory item can temporarily freeze a copy of Roger in time, this will be used for some future puzzles and can also be used to <a href="https://www.youtube.com/watch?v=czkSgwzEfqA">cheat death</a>. This has not been fully tested against all deaths yet, please report bugs.
 
 ## I'm trying to test a planet, how can I skip the opening sequence?
 
