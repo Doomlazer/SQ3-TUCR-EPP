@@ -36,7 +36,131 @@
 	gameStarted
 	soundIsOn
 	wonMsg
+	decoderNum ;mod
+	ringTable = [84 86 88 90 92 94 96 98 100 102 104 106 108 151 153 155 157 159 161 163 165 167 169 171 173 175]
 )
+
+(procedure (Decrypt &tmp i [str 200] t)
+	(curRoom drawPic: 290)
+	(Display 290 12
+		p_at 148 180
+		p_font 600
+		p_width 90
+		p_color vBLACK
+	)
+	(Format @str 290 16)
+	(= i 0)
+	(= t 0)
+	(while (< i (StrLen @str))
+		(if
+			(or
+				(== 10 (StrAt @str i)) ;line break
+				(== 32 (StrAt @str i)) ;space
+				(== 33 (StrAt @str i)) ;exlaim
+				(== 39 (StrAt @str i)) ;apostro
+				(== 46 (StrAt @str i)) ;period
+			)
+			(StrAt @str i (StrAt @str i))
+		else
+			(= t (+ (StrAt @str i) decoderNum))
+			(if (> t 90)
+				(= t (- t 26))	
+			)
+			(StrAt @str i t)
+		)
+		(++ i)
+	)
+	(= printObj
+		(Display @str ;290 16
+			p_at 60 30
+			p_width 200
+			p_color vWHITE
+			p_back vBLACK
+			p_font 600 
+		)
+	)	
+)
+
+(procedure (CryptShift &tmp i [str 200] t)
+	(= inCartoon TRUE)
+	(RedrawCast)
+	;(if (ego has: iDecoderRing)
+		(while (not (== printObj 2))
+			(Format @str 290 10)
+			(= i 0)
+			(= t 0)
+			(while (< i 26)
+				;(Printf {StrAt @str : %d} (StrAt @str [ringTable i])) 
+				(= t (+ (StrAt @str [ringTable i]) decoderNum))
+				(if (> t 90)
+					(= t (- t 26))	
+				)
+				;(Printf {t : %d} t) 
+				(StrAt @str [ringTable i] t)
+				(++ i)
+			)	
+			(= printObj
+				(Print @str ;290 10
+					#font 777 ;603 use new fixed width "i"
+					#icon 242 0 5
+					#width 240
+					#at -1 143
+					#button {Rotate Left} 1
+					#button {Done} 2 
+					#button {Rotate Right} 3
+					#advance
+				)
+			)
+			(if (== printObj 1)
+				(= decoderNum (- decoderNum 1))
+					(if (< decoderNum 0)
+						(= decoderNum 25)	
+					)
+				)
+			(if (== printObj 2)
+				(= printObj 0)
+				(curRoom drawPic: 290)
+				(Display 290 16
+					p_at 60 30
+					p_width 200
+					p_color vWHITE
+					p_back vBLACK
+					p_font 603 
+				)		
+				(break)	
+			)
+			(if (== printObj 3)
+				(= decoderNum (+ decoderNum 1))
+				(if (> decoderNum 25)
+					(= decoderNum 0)	
+				)
+			)
+			(Decrypt)
+			(if
+				(and
+					(< astroChickenScore 120)
+					(not decodedMessage)
+					wonMsg
+					(== decoderNum 0)
+				)
+				(theGame changeScore: 20)
+				(+= astroChickenScore 20)
+				(= decodedMessage TRUE)
+				(Print 290 19 #at -1 143) ;cracked the code text
+				(= wonMsg 0)
+				(= saveDisabled FALSE)
+				(= inCartoon FALSE)
+				(self newRoom: 29)
+				(break)
+			)
+		)
+;;;	else
+;;;		(Print 290 11)
+;;;		(curRoom setScript: intro)
+;;;	)	
+)
+
+
 (procedure (StartNewChicken)
 	(= oldChickenX (Random 70 248))
 )
@@ -113,6 +237,7 @@
 ;;;		(TheMenuBar draw:)
 ;;;		(StatusLine enable:)
 		(= saveDisabled TRUE)
+		(= decoderNum (Random 5 20))
 		(self setScript: intro)
 	)
 	
@@ -270,7 +395,6 @@
 						(= saveDisabled FALSE)
 						(= inCartoon FALSE)
 						(curRoom newRoom: 29)
-;;;						(= quit TRUE)
 					)
 					((Said 'beat,tilt/game,device')
 						(Print 290 4)
@@ -292,29 +416,16 @@
 						)
 					)
 					((or (Said 'use/decoder,relic') (Said 'decode/letter'))
-						(= inCartoon TRUE)
-						(RedrawCast)
-						(if (ego has: iDecoderRing)
-							(if (and (< astroChickenScore 120) (not decodedMessage) wonMsg)
-								(theGame changeScore: 20)
-								(+= astroChickenScore 20)
-								(= decodedMessage TRUE)
+						(if wonMsg
+							(if (ego has: iDecoderRing)
+								(Decrypt)
+								(CryptShift)
+							else
+								(Print 290 11)
+								(curRoom setScript: intro)
 							)
-							(= printObj
-								(Print 290 10
-									#font 603
-									#icon 242 0 5
-									#width 240
-									#at -1 143
-								)
-							)
-							(= wonMsg 0)
-							(= saveDisabled FALSE)
-							(= inCartoon FALSE)
-							(self newRoom: 29)
 						else
-							(Print 290 11)
-							(curRoom setScript: intro)
+							(Print 290 9)
 						)
 					)
 				)
@@ -553,7 +664,7 @@
 					)
 					(++ currentLives)
 				)
-				(if (== currentLevel 10)
+				(if (== currentLevel 10) ;10
 					(client setScript: youWon)
 					(= local15 1)
 				else
@@ -605,16 +716,16 @@
 				(TheMenuBar draw: state: TRUE)
 ;;;				(StatusLine enable: state: TRUE)
 				(User canInput: TRUE)
+
 				(= printObj
 					(Display 290 16
 						p_at 60 30
 						p_width 200
 						p_color vWHITE
 						p_back vBLACK
-						p_font 603
+						p_font 603 
 					)
 				)
-;;;				(theGame restart:)
 			)
 		)
 	)
@@ -706,7 +817,7 @@
 			)
 			(1
 				(gameOver dispose:)
-				(if (== astroChickenPlays 10)
+				(if (== astroChickenPlays 1)
 					(curRoom setScript: youWon)
 				else
 					(Chicken dispose:)

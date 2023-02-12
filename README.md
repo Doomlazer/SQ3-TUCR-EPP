@@ -26,6 +26,13 @@ ScummVM users can move the entire PATCHES folder into the SQ3 game folder. Remov
 
 ### Decoder Ring
 
+<img src="pics/holofights.png"  width="600" alt="Quirk's Holo-fights. Like a cock-fight, but with astrochickens.">
+
+At the newly renamed "Quirk's Bar" location there is a backroom where Holo-fights take place. Currently, the fights just loop and there is no player interaction (the room itself is incomplete). The next update will add betting on the fight outcomes to win (or lose) more buckazoids! 
+
+
+### Decoder Ring
+
 <img src="pics/ring.png"  width="600" alt="Monolth Burger Decoder ring changes.">
 
 The Monolth Buger Decoder ring is now a fully functional ceasar cipher. Rotating the dial on the ring changes the letter offset on the ring. It also shows the standard english letters on the videogame screen - however scrambled they might be.
@@ -49,10 +56,16 @@ FYI, the QA debug command is only available in the first room. More debugging in
 
 DoomLazer - Concepts and Programming
 
-Threepwang - Background Artist
+Threepwang - Backgrounds
 
 
 ## What's changed recently?
+
+### Febuary 2023
+
+Added partially complete astrochicken fights at Quirk's bar.
+
+Renamed Quark's to Quirk's for legal reasons.
 
 ### December 2022 
 

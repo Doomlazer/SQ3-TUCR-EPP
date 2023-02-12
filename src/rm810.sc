@@ -141,15 +141,22 @@
 		(switch (event type?)
 			(saidEvent
 				(cond 
+					((Said '[play,bet]/dabo')
+						(Print 810 12)
+						(Print 810 13)	
+					)
+					((Said 'call,converse/quark') (Print 810 14))
 					((Said 'look>')
 						(cond 
-							((Said '/quark,bartender,man') (Print 810 3))
+							((Said '/quark,bartender,man') (Print 810 14))
+							((Said '/quirk,bartender,man') (Print 810 3))
 							((Said '/woman,alien') (Print 810 2))
-							((Said '/dabo[/table]') (Print 810 1))
+							((Said '/dapo[/table]') (Print 810 1))
+							((Said '/dabo[/table]') (Print 810 12)(Print 810 13))
 							((Said '[<around,at,in][/area,cafe]') (Print 810 0))
 						)
 					)
-					((Said 'bet,play,dabo[/*]')
+					((Said 'bet,play,dapo/*')
 						(if odoGone
 							(Print 810 10)
 						else 

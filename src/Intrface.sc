@@ -765,7 +765,7 @@
 		(= busy 1)
 
 		(self eachElementDo: #init:)
-
+		
 		; if def is not passed or zero, we pick first active item
 		; unmark last default
 		(if theItem
@@ -1016,12 +1016,32 @@
 						; we are out of here
 						(= ret -1)		
 				)
-				((and (== keyDown (event type?)) (== TAB (event message?)))
+				(
+					(or
+						(and
+							(== keyDown (event type?))
+							(== TAB (event message?))
+						)
+						(and
+							(== keyDown (event type?))
+							(== $4D00 (event message?)) ;KEY_RIGHT
+						)
+					)
 					; claim this event
 					(event claimed:TRUE)
 					(self advance:)
 				)
-				((and (== keyDown (event type?)) (== SHIFTTAB (event message?)))
+				(
+					(or
+						(and
+							(== keyDown (event type?))
+							(== SHIFTTAB (event message?))
+						)
+						(and
+							(== keyDown (event type?))
+							(== $4B00 (event message?)) ;KEY_LEFT
+						)
+					)
 					; claim this event
 					(event claimed:TRUE)
 					(self retreat:)
@@ -1278,7 +1298,7 @@
 			(#button
 				((= [buttons buttonsUsed] (DButton new:)) text:[args (++ i)], value:[args (++ i)], setSize:)
 				(+= buttonWide (+ ([buttons buttonsUsed] nsRight?) MARGIN))
-				(++ buttonsUsed)
+				(++ buttonsUsed) 
 			)
 
 			; add optional icon to list
