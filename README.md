@@ -24,7 +24,7 @@ ScummVM users can move the entire PATCHES folder into the SQ3 game folder. Remov
 
 ## New features
 
-### Decoder Ring
+### AstroChicken Fighting
 
 <img src="pics/holofights.png"  width="600" alt="Quirk's Holo-fights. Like a cock-fight, but with astrochickens.">
 
