@@ -38,6 +38,7 @@
 		(self
 			view: 302
 			ignoreActors:
+			illegalBits: 0
 			setLoop: 6
 			setCel: 0
 			;setPri: 13
@@ -54,6 +55,7 @@
 		(self
 			view: 290
 			ignoreActors:
+			illegalBits: 0
 			setLoop: 6
 			setCel: 0
 			;setPri: 13
@@ -137,7 +139,7 @@
 					)
 				)
 				(if betOnNum
-					(= betAmount (GetNumber {How many Buckazoids do you bet?}))
+					(= betAmount (GetNumber (Format @str {You have %d buckazoids.\nBet amount?} buckazoids)))
 					(if (> betAmount buckazoids)
 						(Print {That's more that you have, Roger. Bet canceled.})
 						(= betAmount 0)
@@ -149,7 +151,11 @@
 							(= betOnNum 0)
 						else
 							(= buckazoids (- buckazoids betAmount))
-							(Printf {Bet placed:\n__%d on %s to win.} betAmount (Format @str 811 ( if (== betOnNum 1) name1 else name2 )))
+							(if (< buckazoids 1) 
+								(Printf {Bet placed:\n__Everything on %s.} (Format @str 811 ( if (== betOnNum 1) name1 else name2 )))
+							else
+								(Printf {Bet placed:\n__%d on %s to win.} betAmount (Format @str 811 ( if (== betOnNum 1) name1 else name2 )))
+							)
 						)
 					)
 				else
@@ -333,7 +339,7 @@
 				)
 			)
 			(if heroDirY
-				(if (< (ChickenHero y?) 119)
+				(if (< (ChickenHero y?) 120) ;119
 					(ChickenHero y: (+ (ChickenHero y?) (Random 0 4)))
 				else
 					(= heroDirY 0)
@@ -414,7 +420,7 @@
 				)
 			)
 			(if npcDirY
-				(if (< (ChickenNPC y?) 119)
+				(if (< (ChickenNPC y?) 120) ;119
 					(ChickenNPC y: 	(+ (ChickenNPC y?) (Random 0 2)))
 				else
 					(= npcDirY 0)
@@ -461,9 +467,15 @@
 			(0
 				(ChickenNPC setScript: 0)
 				(if (> heroHP 0)
+					(if (< (ChickenHero y?) 114)
+						(ChickenHero posn: (ChickenHero x?) 114)
+					)
 					(ChickenHero loop: 6 cel: 0 setMotion: 0 setCycle: EndLoop)
 					(ChickenNPC view: 291 loop: 0 cel: 0 setMotion: 0 setCycle: EndLoop self)
 				else
+					(if (< (ChickenNPC y?) 114)
+						(ChickenNPC posn: (ChickenNPC x?) 114)
+					)
 					(ChickenNPC loop: 6 cel: 0 setMotion: 0 setCycle: EndLoop )
 					(ChickenHero view: 291 loop: 0 cel: 0 setMotion: 0 setCycle: EndLoop self)
 				)
@@ -502,7 +514,12 @@
 							(Printf {You won %d buckazoids!\n__Total Buckazoids: %d} (* betAmount 2) buckazoids)
 							(= lossCount 0)
 						else
-							(Printf {Your Astrochicken lost.\n__You have %d Buckazoids left.} buckazoids)
+							(if (< buckazoids 1)
+								(Printf {Your Astrochicken lost.\n__You've lost all of your Buckazoids.})
+								(ego put: iBuckazoids -1)
+							else
+								(Printf {Your Astrochicken lost.\n__You have %d Buckazoids left.} buckazoids)
+							)
 							(++ lossCount)
 							(if (== lossCount 5)
 								(Print {Don't give up your day job, Roger.})
