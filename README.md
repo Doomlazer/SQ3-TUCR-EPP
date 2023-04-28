@@ -28,7 +28,7 @@ ScummVM users can move the entire PATCHES folder into the SQ3 game folder. Remov
 
 <img src="pics/holofights.png"  width="600" alt="Quirk's Holo-fights. Like a cock-fight, but with astrochickens.">
 
-At the newly renamed "Quirk's Bar" location there is a backroom where Holo-fights take place. Currently, the fights just loop and there is no player interaction (the room itself is incomplete). The next update will add betting on the fight outcomes to win (or lose) more buckazoids! 
+At the newly renamed "Quirk's Bar" location there is a backroom where Holo-fights take place! Players can now place bets on the outcome (room is still incomplete). 
 
 
 ### Decoder Ring
@@ -60,6 +60,13 @@ Threepwang - Backgrounds
 
 
 ## What's changed recently?
+
+
+### April 2023
+
+Players may now place wagers on the astrochicken fights at Quirk's bar.
+
+A new room was started on Aquavelvetta. The gate requires Roger to be in two places at once to open.
 
 ### Febuary 2023
 
