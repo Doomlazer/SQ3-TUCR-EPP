@@ -150,13 +150,13 @@
 						(cond 
 							((Said '/quark,bartender,man') (Print 810 14))
 							((Said '/quirk,bartender,man') (Print 810 3))
-							((Said '/woman,alien') (Print 810 2))
-							((Said '/dapo[/table]') (Print 810 1))
-							((Said '/dabo[/table]') (Print 810 12)(Print 810 13))
+							((Said '/(woman[<dapo]),alien') (Print 810 2))
+							((Said '/table[<dapo]') (Print 810 1))
+							((Said '/table[<dabo]') (Print 810 12)(Print 810 13))
 							((Said '[<around,at,in][/area,cafe]') (Print 810 0))
 						)
 					)
-					((Said 'bet,play,dapo/*')
+					((Said 'bet,play,dapo/[dapo]')
 						(if odoGone
 							(Print 810 10)
 						else 
@@ -232,7 +232,7 @@
 				(if gaveGem
 					(daboSound stop:)
 					(daboWinMusic number: 403 priority: 15 play:)
-					(Print {DABO!!!!!})
+					(Print {DAPO!!!!!})
 					(Print {YOU WON 999x your bet!})
 					(= buckazoids (* betAmount 999))
 					(= gaveGem 0)
@@ -240,11 +240,12 @@
 					(= seconds 2)
 					(= odoGone 1)
 				else
+					(Printf {The number is %d!!} (dlight cel?))
 					(if (== (- betNumber 1) (dlight cel?))
 						(Print {YOU WON 16x your bet!})
 						(= buckazoids (* betAmount 16))
 					else
-						(Print {You lost!})
+						(Print {You lost.})
 					)
 					(= seconds 10)
 				)
@@ -253,7 +254,7 @@
 				(dlight setScript: dLightIdleScript)
 			)
 			(101
-				(Print 810 9 #at 160 40 #title {Quark})
+				(Print 810 9 #at 160 40 #title {Quirk})
 				(dgirl
 					illegalBits: 0
 					ignoreActors: 1

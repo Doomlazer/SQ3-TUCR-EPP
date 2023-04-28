@@ -314,7 +314,6 @@
 
 	(method (newRoom n &tmp mX mY theMover theEgo oldCur evt)
 		;; Change rooms to room number n.
-		
 
 		;Dispose of any PicViews.
 		(addToPics dispose:)
@@ -324,7 +323,6 @@
 			eachElementDo: #dispose:
 			release:						;don't want stray nodes, they fragment!
 		)
-		
 		;Dispose the cast, expired timers, non-kept regions, and locales.
 		(cast
 			eachElementDo: #dispose:,
@@ -352,7 +350,6 @@
 		;If resource usage tracking is enabled, flush all non-purgable
 		;resources.
 		(FlushResources n)
-
 		;Start up the room we're going to.
 		(= oldCur (self setCursor: waitCursor TRUE))
 		(self
@@ -360,7 +357,6 @@
 			checkAni:,
 			setCursor: oldCur (HaveMouse)
 		)
-
 		;Set the synonym list.
 		(SetSynonyms regions)
 
@@ -406,7 +402,6 @@
 		(if debugOn
 			(SetDebug)
 		)
-
 		;Initialize the new room and add it to the front of the region list.
 		(regions	addToFront: (= curRoom (ScriptID roomNum)))
 		(curRoom init:)

@@ -437,7 +437,7 @@ code_019f:
 						((== currentSector 27) {ORBITING PLANET REN}) ;new 2nd planet
 						((== currentSector 39) {ORBITING PLANET PHLEEBHUT})
 						((== currentSector 62) {APPROACHING MONOLITH BURGER})
-						((== currentSector 70) {APPROACHING QUARK'S BAR}) ;Quarks 
+						((== currentSector 70) {APPROACHING QUIRK'S BAR}) ;Quarks 
 						((== currentSector 82) {ORBITING PLANET ORTEGA})
 						((== currentSector 69) {ORBITING PESTULON})
 					)

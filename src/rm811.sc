@@ -24,6 +24,12 @@
 	heroHP
 	npcHP
 	cooldown
+	name1
+	name2
+	betOnNum
+	betAmount
+	wait
+	lossCount
 )
 
 (instance ChickenHero of Actor
@@ -58,11 +64,8 @@
 	)
 )
 
-(procedure (ChickenInit &tmp [str 50])
-	;(Print {called ChickenInit})
-	(= heroHP (Random 6 10))
-	(= npcHP (Random 6 10))
-	(ShowHP)
+(procedure (ChickenInit &tmp [str 50] [str2 50] c)
+	;clear names
 	(Display 811 0
 		p_width 250
 		p_at 10 158
@@ -91,20 +94,84 @@
 		p_font 777
 		p_color vBLACK		
 	)
-	(Display (Format @str {%s} 811 (Random 1 29))
+	;clear HPs
+	(Display 811 0
+		p_width 250
+		p_at 10 175
+		;p_mode teJustCenter
+		p_font 777
+		p_color vBLACK		
+	)
+	(Display 811 0
+		p_width 250
+		p_at 200 175
+		;p_mode teJustCenter
+		p_font 777
+		p_color vBLACK		
+	)
+	(RedrawCast)
+	(= name1 (Random 1 29))
+	(= name2 (Random 1 29))
+	(while (== name1 name2)
+		(= name2 (Random 1 29))
+	)
+	(if
+		(and
+			wait ;allow betting on 2nd round after entering.
+			(> buckazoids 0)
+		)
+		(= c
+			(Print (Format @str {Bet on next round?\n__%s\n____vs.\n__%s\n} 811 name1 811 name2)
+				;#font: SYSFONT
+				#button: {Place bet} TRUE
+				#button: {No, thanks} FALSE
+			)
+		)
+		(switch c
+			(TRUE
+				(= betOnNum
+					(Print
+						{Pick an Astrochicken:_______}
+						#button: (Format @str 811 name1) 1
+						#button: (Format @str2 811 name2) 2
+					)
+				)
+				(if betOnNum
+					(= betAmount (GetNumber {How many Buckazoids do you bet?}))
+					(if (> betAmount buckazoids)
+						(Print {That's more that you have, Roger.})
+					else
+						(if (< betAmount 1)
+							(Print {Bet canceled.})
+						else
+							(= buckazoids (- buckazoids betAmount))
+							(Printf {Bet placed:\n__%d on %s to win.} betAmount (Format @str 811 ( if (== betOnNum 1) name1 else name2 )))
+						)
+					)
+				else
+					(Print {Bet canceled.})
+				)	
+			)
+		)
+	)
+	(= wait 1)
+	(Display (Format @str {%s} 811 name1)
 		p_width 250
 		p_at 10 160
 		;p_mode teJustCenter
 		p_font 300
 		p_color vMAGENTA			
 	)
-	(Display (Format @str {%s} 811 (Random 1 29))
+	(Display (Format @str {%s} 811 name2)
 		p_width 250
 		p_at 200 160
 		;p_mode teJustCenter
 		p_font 300
 		p_color vGREY
 	)
+	(= heroHP (Random 6 10))
+	(= npcHP (Random 6 10))
+	(ShowHP)
 	(ChickenHero
 		setScript: HeroScript
 		init:
@@ -141,7 +208,7 @@
 	)
 	(Display 811 0
 		p_width 250
-		p_at 210 175
+		p_at 200 175
 		;p_mode teJustCenter
 		p_font 777
 		p_color vBLACK		
@@ -178,8 +245,9 @@
 				(ego posn: 155 180 loop: 3)
 			)
 			(else
-				(ego posn: 250 106 loop: 3)
-				(self setScript: RoomScript)
+				(ego posn: 155 180 loop: 3)
+				;(ego posn: 250 106 loop: 3)
+				;(self setScript: RoomScript)
 			)
 		)
 		(ego init:)	
@@ -196,30 +264,6 @@
 	
 	(method (doit)
 		(super doit:)
-;;;		(if
-;;;			(and
-;;;				(& (ego onControl:) 2) ;darkblue
-;;;				(== script 0)
-;;;			)
-;;;			(curRoom setScript: FallDown)
-;;;		)		
-;;;		(if
-;;;			(and
-;;;				(& (ego onControl:) $4000) ;yellow - back to ship
-;;;				(== script 0)
-;;;			)
-;;;			(curRoom newRoom: 802)
-;;;		)
-;;;		(if
-;;;			(and
-;;;				(or 
-;;;					(> (ego y?) 194)
-;;;					(> (ego x?) 323)
-;;;				)
-;;;				(== script 0)
-;;;			)
-;;;			(curRoom newRoom: 804)
-;;;		)
 	)
 )
 
@@ -228,7 +272,6 @@
 	
 	(method (doit)
 		(super doit:)
-		; code executed each game cycle
 	)
 	
 	(method (handleEvent pEvent)
@@ -270,10 +313,6 @@
 	(method (doit)
 		(super doit:)
 		(if (not heroBonked)
-			;Dead
-			(if (< heroHP 1)
-				(ChickenHero setScript: winScript)
-			)
 			(if heroDirX
 				(ChickenHero loop: 0 setCycle: Forward)
 				(if (< (ChickenHero x?) 200)
@@ -314,11 +353,9 @@
 		 	(-- heroBonked)
 		)
 		
-		
 		;colision
 		(if 
 			(and
-				;(== (ChickenHero y?) (ChickenNPC y?))
 				(< (Abs (- (ChickenHero y?) (ChickenNPC y?))) 5)
 				(< (Abs (- (ChickenHero x?) (ChickenNPC x?))) 10)
 				(not cooldown)
@@ -353,16 +390,10 @@
 	)
 )
 
-
-
 (instance NPCScript of Script
 	(method (doit)
 		(super doit:)
 		(if (not npcBonked)
-			;Dead
-			(if (< npcHP 1)
-				(ChickenHero setScript: winScript)
-			)
 			(if npcDirX
 				(ChickenNPC loop: 0 setCycle: Forward)
 				(if (< (ChickenNPC x?) 200)
@@ -398,6 +429,13 @@
 					(= npcDirY (Random 0 1))
 				)
 			)
+			;Someone is Dead
+			(if (or
+					(< npcHP 1)
+					(< heroHP 1)
+				)
+				(ChickenHero setScript: winScript)
+			)
 		else
 			(ChickenNPC loop: 8 cel: npcBonked)
 			(-- npcBonked)
@@ -418,39 +456,66 @@
 		(switch (= state newState)
 			(0
 				(ChickenNPC setScript: 0)
-				;(ChickenHero setScript: 0)
-				;(Print {0})
 				(if (> heroHP 0)
-					(ChickenHero loop: 6 cel: 0 setCycle: EndLoop)
-					(ChickenNPC view: 291 loop: 0 cel: 0 setCycle: EndLoop)
+					(ChickenHero loop: 6 cel: 0 setMotion: 0 setCycle: EndLoop)
+					(ChickenNPC view: 291 loop: 0 cel: 0 setMotion: 0 setCycle: EndLoop self)
 				else
-					(ChickenNPC loop: 6 cel: 0 setCycle: EndLoop )
-					(ChickenHero view: 291 loop: 0 cel: 0 setCycle: EndLoop)
+					(ChickenNPC loop: 6 cel: 0 setMotion: 0 setCycle: EndLoop )
+					(ChickenHero view: 291 loop: 0 cel: 0 setMotion: 0 setCycle: EndLoop self)
 				)
-				(= seconds 2)
-				
 			)
 			(1
-				;(Print {1})
 				(if (> heroHP 0)
-					(ChickenNPC loop: 1 cel: 0 setCycle: EndLoop winScript)
+					(ChickenNPC loop: 1 cel: 0 setCycle: EndLoop self)
 				else
-					(ChickenHero loop: 1 cel: 0 setCycle: EndLoop winScript)
+					(ChickenHero loop: 1 cel: 0 setCycle: EndLoop self)
 				)
 			)
 			(2
-				;(Print {2})
-				;(ChickenHero dispose:)
-				;(ChickenNPC dispose:)
 				(= seconds 2)
 			)
 			(3
-				;(Print {3})
+				(if betOnNum
+					(if
+						(and
+							(< npcHP 1)
+							(< heroHP 1)
+						)
+						(Print {Draw. House takes all bets.})
+					else
+						(if
+							(or
+								(and
+									(< npcHP 1)
+									(== betOnNum 1)
+								)
+								(and
+									(< heroHP 1)
+									(== betOnNum 2)
+								)
+							)
+							(= buckazoids (+ buckazoids (* betAmount 2)))
+							(Printf {You won %d buckazoids!\n__Total Buckazoids: %d} (* betAmount 2) buckazoids)
+							(= lossCount 0)
+						else
+							(Printf {Your Astrochicken lost.\n__You have %d Buckazoids left.} buckazoids)
+							(++ lossCount)
+							(if (== lossCount 5)
+								(Print {Don't give up your day job, Roger.})
+							)
+															
+						)
+					)
+					(= betAmount 0)
+					(= betOnNum 0)	
+				)
+				(= cycles 1)
+			)
+			(4
 				(ChickenNPC setScript: 0)
 				(ChickenHero setScript: 0)
 				(ChickenInit)
 				(= state -1)
-				;(self dispose:)
 			)
 		)
 	)

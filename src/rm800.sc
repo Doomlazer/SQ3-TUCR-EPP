@@ -8,6 +8,7 @@
 (use Game)
 (use Actor)
 (use System)
+(use User)
 
 (public
 	Room800 0
@@ -46,6 +47,7 @@
 (instance Room800 of Room
 	(properties
 		picture 800
+		north 813
 	)
 	
 	(method (init)
@@ -57,12 +59,29 @@
 		(if (== numVoices 1)
 			(Load SOUND 16)
 		)
-		(= horizon -4000)
+		(= horizon 69) ;-4000)
 		(theGame setSpeed: 5)
 		(HandsOff)
 		(= inCartoon TRUE)
 		(super init:)
-		(self setScript: Actions)
+		(switch prevRoomNum
+			(813
+				(ego
+					view: 68
+					;setLoop: 4
+					setCycle: Walk
+					setStep: 1 1
+					setPri: 12
+					posn: 160 70
+					setMotion: MoveTo 160 72 self ;176
+					init:
+				)
+				(HandsOn)
+			)
+			(else
+				(self setScript: Actions)
+			)
+		)
 	)
 	
 	(method (newRoom n)
@@ -81,6 +100,7 @@
 					setCel: 0
 					setPri: 13
 					ignoreActors:
+					ignoreHorizon:
 					setMotion: MoveTo 0 39 self
 					init:
 				)
@@ -140,7 +160,7 @@
 				
 			)
 			(7
-				(Mark
+				(ego
 					view: 68
 					setLoop: 4
 					setCycle: Walk
@@ -152,51 +172,54 @@
 				)
 			)
 			(8
-				(Mark setMotion: MoveTo 117 130 self)
-			)
-			(9
-				(Scott ;now astro chicken
-					view: 290 ;215
-					setLoop: 8
-					setCycle: EndLoop
-					setStep: 1 10
-					setPri: 12
-					posn: 117 0
-					setMotion: MoveTo 117 135 self
-					init:
-				)
-				(= seconds 2)	
-			)
-			(10
-				(Mark dispose:) 
-				(Scott ;now astro chicken
-					view: 291
-					setLoop: 0
-					ignoreActors:
-					ignoreHorizon:
-					ignoreControl: 
-					setCycle: EndLoop self
-					setPri: 15
-					posn: 117 135
-				)
-			)
-			(11
-				(Scott ;now astro chicken
-					view: 291 ;215
-					setLoop: 1
-					setCycle: EndLoop self
-					setPri: 15
-					posn: 117 135
-				)
-			
-			)
-			(12
-				(Scott dispose:)
-				(Print {Suddenly, from out of the sky comes an astro chicken careening towards you at supersonic speed. Both you and the chicken are vaporied on impact.})
-				(EgoDead 0 0 8 16)
-				(= inCartoon FALSE)
+				(ego 
+					setLoop: -1
+				)	;setMotion: MoveTo 117 130 self)
 				(HandsOn)
 			)
+;;;			(9
+;;;				(Scott ;now astro chicken
+;;;					view: 290 ;215
+;;;					setLoop: 8
+;;;					setCycle: EndLoop
+;;;					setStep: 1 10
+;;;					setPri: 12
+;;;					posn: 117 0
+;;;					setMotion: MoveTo 117 135 self
+;;;					init:
+;;;				)
+;;;				(= seconds 2)	
+;;;			)
+;;;			(10
+;;;				(Mark dispose:) 
+;;;				(Scott ;now astro chicken
+;;;					view: 291
+;;;					setLoop: 0
+;;;					ignoreActors:
+;;;					ignoreHorizon:
+;;;					ignoreControl: 
+;;;					setCycle: EndLoop self
+;;;					setPri: 15
+;;;					posn: 117 135
+;;;				)
+;;;			)
+;;;			(11
+;;;				(Scott ;now astro chicken
+;;;					view: 291 ;215
+;;;					setLoop: 1
+;;;					setCycle: EndLoop self
+;;;					setPri: 15
+;;;					posn: 117 135
+;;;				)
+;;;			
+;;;			)
+;;;			(12
+;;;				(Scott dispose:)
+;;;				(Print {Suddenly, from out of the sky comes an astro chicken careening towards you at supersonic speed. Both you and the chicken are vaporied on impact.})
+;;;				(EgoDead 0 0 8 16)
+;;;				(= inCartoon FALSE)
+;;;				(HandsOn)
+;;;			)
 		)
 	)
 )
