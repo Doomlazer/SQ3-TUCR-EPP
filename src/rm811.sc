@@ -139,10 +139,14 @@
 				(if betOnNum
 					(= betAmount (GetNumber {How many Buckazoids do you bet?}))
 					(if (> betAmount buckazoids)
-						(Print {That's more that you have, Roger.})
+						(Print {That's more that you have, Roger. Bet canceled.})
+						(= betAmount 0)
+						(= betOnNum 0)
 					else
 						(if (< betAmount 1)
 							(Print {Bet canceled.})
+							(= betAmount 0)
+							(= betOnNum 0)
 						else
 							(= buckazoids (- buckazoids betAmount))
 							(Printf {Bet placed:\n__%d on %s to win.} betAmount (Format @str 811 ( if (== betOnNum 1) name1 else name2 )))
