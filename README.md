@@ -18,9 +18,9 @@ This mod requires the retail version of SQ3. Both the GOG and Steam versions are
 
 To download the patch, click the green "CODE" button near the top of this page and select "Download Zip". Uncompress the .zip and find the PATCHES folder.
 
-DOSBox users <b>must copy the contents</b> of PATCHES into the SQ3 game folder. All the mod files need to be loose inside the folder next to SQ3.bat - this makes uninstalling the mod difficult, so it's recommend you back up your SQ3 game folder or use a copy of SQ3 for this mod.
+DOSBox users <b>must copy the contents</b> of 'patch' into the SQ3 game folder. All the mod files need to be loose inside the folder next to SQ3.bat - this makes uninstalling the mod difficult, so it's recommend you back up your SQ3 game folder or use a copy of SQ3 for this mod.
 
-ScummVM users can move the entire PATCHES folder into the SQ3 game folder. Remove the PATCHES folder to uninstall.
+ScummVM users can move the entire 'patch' folder into the SQ3 game folder. Remove the PATCHES folder to uninstall.
 
 ## New features
 
