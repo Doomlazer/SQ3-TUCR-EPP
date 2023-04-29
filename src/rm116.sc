@@ -224,97 +224,101 @@
 					#width 320
 				)
 				(= seconds 8)
+				(if (< buckazoids 1000) ;if not easter egg do original ending
+					(= state 49)
+				)
 			)
 			(13
 				(cls)
 				(RedrawCast)
 				(rMouth setCel: 0)
 				(kMouth setCycle: Forward)
-				(Print 116 2
+				(Print 116 12 ;116 2
 					#title {Ken Williams}
 					#dispose
 					#at -1 156
 					#width 320
 				)
-				(= seconds 10)
+				(= seconds 5)
 			)
 			(14
 				(cls)
 				(RedrawCast)
-				(kMouth setCel: 0)
-				(sMouth setCycle: Forward)
-				(Print 116 3 #title {Scott} #dispose #at -1 170)
-				(= seconds 5)
+				(Print 116 13
+					#title {Ken Williams}
+					#dispose
+					#at -1 156
+					#width 320
+				)
+				(= seconds 7)
 			)
 			(15
 				(cls)
 				(RedrawCast)
-				(sMouth setCel: 0)
-				(kMouth cel: 255 setCycle: EndLoop self)
-				(Print 116 4
+				(Print 116 14 ;116 4
 					#title {Ken Williams}
 					#dispose
 					#at -1 170
 					#mode teJustCenter
 				)
+				(= seconds 5)
 			)
 			(16
-				(cls)
-				(RedrawCast)
-				(mMouth setCel: 0)
-				(sMouth cel: 255 setCycle: EndLoop self)
-				(Print 116 5 #title {Scott} #dispose #at -1 170 #mode 1)
-			)
-			(17
-				(cls)
-				(RedrawCast)
-				(sMouth setCel: 0)
-				(kMouth setCycle: Forward)
-				(Print 116 6 #title {Ken Williams} #dispose #at -1 170)
-				(= seconds 8)
-			)
-			(18
 				(cls)
 				(RedrawCast)
 				(kMouth setCel: 0)
 				(mMouth setCycle: Forward)
 				(sMouth setCycle: Forward)
-				(Print 116 7
+				(Print {Yes, master.} ;116 7
 					#title {Scott and Mark}
 					#dispose
 					#at -1 156
-					#width 320
+					#width 100
 					#mode teJustCenter
 				)
-				(= seconds 5)
+				(= seconds 1)
 			)
-			(19
+			(17
 				(cls)
 				(RedrawCast)
 				(sMouth setCel: 0)
 				(mMouth setCel: 0)
-				(kMouth cel: 255 setCycle: EndLoop self)
-				(Print 116 8 #title {Ken Williams} #dispose #at -1 170)
+				(kMouth setCycle: Forward)
+				(Print
+					116 15 ;116 6
+					#title {Ken Williams}
+					#dispose
+					#at -1 170
+				)
+				(= seconds 3)
+				(= state 19)
 			)
 			(20
 				(cls)
 				(RedrawCast)
 				(kMouth setCel: 0)
 				(rMouth setCycle: Forward)
-				(Print 116 9 #title {Roger} #dispose #at -1 170)
-				(= seconds 7)
+				(Print
+					116 17 ;116 9 
+					#title {Roger}
+					#dispose
+					#at -1 170
+				)
+				(= seconds 3)
 			)
 			(21
 				(cls)
 				(RedrawCast)
 				(rMouth setCel: 0)
-				(kMouth cel: 255 setCycle: EndLoop self)
-				(Print 116 4
+				;(kMouth cel: 255 setCycle: EndLoop self)
+				(kMouth setCycle: Forward)
+				(Print 116 16 ;116 4
 					#title {Ken Williams}
 					#dispose
 					#at -1 170
 					#mode teJustCenter
 				)
+				(= seconds 4)
 			)
 			(22
 				(cls)
@@ -410,6 +414,98 @@
 			)
 			(38
 				(curRoom newRoom: 117)
+			)
+			(50 ;original ending
+				(cls)
+				(RedrawCast)
+				(rMouth setCel: 0)
+				(kMouth setCycle: Forward)
+				(Print 116 2
+					#title {Ken Williams}
+					#dispose
+					#at -1 156
+					#width 320
+				)
+				(= seconds 10)
+			)
+			(51
+				(cls)
+				(RedrawCast)
+				(kMouth setCel: 0)
+				(sMouth setCycle: Forward)
+				(Print 116 3 #title {Scott} #dispose #at -1 170)
+				(= seconds 5)
+			)
+			(52
+				(cls)
+				(RedrawCast)
+				(sMouth setCel: 0)
+				(kMouth cel: 255 setCycle: EndLoop self)
+				(Print 116 4
+					#title {Ken Williams}
+					#dispose
+					#at -1 170
+					#mode teJustCenter
+				)
+			)
+			(53
+				(cls)
+				(RedrawCast)
+				(mMouth setCel: 0)
+				(sMouth cel: 255 setCycle: EndLoop self)
+				(Print 116 5 #title {Scott} #dispose #at -1 170 #mode 1)
+			)
+			(54
+				(cls)
+				(RedrawCast)
+				(sMouth setCel: 0)
+				(kMouth setCycle: Forward)
+				(Print 116 6 #title {Ken Williams} #dispose #at -1 170)
+				(= seconds 8)
+			)
+			(55
+				(cls)
+				(RedrawCast)
+				(kMouth setCel: 0)
+				(mMouth setCycle: Forward)
+				(sMouth setCycle: Forward)
+				(Print 116 7
+					#title {Scott and Mark}
+					#dispose
+					#at -1 156
+					#width 320
+					#mode teJustCenter
+				)
+				(= seconds 5)
+			)
+			(56
+				(cls)
+				(RedrawCast)
+				(sMouth setCel: 0)
+				(mMouth setCel: 0)
+				(kMouth cel: 255 setCycle: EndLoop self)
+				(Print 116 8 #title {Ken Williams} #dispose #at -1 170)
+			)
+			(57
+				(cls)
+				(RedrawCast)
+				(kMouth setCel: 0)
+				(rMouth setCycle: Forward)
+				(Print 116 9 #title {Roger} #dispose #at -1 170)
+				(= seconds 7)
+			)
+			(58
+				(cls)
+				(RedrawCast)
+				(rMouth setCel: 0)
+				(kMouth cel: 255 setCycle: EndLoop self)
+				(Print 116 4
+					#title {Ken Williams}
+					#dispose
+					#at -1 170
+					#mode teJustCenter
+				)
+				(= state 21)
 			)
 		)
 	)
