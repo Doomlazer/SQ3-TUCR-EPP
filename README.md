@@ -68,6 +68,8 @@ Players may now place wagers on the astrochicken fights at Quirk's bar.
 
 A new room was started on Aquavelvetta. The gate requires Roger to be in two places at once to open.
 
+Easter Egg <a href="https://www.youtube.com/watch?v=ZASZ0iqXUAc">ending dialogue</a>.
+
 ### Febuary 2023
 
 Added partially complete astrochicken fights at Quirk's bar.
