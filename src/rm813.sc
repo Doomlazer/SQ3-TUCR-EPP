@@ -13,8 +13,7 @@
 	Room813 0
 )
 
-(local
-)
+(local)
 
 (procedure (checkPad pad)
 	(if
@@ -43,43 +42,49 @@
 		(super init:)
 		(self
 			view: 303
-			;ignoreActors:
+			ignoreHorizon:
+			illegalBits: 0
 			setLoop: 1
 			setCel: 0
-			setPri: 10
+			setPri: 2
 			x: 160
-			y: 150
+			y: 115
 		)
 	)
 	
 	(method (doit)
 		(super doit:)
-		(self setPri: 10)
 		(if 
 			(and
 				(== (pad1 cel?) 2)
 				(== (pad2 cel?) 2)
 			)
-			(self setStep: 2 3 setMotion: MoveTo (self x?) 80)	
+			(if (> (self y?) 40)
+				(self setStep: 2 3 setMotion: MoveTo (self x?) 40)
+			)	
 		else
-			(self setStep: 2 1 setMotion: MoveTo (self x?) 150)
-		)
-		(if (< (door y?) 115)
-			(ego illegalBits: cRED)
-		else
-			(ego illegalBits: (| cGREEN cRED))
-			(if
-				(and
-					(& (ego onControl:) cGREEN)
-					(< (door y?) 120)
-					(> (door y?) 115)
-				)
-				(Print {the door crushes your skull.})
-				(EgoDead 901 0 15 1)
+			(if (< (self y?) 115)
+				(self setStep: 2 1 setMotion: MoveTo (self x?) 115)
 			)
+		)
+
+		(if (< (self y?) 75)
+			(ego illegalBits: (| cGREEN cWHITE))
+		else
+			(ego illegalBits: (| cGREEN cRED cWHITE))
+;;;			(if
+;;;				(and
+;;;					(& (ego onControl:) cRED)
+;;;					(< (self y?) 80)
+;;;					(> (self y?) 75)
+;;;				)
+;;;				(Print {the door crushes your skull.})
+;;;				(EgoDead 901 0 15 1)
+;;;			)
 		)
 	)
 )
+
 
 (instance pad1 of Prop
 	
@@ -91,8 +96,8 @@
 			setLoop: 0
 			setCel: 0
 			setPri: 3
-			x: 73
-			y: 169
+			x: 78
+			y: 147
 		)
 	)
 	
@@ -119,8 +124,8 @@
 			setLoop: 0
 			setCel: 0
 			setPri: 3
-			x: 240
-			y: 169
+			x: 220
+			y: 147
 		)
 	)
 	
@@ -155,6 +160,7 @@
 		(pad1 init:)
 		(pad2 init:)
 		(door init:)
+		;(door2 init:)
 		(ego get: 18)
 		(switch prevRoomNum
 			(814
@@ -178,7 +184,7 @@
 	
 	(method (doit)
 		(super doit:)
-		(if (< (ego y?) 140)
+		(if (< (ego y?) 105)
 			(curRoom newRoom: 800) ;814)	
 		)
 		(if (> (ego y?) 205)
@@ -226,46 +232,3 @@
 		priority 3
 	)
 )
-
-;;;(instance winScript of Script
-;;;	(method (changeState newState)
-;;;		(switch (= state newState)
-;;;			(0
-;;;				(ChickenNPC setScript: 0)
-;;;				;(ChickenHero setScript: 0)
-;;;				;(Print {0})
-;;;				(if (> heroHP 0)
-;;;					(ChickenHero loop: 6 cel: 0 setCycle: EndLoop)
-;;;					(ChickenNPC view: 291 loop: 0 cel: 0 setCycle: EndLoop)
-;;;				else
-;;;					(ChickenNPC loop: 6 cel: 0 setCycle: EndLoop )
-;;;					(ChickenHero view: 291 loop: 0 cel: 0 setCycle: EndLoop)
-;;;				)
-;;;				(= seconds 2)
-;;;				
-;;;			)
-;;;			(1
-;;;				;(Print {1})
-;;;				(if (> heroHP 0)
-;;;					(ChickenNPC loop: 1 cel: 0 setCycle: EndLoop winScript)
-;;;				else
-;;;					(ChickenHero loop: 1 cel: 0 setCycle: EndLoop winScript)
-;;;				)
-;;;			)
-;;;			(2
-;;;				;(Print {2})
-;;;				;(ChickenHero dispose:)
-;;;				;(ChickenNPC dispose:)
-;;;				(= seconds 2)
-;;;			)
-;;;			(3
-;;;				;(Print {3})
-;;;				(ChickenNPC setScript: 0)
-;;;				(ChickenHero setScript: 0)
-;;;				(ChickenInit)
-;;;				(= state -1)
-;;;				;(self dispose:)
-;;;			)
-;;;		)
-;;;	)
-;;;)
