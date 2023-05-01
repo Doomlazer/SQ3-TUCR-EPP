@@ -21,6 +21,7 @@
 	maxDown = 110
 	maxLeft = 20
 	maxRight = 300
+	mineToggle = 1
 )
 
 (procedure (checkMine mine)
@@ -44,11 +45,10 @@
 			ignoreHorizon:
 			illegalBits: 0
 			ignoreActors:
-			;ignoreControl: (| cGREEN cRED cWHITE)
 			setLoop: 1
 			setCel: 0
-			;setPri: 15
 			setCycle: Forward
+			hide:
 			x: (Random maxLeft maxRight)
 			y: (Random maxUp maxDown)
 		)
@@ -57,15 +57,24 @@
 	(method (doit)
 		(super doit:)
 		(if (checkMine self)
-			(self hide:)
-			(ego view: 291 cel: 0 setCycle: EndLoop)
-			(EgoDead)
+			(ego setScript: mineDeath)
+			(self dispose:)
 		)
-		(if (== (Random 0 100) 69)	
+		(if (== (Random 0 100) 69)
 			(self setMotion: MoveTo (Random maxLeft maxRight) (Random maxUp maxDown))
+		else
+			(if
+				(and
+					mineToggle
+					(< (ego y?) maxDown)
+				)
+				(self show:)
+				(self setMotion: MoveTo (ego x?) (ego y?))
+			)
 		)
 	)
 )
+
 (instance mine2 of Actor
 	
 	(method (init)
@@ -75,11 +84,10 @@
 			ignoreHorizon:
 			illegalBits: 0
 			ignoreActors:
-			;ignoreControl: (| cGREEN cRED cWHITE)
 			setLoop: 1
 			setCel: 0
-			;setPri: 15
 			setCycle: Forward
+			hide:
 			x: (Random maxLeft maxRight)
 			y: (Random maxUp maxDown)
 		)
@@ -88,15 +96,24 @@
 	(method (doit)
 		(super doit:)
 		(if (checkMine self)
-			(self hide:)
-			(ego view: 291 cel: 0 setCycle: EndLoop)
-			(EgoDead)
+			(ego setScript: mineDeath)
+			(self dispose:)
 		)
-		(if (== (Random 0 100) 69)	
+		(if (== (Random 0 100) 69)
 			(self setMotion: MoveTo (Random maxLeft maxRight) (Random maxUp maxDown))
+		else
+			(if
+				(and
+					mineToggle
+					(< (ego y?) maxDown)
+				)
+				(self show:)
+				(self setMotion: MoveTo (ego x?) (ego y?))
+			)
 		)
 	)
 )
+
 (instance mine3 of Actor
 	
 	(method (init)
@@ -106,11 +123,10 @@
 			ignoreHorizon:
 			illegalBits: 0
 			ignoreActors:
-			;ignoreControl: (| cGREEN cRED cWHITE)
 			setLoop: 1
 			setCel: 0
-			;setPri: 15
 			setCycle: Forward
+			hide:
 			x: (Random maxLeft maxRight)
 			y: (Random maxUp maxDown)
 		)
@@ -119,15 +135,24 @@
 	(method (doit)
 		(super doit:)
 		(if (checkMine self)
-			(self hide:)
-			(ego view: 291 cel: 0 setCycle: EndLoop)
-			(EgoDead)
+			(ego setScript: mineDeath)
+			(self dispose:)
 		)
-		(if (== (Random 0 100) 69)	
+		(if (== (Random 0 100) 69)
 			(self setMotion: MoveTo (Random maxLeft maxRight) (Random maxUp maxDown))
+		else
+			(if
+				(and
+					mineToggle
+					(< (ego y?) maxDown)
+				)
+				(self show:)
+				(self setMotion: MoveTo (ego x?) (ego y?))
+			)
 		)
 	)
 )
+
 (instance mine4 of Actor
 	
 	(method (init)
@@ -137,11 +162,10 @@
 			ignoreHorizon:
 			illegalBits: 0
 			ignoreActors:
-			;ignoreControl: (| cGREEN cRED cWHITE)
 			setLoop: 1
 			setCel: 0
-			;setPri: 15
 			setCycle: Forward
+			hide:
 			x: (Random maxLeft maxRight)
 			y: (Random maxUp maxDown)
 		)
@@ -150,15 +174,24 @@
 	(method (doit)
 		(super doit:)
 		(if (checkMine self)
-			(self hide:)
-			(ego view: 291 cel: 0 setCycle: EndLoop)
-			(EgoDead)
+			(ego setScript: mineDeath)
+			(self dispose:)
 		)
-		(if (== (Random 0 100) 69)	
+		(if (== (Random 0 100) 69)
 			(self setMotion: MoveTo (Random maxLeft maxRight) (Random maxUp maxDown))
+		else
+			(if
+				(and
+					mineToggle
+					(< (ego y?) maxDown)
+				)
+				(self show:)
+				(self setMotion: MoveTo (ego x?) (ego y?))
+			)
 		)
 	)
 )
+
 (instance mine5 of Actor
 	
 	(method (init)
@@ -168,11 +201,10 @@
 			ignoreHorizon:
 			illegalBits: 0
 			ignoreActors:
-			;ignoreControl: (| cGREEN cRED cWHITE)
 			setLoop: 1
 			setCel: 0
-			;setPri: 15
 			setCycle: Forward
+			hide:
 			x: (Random maxLeft maxRight)
 			y: (Random maxUp maxDown)
 		)
@@ -181,15 +213,24 @@
 	(method (doit)
 		(super doit:)
 		(if (checkMine self)
-			(self hide:)
-			(ego view: 291 cel: 0 setCycle: EndLoop)
-			(EgoDead)
+			(ego setScript: mineDeath)
+			(self dispose:)
 		)
-		(if (== (Random 0 100) 69)	
+		(if (== (Random 0 100) 69)
 			(self setMotion: MoveTo (Random maxLeft maxRight) (Random maxUp maxDown))
+		else
+			(if
+				(and
+					mineToggle
+					(< (ego y?) maxDown)
+				)
+				(self show:)
+				(self setMotion: MoveTo (ego x?) (ego y?))
+			)
 		)
 	)
 )
+
 (instance mine6 of Actor
 	
 	(method (init)
@@ -199,11 +240,10 @@
 			ignoreHorizon:
 			illegalBits: 0
 			ignoreActors:
-			;ignoreControl: (| cGREEN cRED cWHITE)
 			setLoop: 1
 			setCel: 0
-			;setPri: 15
 			setCycle: Forward
+			hide:
 			x: (Random maxLeft maxRight)
 			y: (Random maxUp maxDown)
 		)
@@ -212,15 +252,24 @@
 	(method (doit)
 		(super doit:)
 		(if (checkMine self)
-			(self hide:)
-			(ego view: 291 cel: 0 setCycle: EndLoop)
-			(EgoDead)
+			(ego setScript: mineDeath)
+			(self dispose:)
 		)
-		(if (== (Random 0 100) 69)	
+		(if (== (Random 0 100) 69)
 			(self setMotion: MoveTo (Random maxLeft maxRight) (Random maxUp maxDown))
+		else
+			(if
+				(and
+					mineToggle
+					(< (ego y?) maxDown)
+				)
+				(self show:)
+				(self setMotion: MoveTo (ego x?) (ego y?))
+			)
 		)
 	)
 )
+
 (instance mine7 of Actor
 	
 	(method (init)
@@ -230,11 +279,10 @@
 			ignoreHorizon:
 			illegalBits: 0
 			ignoreActors:
-			;ignoreControl: (| cGREEN cRED cWHITE)
 			setLoop: 1
 			setCel: 0
-			;setPri: 15
 			setCycle: Forward
+			hide:
 			x: (Random maxLeft maxRight)
 			y: (Random maxUp maxDown)
 		)
@@ -243,15 +291,24 @@
 	(method (doit)
 		(super doit:)
 		(if (checkMine self)
-			(self hide:)
-			(ego view: 291 cel: 0 setCycle: EndLoop)
-			(EgoDead)
+			(ego setScript: mineDeath)
+			(self dispose:)
 		)
-		(if (== (Random 0 100) 69)	
+		(if (== (Random 0 100) 69)
 			(self setMotion: MoveTo (Random maxLeft maxRight) (Random maxUp maxDown))
+		else
+			(if
+				(and
+					mineToggle
+					(< (ego y?) maxDown)
+				)
+				(self show:)
+				(self setMotion: MoveTo (ego x?) (ego y?))
+			)
 		)
 	)
 )
+
 (instance mine8 of Actor
 	
 	(method (init)
@@ -261,11 +318,10 @@
 			ignoreHorizon:
 			illegalBits: 0
 			ignoreActors:
-			;ignoreControl: (| cGREEN cRED cWHITE)
 			setLoop: 1
 			setCel: 0
-			;setPri: 15
 			setCycle: Forward
+			hide:
 			x: (Random maxLeft maxRight)
 			y: (Random maxUp maxDown)
 		)
@@ -274,15 +330,24 @@
 	(method (doit)
 		(super doit:)
 		(if (checkMine self)
-			(self hide:)
-			(ego view: 291 cel: 0 setCycle: EndLoop)
-			(EgoDead)
+			(ego setScript: mineDeath)
+			(self dispose:)
 		)
-		(if (== (Random 0 100) 69)	
+		(if (== (Random 0 100) 69)
 			(self setMotion: MoveTo (Random maxLeft maxRight) (Random maxUp maxDown))
+		else
+			(if
+				(and
+					mineToggle
+					(< (ego y?) maxDown)
+				)
+				(self show:)
+				(self setMotion: MoveTo (ego x?) (ego y?))
+			)
 		)
 	)
 )
+
 (instance mine9 of Actor
 	
 	(method (init)
@@ -292,11 +357,10 @@
 			ignoreHorizon:
 			illegalBits: 0
 			ignoreActors:
-			;ignoreControl: (| cGREEN cRED cWHITE)
 			setLoop: 1
 			setCel: 0
-			;setPri: 15
 			setCycle: Forward
+			hide:
 			x: (Random maxLeft maxRight)
 			y: (Random maxUp maxDown)
 		)
@@ -305,17 +369,23 @@
 	(method (doit)
 		(super doit:)
 		(if (checkMine self)
-			(self hide:)
-			(ego view: 291 cel: 0 setCycle: EndLoop)
-			(EgoDead)
+			(ego setScript: mineDeath)
+			(self dispose:)
 		)
-		(if (== (Random 0 100) 69)	
+		(if (== (Random 0 100) 69)
 			(self setMotion: MoveTo (Random maxLeft maxRight) (Random maxUp maxDown))
+		else
+			(if
+				(and
+					mineToggle
+					(< (ego y?) maxDown)
+				)
+				(self show:)
+				(self setMotion: MoveTo (ego x?) (ego y?))
+			)
 		)
 	)
 )
-
-
 
 (instance ship of Actor)
 
@@ -379,6 +449,33 @@
 	(method (handleEvent pEvent)
 		(super handleEvent: pEvent)
 		; handle Said's, etc...
+		(if (Said 'look/mine')
+			(if mineToggle
+				(= mineToggle 0)
+				(mine1 show:)
+				(mine2 show:)
+				(mine3 show:)
+				(mine4 show:)
+				(mine5 show:)
+				(mine6 show:)
+				(mine7 show:)
+				(mine8 show:)
+				(mine9 show:)
+			else
+				(= mineToggle 1)
+				(mine1 hide:)
+				(mine2 hide:)
+				(mine3 hide:)
+				(mine4 hide:)
+				(mine5 hide:)
+				(mine6 hide:)
+				(mine7 hide:)
+				(mine8 hide:)
+				(mine9 hide:)
+			)
+			(pEvent claimed: 1)		
+		)
+		
 		(if (Said 'look>')
 			(pEvent claimed: 1)
 			(cond 
@@ -397,6 +494,23 @@
 	
 	(method (newRoom n)
 		(super newRoom: n)
+	)
+)
+
+(instance mineDeath of Script
+	(method (changeState newState)
+		(switch (= state newState)
+			(0
+				(HandsOff)
+				(ego view: 291 loop: 0 cel: 0 setMotion: 0 setCycle: EndLoop self)
+			)
+			(1
+				(ego view: 291 loop: 1 cel: 0 setCycle: EndLoop self)
+			)
+			(2
+				(EgoDead)
+			)
+		)
 	)
 )
 
