@@ -63,14 +63,12 @@ FYI, the QA debug command is only available in the first room. More debugging in
 
 ## CREDITS
 
-<b>Sectors 23, 27 & 70:</b>
-
-DoomLazer - Concepts and Programming
+DoomLazer - Programming
 
 Threepwang - Backgrounds
 
 
-## What's changed recently?
+## What's changed?
 
 ### May 2023
 
