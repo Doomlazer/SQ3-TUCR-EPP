@@ -41,13 +41,6 @@ The Monolth Buger Decoder ring is now a fully functional ceasar cipher. Rotating
 
 This new inventory item can temporarily freeze a copy of Roger in time, this will be used for some future puzzles and can also be used to <a href="https://www.youtube.com/watch?v=czkSgwzEfqA">cheat death</a>. This has not been fully tested against all deaths yet, please report bugs.
 
-## I'm trying to test a planet, how can I skip the opening sequence?
-
-When Roger wakes up and exits the escape pod, type <b>PUMP SHARK</b> to activate debugging. 
-
-You can use the debug command <b>TP</b> to teleport to other rooms, but it's best to type <b>QA</b> in the first room, then select the "space" option which makes the Mallard spaceworthy and ready to warp to any planet. 
-
-FYI, the QA debug command is only available in the first room. More debugging info <a href="http://sciwiki.sierrahelp.com//index.php?title=SCI_Debug_Modes#Space_Quest_3">here</a> and <a href="https://github.com/Doomlazer/SCI-Debug-Resources">here</a>.
 
 
 ### Mine-Avoidance Goggles
@@ -55,6 +48,16 @@ FYI, the QA debug command is only available in the first room. More debugging in
 <img src="pics/goggles.png"  width="600" alt="The alien salesman Fester pitches the goggles to the player.">
 
 Fester now sells an additional item.
+
+
+
+## I'm trying to test a planet, how can I skip the opening sequence?
+
+When Roger wakes up and exits the escape pod, type <b>PUMP SHARK</b> to activate debugging. 
+
+You can use the debug command <b>TP</b> to teleport to other rooms, but it's best to type <b>QA</b> in the first room, then select the "space" option which makes the Mallard spaceworthy and ready to warp to any planet. 
+
+FYI, the QA debug command is only available in the first room. More debugging info <a href="http://sciwiki.sierrahelp.com//index.php?title=SCI_Debug_Modes#Space_Quest_3">here</a> and <a href="https://github.com/Doomlazer/SCI-Debug-Resources">here</a>.
 
 
 
