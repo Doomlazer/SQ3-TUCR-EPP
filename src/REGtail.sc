@@ -50,11 +50,12 @@
 ;;;                signal $4000
 ;;;        )
 ;;;)
-(instance trail5 of Actor
-        (properties
-                signal $4000
-        )
-)
+
+;;;(instance trail5 of Actor
+;;;        (properties
+;;;                signal $4000
+;;;        )
+;;;)
 
 
 (instance cleanup of Script
@@ -123,6 +124,7 @@
 (instance regtrail of Region
  	(method (init)
 		(super init:)
+		(= PTDCountDown 200) ;global in main
 		(= tdx (ego x?)) 
 		(= tdy (ego y?))
 		(= tdv (ego view?))
@@ -151,7 +153,7 @@
 			setPri: (ego priority?)
 			init:
 		)
-		(= count1 4)
+		(= count1 3) ;4)
 ;;;		(trail2
 ;;;			x: (ego x?)
 ;;;			y: (ego y?)
@@ -171,7 +173,7 @@
 			setPri: (ego priority?)
 			init:
 		)
-		(= count3 12)
+		(= count3 6) ; 12)
 ;;;		(trail4
 ;;;			x: (ego x?)
 ;;;			y: (ego y?)
@@ -182,32 +184,36 @@
 ;;;			init:
 ;;;		)
 ;;;		(= count4 16)
-		(trail5
-			x: (ego x?)
-			y: (ego y?)
-			view: (ego view?)
-			loop: (ego loop?)
-			cel: (ego cel?)
-			setPri: (ego priority?)
-			init:
-		)
-		(= count5 20)
+;;;		(trail5
+;;;			x: (ego x?)
+;;;			y: (ego y?)
+;;;			view: (ego view?)
+;;;			loop: (ego loop?)
+;;;			cel: (ego cel?)
+;;;			setPri: (ego priority?)
+;;;			init:
+;;;		)
+;;;		(= count5 6) ;20)
 	)
 	
 	(method (doit &tmp [str 40])
 		(super doit:)
-		(= randy 20) ;(Random 19 20))
+		(= randy 6) ; 20) ;(Random 19 20))
 		(-- count1)
 		(if (<= count1 0) 
-			(trail1 
-				x: (ego x?)
-				y: (ego y?)
-				view: (ego view?)
-				loop: (ego loop?)
-				cel: (ego cel?)
-				setPri: (ego priority?)
-			)
-			(= count1 randy)
+;;;			(if (> PTDCountDown 30)
+				(trail1 
+					x: (ego x?)
+					y: (ego y?)
+					view: (ego view?)
+					loop: (ego loop?)
+					cel: (ego cel?)
+					setPri: (ego priority?)
+				)
+				(= count1 randy)
+;;;			else
+;;;				(trail1 dispose:)
+;;;			)
 		)
 ;;;		(-- count2)
 ;;;		(if (<= count2 0) 
@@ -223,15 +229,19 @@
 ;;;		)
 		(-- count3)
 		(if (<= count3 0) 
-			(trail3
-				x: (ego x?)
-				y: (ego y?)
-				view: (ego view?)
-				loop: (ego loop?)
-				cel: (ego cel?)
-				setPri: (ego priority?)
-			)
-			(= count3 randy)
+;;;			(if (> PTDCountDown 30)
+				(trail3
+					x: (ego x?)
+					y: (ego y?)
+					view: (ego view?)
+					loop: (ego loop?)
+					cel: (ego cel?)
+					setPri: (ego priority?)
+				)
+				(= count3 randy)
+;;;			else
+;;;				(trail3 dispose:)
+;;;			)
 		)
 ;;;		(-- count4)
 ;;;		(if (<= count4 0) 
@@ -245,17 +255,30 @@
 ;;;			)
 ;;;			(= count4 randy)
 ;;;		)
-		(-- count5)
-		(if (<= count5 0) 
-			(trail5
-				x: (ego x?)
-				y: (ego y?)
-				view: (ego view?)
-				loop: (ego loop?)
-				cel: (ego cel?)
-				setPri: (ego priority?)
-			)
-			(= count5 randy)
+;;;		(-- count5)
+;;;		(if (<= count5 0) 
+;;;			(trail5
+;;;				x: (ego x?)
+;;;				y: (ego y?)
+;;;				view: (ego view?)
+;;;				loop: (ego loop?)
+;;;				cel: (ego cel?)
+;;;				setPri: (ego priority?)
+;;;			)
+;;;			(= count5 randy)
+;;;		)
+
+		(if (> (GetDistance (trail0 x?) (trail0 y?) (ego x?)(ego y?)) 10)	
+			(trail0 ignoreActors: FALSE)
 		)
+
+
+;;;		(if (< PTDCountDown 3)
+;;;			(trail0 dispose:)	
+;;;		)
+;;;		(-- PTDCountDown)
+;;;		(if (== PTDCountDown 1)
+;;;			(Print {the time distortion effect has worn off.})
+;;;		)
 	)
 )

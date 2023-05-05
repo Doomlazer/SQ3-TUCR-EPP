@@ -498,6 +498,23 @@
 				)
 			)
 			(6
+				(if ((inventory at: iGoggles) ownedBy: 470)
+					(FesterTalks)
+					(localproc_1714 2 2 215 94 0)
+					(= printObj
+						(Print 470 47 ;goggles description
+							#at -1 1
+							#width 280
+							#font 600
+							#dispose
+						)
+					)
+					(= seconds 15)
+				else
+					(= cycles 2)
+				)
+			)
+			(7
 				(if printObj
 					(localproc_1788)
 					(= seconds 7)
@@ -505,7 +522,7 @@
 					(= cycles 2)
 				)
 			)
-			(7
+			(8
 				(FesterTalks)
 				(= printObj
 					(Print 470 40
@@ -517,11 +534,11 @@
 				)
 				(= seconds 10)
 			)
-			(8
+			(9
 				(localproc_1788)
 				(= seconds 10)
 			)
-			(9
+			(10
 				(if (== lookedAtCounter TRUE)
 					(FesterTalks)
 					(= printObj
@@ -537,7 +554,7 @@
 					(= cycles 2)
 				)
 			)
-			(10
+			(11
 				(if (== lookedAtCounter TRUE)
 					(localproc_1788)
 					(= seconds 7)
@@ -545,7 +562,7 @@
 					(= cycles 2)
 				)
 			)
-			(11 (self init:))
+			(12 (self init:))
 		)
 	)
 )

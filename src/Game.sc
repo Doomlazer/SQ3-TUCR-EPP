@@ -688,7 +688,6 @@
 		(return (event claimed?))
 	)
 
-
 	(method (dispose)
 		;Delete this region from the region list, then dispose any
 		;objects attached to/owned by it.

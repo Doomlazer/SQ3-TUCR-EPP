@@ -44,6 +44,7 @@
 			view: 303
 			ignoreHorizon:
 			illegalBits: 0
+			;ignoreControl: (| cGREEN cRED cWHITE)
 			setLoop: 1
 			setCel: 0
 			setPri: 2
@@ -219,6 +220,9 @@
 			)
 			(1
 				(RedrawCast)
+				(if (ego has: iGoggles)
+					(Print 800 18)
+				)
 				(HandsOn)
 				(self dispose:)
 			)

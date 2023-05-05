@@ -85,9 +85,9 @@
 	demoDialogTime	=	3				;how long Prints stay up in demo mode
 	currentPalette
 	modelessPort
-	;globals 63-99 are unused
-		global63
-		global64
+	PTDCountDown
+	PTDattachObj
+	;globals 65-99 are unused
 		global65
 		global66
 		global67
@@ -872,6 +872,7 @@
 				Invisibility_Belt
 				Bag_of_Fast_Food
 				Time_Disruptor
+				goggles
 		)
 		(if (GameIsRestarting)
 			(TheMenuBar draw:)
@@ -886,6 +887,10 @@
 	)
 	
 	(method (doit &tmp haveMouse)
+;;;		(-- PTDCountDown)
+;;;		(if (< PTDCountDown 1)
+;;;			(curRoom eachElementDo: #disposePTD)
+;;;		)
 		(if adSupported
 			(if 
 				(
@@ -1120,6 +1125,24 @@
 		(switch (event type?)
 			(saidEvent
 				(cond
+					((Said 'remove,take[<off]/goggles')
+						(if (ego has: iGoggles)
+							(Print 800 7)
+						else
+							(Print 800 11)
+						)
+					)
+					((Said 'wear,use/goggles')
+						(if (ego has: iGoggles)
+							(if (== curRoomNum 470)
+								(Print 800 12) ;Always sunny reference
+							else
+								(Print 800 10)
+							)
+						else
+							(Print 800 11)
+						)
+					)
 					((Said 'activate,use,press/disruptor[<time]')
 						(if (ego has: 18)
 							(if (== curRoomNum 10) ;disable use
@@ -1697,6 +1720,18 @@
 		loop 1
 		cel 1
 		name "Time Disruptor"
+	)
+)
+
+(instance goggles of InvItem
+	(properties
+		said '/goggles'
+		description {ACME Mine Avoidance Goggles. They make cloaked mines visable and jam their tracking abilities.}
+		owner 470
+		view 242
+		loop 1
+		cel 2
+		name "Mine Avoidance Goggles"
 	)
 )
 

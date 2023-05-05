@@ -30,6 +30,7 @@
 	iInvisibilityBelt		;16
 	iBagOfFastFood			;17
 	iTime_Disruptor			;18
+	iGoggles				;19
 )
 
 ;Locales and Regions

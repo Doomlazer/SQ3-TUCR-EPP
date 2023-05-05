@@ -21,7 +21,9 @@
 	maxDown = 110
 	maxLeft = 20
 	maxRight = 300
+	maxDist = 60
 	mineToggle = 1
+	courtesy = 1
 )
 
 (procedure (checkMine mine)
@@ -36,6 +38,17 @@
 	)
 )
 
+(procedure (MineShow)
+	(mine1 show:)
+	(mine2 show:)
+	(mine3 show:)
+	(mine4 show:)
+	(mine5 show:)
+	(mine6 show:)
+	(mine7 show:)
+	(mine8 show:)
+	(mine9 show:)
+)
 (instance mine1 of Actor
 	
 	(method (init)
@@ -65,11 +78,14 @@
 		else
 			(if
 				(and
+					courtesy
 					mineToggle
 					(< (ego y?) maxDown)
 				)
-				(self show:)
-				(self setMotion: MoveTo (ego x?) (ego y?))
+				(if (< (GetDistance (ego x?)(ego y?)(self x?)(self y?)) maxDist)
+					(self show:)
+					(self setMotion: MoveTo (ego x?) (ego y?))
+				)
 			)
 		)
 	)
@@ -104,11 +120,14 @@
 		else
 			(if
 				(and
+					courtesy
 					mineToggle
 					(< (ego y?) maxDown)
 				)
-				(self show:)
-				(self setMotion: MoveTo (ego x?) (ego y?))
+				(if (< (GetDistance (ego x?)(ego y?)(self x?)(self y?)) maxDist)
+					(self show:)
+					(self setMotion: MoveTo (ego x?) (ego y?))
+				)
 			)
 		)
 	)
@@ -143,11 +162,14 @@
 		else
 			(if
 				(and
+					courtesy
 					mineToggle
 					(< (ego y?) maxDown)
 				)
-				(self show:)
-				(self setMotion: MoveTo (ego x?) (ego y?))
+				(if (< (GetDistance (ego x?)(ego y?)(self x?)(self y?)) maxDist)
+					(self show:)
+					(self setMotion: MoveTo (ego x?) (ego y?))
+				)
 			)
 		)
 	)
@@ -182,11 +204,14 @@
 		else
 			(if
 				(and
+					courtesy
 					mineToggle
 					(< (ego y?) maxDown)
 				)
-				(self show:)
-				(self setMotion: MoveTo (ego x?) (ego y?))
+				(if (< (GetDistance (ego x?)(ego y?)(self x?)(self y?)) maxDist)
+					(self show:)
+					(self setMotion: MoveTo (ego x?) (ego y?))
+				)
 			)
 		)
 	)
@@ -221,11 +246,14 @@
 		else
 			(if
 				(and
+					courtesy
 					mineToggle
 					(< (ego y?) maxDown)
 				)
-				(self show:)
-				(self setMotion: MoveTo (ego x?) (ego y?))
+				(if (< (GetDistance (ego x?)(ego y?)(self x?)(self y?)) maxDist)
+					(self show:)
+					(self setMotion: MoveTo (ego x?) (ego y?))
+				)
 			)
 		)
 	)
@@ -260,11 +288,14 @@
 		else
 			(if
 				(and
+					courtesy
 					mineToggle
 					(< (ego y?) maxDown)
 				)
-				(self show:)
-				(self setMotion: MoveTo (ego x?) (ego y?))
+				(if (< (GetDistance (ego x?)(ego y?)(self x?)(self y?)) maxDist)
+					(self show:)
+					(self setMotion: MoveTo (ego x?) (ego y?))
+				)
 			)
 		)
 	)
@@ -299,11 +330,14 @@
 		else
 			(if
 				(and
+					courtesy
 					mineToggle
 					(< (ego y?) maxDown)
 				)
-				(self show:)
-				(self setMotion: MoveTo (ego x?) (ego y?))
+				(if (< (GetDistance (ego x?)(ego y?)(self x?)(self y?)) maxDist)
+					(self show:)
+					(self setMotion: MoveTo (ego x?) (ego y?))
+				)
 			)
 		)
 	)
@@ -338,11 +372,14 @@
 		else
 			(if
 				(and
+					courtesy
 					mineToggle
 					(< (ego y?) maxDown)
 				)
-				(self show:)
-				(self setMotion: MoveTo (ego x?) (ego y?))
+				(if (< (GetDistance (ego x?)(ego y?)(self x?)(self y?)) maxDist)
+					(self show:)
+					(self setMotion: MoveTo (ego x?) (ego y?))
+				)
 			)
 		)
 	)
@@ -377,11 +414,15 @@
 		else
 			(if
 				(and
+					courtesy
 					mineToggle
 					(< (ego y?) maxDown)
+					
 				)
-				(self show:)
-				(self setMotion: MoveTo (ego x?) (ego y?))
+				(if (< (GetDistance (ego x?)(ego y?)(self x?)(self y?)) maxDist)
+					(self show:)
+					(self setMotion: MoveTo (ego x?) (ego y?))
+				)
 			)
 		)
 	)
@@ -394,8 +435,6 @@
 (instance cockPit of Prop)
 
 (instance ramp of Prop)
-
-(instance bigRoger of Actor)
 
 (instance Room800 of Room
 	(properties
@@ -429,6 +468,12 @@
 					setMotion: MoveTo 160 72 self ;176
 					init:
 				)
+				(if (ego has: iGoggles)
+					(Print 800 19)
+					(= mineToggle 1)
+				else
+					(Print 800 20)
+				)
 				(HandsOn)
 			)
 			(else
@@ -448,52 +493,94 @@
 
 	(method (handleEvent pEvent)
 		(super handleEvent: pEvent)
-		; handle Said's, etc...
-		(if (Said 'look/mine')
-			(if mineToggle
-				(= mineToggle 0)
-				(mine1 show:)
-				(mine2 show:)
-				(mine3 show:)
-				(mine4 show:)
-				(mine5 show:)
-				(mine6 show:)
-				(mine7 show:)
-				(mine8 show:)
-				(mine9 show:)
+		
+		(if (Said 'talk/mine')
+			(if (not courtesy)
+				(Print 800 17)
 			else
-				(= mineToggle 1)
-				(mine1 hide:)
-				(mine2 hide:)
-				(mine3 hide:)
-				(mine4 hide:)
-				(mine5 hide:)
-				(mine6 hide:)
-				(mine7 hide:)
-				(mine8 hide:)
-				(mine9 hide:)
-			)
-			(pEvent claimed: 1)		
+				(MineShow)
+				(= courtesy 0)
+				(Print 800 13)
+				(Print 800 14)
+				(Print 800 15)
+				(Print 800 16)
+			)	
 		)
 		
+		(if (Said 'look/mine')
+			(if mineToggle
+				(Print 800 3)
+			else
+				(Print 800 4)
+			)	
+		)
+		
+		(if (Said 'wear,use/glasses,goggles')
+			(if (ego has: iGoggles)
+				(if mineToggle
+					(= mineToggle 0)
+					(Print 800 5)
+					(MineShow)
+				else
+					(Print 800 6)
+				)
+			else
+				(Print 800 11)
+			)
+		)
+		
+		(if (Said 'remove,take[<off]/glasses,goggles')
+			(if (ego has: iGoggles)
+				(if mineToggle
+					(Print 800 7)				
+				else
+					(= mineToggle 1)
+					(mine1 hide:)
+					(mine2 hide:)
+					(mine3 hide:)
+					(mine4 hide:)
+					(mine5 hide:)
+					(mine6 hide:)
+					(mine7 hide:)
+					(mine8 hide:)
+					(mine9 hide:)
+				)
+			else
+				(Print 800 11)
+			)
+		)
 		(if (Said 'look>')
-			(pEvent claimed: 1)
 			(cond 
 				((Said '/sign') (Print 800 0))
 				((Said '/building') (Print 800 2))
-				(else
-					(Print 800 1)
-				)
+				((Said '/*') (Print 800 1))
 			)
 		)
 		(if (Said 'read/sign')
-			(pEvent claimed: 1)
 			(Print 800 0)
 		)
 	)
 	
 	(method (newRoom n)
 		(super newRoom: n)
+	)
+)
+
+(instance surfaceScript of Script
+	(method (doit)
+		(if (& (ego onControl:) $0002);water
+			(if mineToggle
+				(ego view: 305) ;water no glasses
+			else
+				(ego view: 307) ;water w/ glasses
+			)
+		else 
+			(if mineToggle
+				(ego view: 68) ;no water w/ glasses
+			else
+				(ego view: 306) ;no water no glasses
+			)	
+		)
 	)
 )
 
@@ -597,6 +684,7 @@
 				)
 			)
 			(8
+				(ego setScript: surfaceScript)
 				(ego 
 					setLoop: -1
 				)	;setMotion: MoveTo 117 130 self)
