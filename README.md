@@ -72,6 +72,9 @@ Threepwang - Backgrounds
 
 ## What's changed recently?
 
+### May 2023
+
+Added Goggles inventory item.
 
 ### April 2023
 
