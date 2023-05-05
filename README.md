@@ -50,6 +50,14 @@ You can use the debug command <b>TP</b> to teleport to other rooms, but it's bes
 FYI, the QA debug command is only available in the first room. More debugging info <a href="http://sciwiki.sierrahelp.com//index.php?title=SCI_Debug_Modes#Space_Quest_3">here</a> and <a href="https://github.com/Doomlazer/SCI-Debug-Resources">here</a>.
 
 
+### Mine-Avoidance Goggles
+
+<img src="pics/goggles.png"  width="600" alt="The alien salesman Fester pitches the goggles to the player.">
+
+Fester now sells an additional item.
+
+
+
 ## CREDITS
 
 <b>Sectors 23, 27 & 70:</b>
