@@ -549,15 +549,15 @@
 				(Print 800 11)
 			)
 		)
+		(if (Said 'read/sign')
+			(Print 800 0)
+		)
 		(if (Said 'look>')
 			(cond 
 				((Said '/sign') (Print 800 0))
 				((Said '/building') (Print 800 2))
-				((Said '/*') (Print 800 1))
+				((Said '[<at,around,in][/area,!*]') (Print 800 1))
 			)
-		)
-		(if (Said 'read/sign')
-			(Print 800 0)
 		)
 	)
 	
@@ -580,6 +580,21 @@
 			else
 				(ego view: 306) ;no water no glasses
 			)	
+		)
+		(if (ego inRect: 45 150 80 185) 
+			(ego setScript: takeOff)
+		)
+		(if (< (ego x?) -5)
+			(Print 800 21)
+			(ego setMotion: MoveTo 10 (ego y?))
+		)
+		(if (> (ego x?) 325)
+			(Print 800 21)
+			(ego setMotion: MoveTo 315 (ego y?))
+		)
+		(if (> (ego y?) 195)
+			(Print 800 21)
+			(ego setMotion: MoveTo (ego x?) 185)
 		)
 	)
 )
@@ -631,6 +646,7 @@
 					setCel: 0
 					posn: 5 255
 					ignoreActors:
+					ignoreControl: $0002 
 					setPri: 0
 					;setStep: 2 4
 					setMotion: MoveTo 5 155 ;105 ;165
@@ -687,6 +703,7 @@
 				(ego setScript: surfaceScript)
 				(ego 
 					setLoop: -1
+					setPri: -1
 				)	;setMotion: MoveTo 117 130 self)
 				(HandsOn)
 			)
@@ -733,6 +750,72 @@
 ;;;				(= inCartoon FALSE)
 ;;;				(HandsOn)
 ;;;			)
+		)
+	)
+)
+
+(instance takeOff of Script
+	(method (changeState newState)
+		(switch (= state newState)
+			(0
+				(HandsOff)
+				(ego
+					setCycle: Walk
+					setStep: 1 1
+					setPri: 12
+					;posn: 87 176
+					ignoreActors: TRUE
+					setMotion: MoveTo 64 157 self 
+				)
+			)
+			(1
+				(cockPit
+					view: 215
+					setLoop: 2
+					cycleSpeed: 3
+					setPri: 13
+					posn: 70 149
+					setCycle: BegLoop self
+				)
+			)
+			(2
+				(cockPit hide:)
+				(ego
+					ignoreActors: FALSE
+					hide:
+				)
+				(ship startUpd:)
+			;	(shadow stopUpd:)
+				(ramp
+					view: 215
+					setLoop: 3
+					posn: 67 160 ;110 ;169
+					cel: 255
+					ignoreActors:
+					setPri: 11
+					setCycle: BegLoop self
+
+				)
+			)
+			(3
+				(ramp hide:)
+				(theMusic number: 83 loop: 1 play:)
+				(ship setCel: 2 setMotion: MoveTo 0 100 self) ;80 self) ;was 132
+				(shadow
+					view: 215
+					setLoop: 1
+					setCel: 0
+					posn: 5 155
+					ignoreActors:
+					ignoreControl: $0002 
+					setPri: 0
+					;setStep: 2 4
+					setMotion: MoveTo 5 255 ;105 ;165
+				)
+			)
+			(4
+				(curRoom newRoom: 14)
+			)
 		)
 	)
 )

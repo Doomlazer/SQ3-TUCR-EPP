@@ -448,7 +448,7 @@ code_019f:
 			(3
 				(localproc_0a59 local133 134)
 				(cond 
-					;((== currentSector 23) (= global208 0) (= saveDisabled 0) (curRoom newRoom: 800)) ;dump roger on planet for now. TODO: switch to landing.
+					((== currentSector 23) (= global208 0) (= saveDisabled 0) (curRoom newRoom: 800)) ;dump roger on planet for now. TODO: switch to landing.
 					((== currentSector 23) (= shipLocation shipAQUAVELVEETA_ORBIT))
 					((== currentSector 27) (= shipLocation 11)) ;orbiting 2nd new planet. add to game.sh
 					((== currentSector 62) (= global208 0) (= saveDisabled 0) (curRoom newRoom: 27))

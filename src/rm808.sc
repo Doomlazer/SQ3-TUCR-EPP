@@ -35,6 +35,28 @@
 	choice
 	toldAboutDisruptor
 )
+
+(procedure (buyPTDlocal cost &tmp c)
+	(= c 0)
+	(= c
+		(Printf 808 36 cost
+			#title {Quirk}
+			#mode teJustLeft
+			#button {Yes, I want it.} 1
+			#button {No, thank you.} 2
+		)
+	)
+	(if (== c 1)
+		(Printf 808 37 cost #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))
+		(Print 808 38)
+		(= qtab (+ qtab cost))
+		(ego get: 18)
+	)
+	(if (== c 2)
+		(Print 808 39 #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))	
+	)	
+)
+
 (instance rm808 of Room
 	(properties
 		picture 809
@@ -136,7 +158,44 @@
 		(if (event claimed?) (return))
 		(switch (event type?)
 			(saidEvent
-				(cond 
+				(cond
+					((Said 'ask[<about]/buy,sell,ptd')
+						(if (== standingUp FALSE)
+							
+							(if (ego has: 18)
+								(Print 808 41 #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))
+							else
+								(if toldAboutDisruptor
+									(Print 808 40 #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))
+								else
+									(while (< choice 4)
+										(Print 808 (+ 32 choice) #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))
+										(++ choice)
+									)
+									(++ toldAboutDisruptor)
+								)
+								(buyPTDlocal 800)
+							)
+						else
+							(Print 808 39 #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))
+						)
+					)
+					((Said 'ask[<about]/work,job')
+						(if quirkJobKnown
+							(= choice 0)
+							(while (< choice 2)
+								(Print 808 (+ 48 choice) #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))
+								(++ choice)					
+							)
+							
+						else
+							(while (< choice 3)
+								(Print 808 (+ 42 choice) #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))
+								(++ choice)					
+							)
+							(++ quirkJobKnown)
+						)
+					)
 					((Said 'look>')
 						(cond 
 							((or (Said '/pane') (Said '<out')) (Print 808 10))
@@ -712,19 +771,29 @@
 		(switch (= state newState)
 			(0
 				
-				(= choice (Print {"What can I get for you, Hu-mon?"} #title {Quirk} #mode teJustLeft #button {Food} 1 #button {Drink} 2 #button {Pay Tab} 3 #button {Other} 4))
+				(= choice
+					(Print
+						{"What can I get for you, Hu-mon?"}
+						#title {Quirk}
+						#mode teJustLeft
+						#button {Food} 1
+						#button {Drink} 2
+						#button {Pay Tab} 3
+						;#button {Other} 4
+					)
+				)
 				(if (== choice 1)
-						(++ orderedBigBelcherCombo)
+						(++ orderedBigBelcherCombo) ;vomit on exit
 						(= qtab (+ qtab 10))
 						(Print 808 18)
 						(Print 808 19 #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60)) 
 				)
 				(if (== choice 2)
-						(= qtab (+ qtab 3))
+						(= qtab (+ qtab 9))
 						(Print 808 24 #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60)) 
 						(Print 808 23)
 				)
-				(if (== choice 3)
+				(if (== choice 3) ;pay tab
 					(if (<= qtab 0)
 						(Print 808 30 #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60)) 
 					)
@@ -755,7 +824,14 @@
 							(Print 808 35 #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))
 							(++ toldAboutDisruptor)
 						)
-						(= choice (Print 808 36 #title {Quirk} #mode teJustLeft #button {Yes, I want it.} 1 #button {No, thank you.} 2))
+						(= choice
+							(Print 808 36
+								#title {Quirk}
+								#mode teJustLeft
+								#button {Yes, I want it.} 1
+								#button {No, thank you.} 2
+							)
+						)
 						(if (== choice 1)
 							(Print 808 37 #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))
 							(Print 808 38)

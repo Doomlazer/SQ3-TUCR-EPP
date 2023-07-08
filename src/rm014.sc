@@ -89,6 +89,7 @@
 							(== shipLocation shipPHLEEBHUT_ORBIT)
 							(== shipLocation shipREN_ORBIT) ;new 2nd planet
 							(== shipLocation shipQUARKS)
+							(== shipLocation shipAQUAVELVEETA_ORBIT)
 						)
 						(wallA init: setLoop: 4 setCel: 0)
 					)
@@ -250,6 +251,15 @@
 				(= global206 3)
 				(= global179 1)
 				(= global208 2)
+			)
+			(800 ;Aquavelvetta
+				(wallA init: setLoop: 4 setCel: 0)
+				(SitDown)
+				(theMusic fade:)
+				(= shipLocation shipAQUAVELVEETA_ORBIT)
+				;(= global207 1)
+				(= global208 2)
+				(= global206 3)
 			)
 			(802 ;new 2nd planet
 				(wallA init: setLoop: 6 stopUpd:)

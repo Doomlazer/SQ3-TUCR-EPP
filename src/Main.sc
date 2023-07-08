@@ -87,8 +87,8 @@
 	modelessPort
 	PTDCountDown
 	PTDattachObj
-	;globals 65-99 are unused
-		global65
+	quirkJobKnown
+	;globals 66-99 are unused
 		global66
 		global67
 		global68
