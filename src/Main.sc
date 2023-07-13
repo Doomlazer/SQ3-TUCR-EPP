@@ -14,6 +14,7 @@
 (use Menu)
 (use Actor)
 (use System)
+(use pet)
 
 (public
 	SQ3 0
@@ -648,6 +649,12 @@
 	tdobc ;observe control
 	
 	qtab = 0 ;quarks bar tab
+	
+	petInit
+	petActive ;Roger's pet 
+	petMode ;0-off, 1-auto, 2-follow, 3-stay, 4-wonder
+	petView = 309
+	petName = {nermal}
 )
 (procedure (NormalEgo theLoop theView)
 	;normalizes ego's animation
@@ -801,6 +808,48 @@
 	)
 )
 
+(procedure (DisplayPet v l c &tmp temp0 [str 100])
+	(if (not petInit)
+		(Print 
+			{A virtual pet children's toy. It's awaiting initialization.}
+			#icon 242 1 3
+		)	
+	else
+		(if petActive
+			(Print 
+				(Format @str {Your virtual pet, %s. Current status: Activated.} petName)
+				#icon 242 1 3
+			)
+		else
+			(Print 
+				(Format @str {Your virtual pet, %s. Current status: Deactivated.} petName)
+				#icon 242 1 3
+			)
+		)
+	)
+)
+
+(procedure (ActivatePet)
+	;Pet
+	(if
+		(and
+			(ego has: 20)
+			petActive
+		)
+		(if
+			(or
+				(not (== curRoomNum 14))
+				(not (== curRoomNum 17))
+				(not (== curRoomNum 18))
+				(not (== curRoomNum 19))
+			)
+			(if (== (ego script?) 0)
+				(ego setScript: (ScriptID 26 0))	
+			)
+		)
+	)	
+)
+
 (instance statusCode of Code
 	;draw the status line
 	(method (doit strg)
@@ -873,6 +922,7 @@
 				Bag_of_Fast_Food
 				Time_Disruptor
 				goggles
+				petInv
 		)
 		(if (GameIsRestarting)
 			(TheMenuBar draw:)
@@ -1094,7 +1144,7 @@
 			RELDPATH TIMER GROOPER RFEATURE QSCRIPT DPATH SMOOPER COUNT 952
 			FOLLOW STOPWALK DCICON WANDER MOUSER LASTLINK QSOUND SORT CAT GOTOSAID FORCOUNT
 			CHASE NAMEFIND APPROACH TIMEDCUE TEXTRA ORBIT DEMO WINDOW TRACK AVOIDER
-			SIGHT REVERSE
+			SIGHT REVERSE 26 ;26=pet
 		)
 		(if debugOn
 			(= debugOn FALSE)
@@ -1107,11 +1157,16 @@
 				debugging
 				(Print 0 2
 					#button {Debug} 1
+					#button {ignore} 0
 				)
 			)
 			(SetDebug)
 		)
 		(super startRoom: roomNum)
+		(if (== petMode 99)
+			(= petMode 1) ;no name was chosen
+		)
+		(ActivatePet)
 	)
 	
 	(method (handleEvent event &tmp item obj evt temp3 nextRoom evtX evtY evtMod temp8 [str 50])
@@ -1135,7 +1190,7 @@
 					((Said 'wear,use/goggles')
 						(if (ego has: iGoggles)
 							(if (== curRoomNum 470)
-								(Print 800 12) ;Always sunny reference
+								(Print 800 12)
 							else
 								(Print 800 10)
 							)
@@ -1304,6 +1359,85 @@
 							)
 							(else
 								(Print 0 17)
+							)
+						)
+					)
+					((Said 'converse/pet')
+						(cond
+							((not (ego has: iPetInv))
+								(DontHave)
+							)
+							(else
+								(if petInit
+									(if petActive
+										(if (== petMode 99)
+											(PetRename)
+										else
+											(CommandPet)
+										)
+									else
+										(Print {First activate the pet.})
+									)
+								else
+									(Print {Initialize the pet first.})
+								)
+							)
+						)
+					)
+					((Said 'look/pet')
+						(cond 
+							((not (ego has: iPetInv))
+								(DontHave)
+							)
+							(else
+								(DisplayPet)
+							)
+						)
+					)
+					(
+						(or
+							(Said 'init,activate/pet')
+							(Said 'pet<on')
+						)
+						(cond 
+							((not (ego has: iPetInv))
+								(DontHave)
+							)
+							(else
+								(if petInit
+									(if petActive
+										(Print {Pet is already initialized and active.})
+									else
+										(Print {Activating pet.})
+										(= petMode 0)
+										(= petActive 1)
+										(ActivatePet)
+									)
+								else 
+									(= petMode 0)
+									(= petActive 1)
+									(ActivatePet)
+								)
+							)
+						)
+					)
+					(
+						(or
+							(Said 'deactivate/pet')
+							(Said 'pet<off')
+						)
+						
+						(cond 
+							((not (ego has: iPetInv))
+								(DontHave)
+							)
+							(else
+								(if petActive
+									(Print {deactivation sequence...})
+									(= petMode 5)
+								else
+									(Print {Pet is already deactivated.})
+								)
 							)
 						)
 					)
@@ -1504,7 +1638,26 @@
 	
 	(method (wordFail word &tmp [str 100])
 		;don't recognize a word
-		(Print (Format @str 0 31 word))
+		(if petActive
+			(if (not (StrCmp word petName)) ;name said
+				(CommandPet)
+			else
+				(if (== petMode 99)
+					(= petMode 1) ;return to auto
+					(StrCpy petName word)
+					(Print (Format @str {"Pet has been successfully renamed: %s".} petName))
+					(= petInit 1)
+				else
+					(Print (Format @str 0 31 word))
+				)
+			)
+		else
+			(if (not (StrCmp word petName)) ;name said
+				(Print {Pet is currently deactivated.})
+			else
+				(Print (Format @str 0 31 word))
+			)
+		)
 	)
 	
 	(method (syntaxFail)
@@ -1732,6 +1885,22 @@
 		loop 1
 		cel 2
 		name "Mine Avoidance Goggles"
+	)
+)
+
+(instance petInv of InvItem
+	(properties
+		said '/pet'
+		description {Your virtual pet}
+		owner 470
+		view 242
+		loop 1
+		cel 3
+		name "Pet"
+	)
+	
+	(method (showSelf)
+		(DisplayPet)
 	)
 )
 

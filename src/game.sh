@@ -31,6 +31,7 @@
 	iBagOfFastFood			;17
 	iTime_Disruptor			;18
 	iGoggles				;19
+	iPetInv					;20
 )
 
 ;Locales and Regions
