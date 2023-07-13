@@ -1,6 +1,6 @@
 # Space Quest III - The Undiscovered Country Road - Extended Planets Pack!
 
-WARNING: This mod is still in early development.
+Notice: Due to the limitations of SCI0 heap (only 64K!), this mod is only supported in ScummVM and not DOSBox. It's unfortunate, but I believe the freedom to implement complex new features outweighs DOSBox compatibility for this project. 
 
 ## What is this? 
 
@@ -16,13 +16,26 @@ A mod for the DOS version of Space Quest III. It adds new planets to the Aluminu
 
 This mod requires the retail version of SQ3. Both the GOG and Steam versions are compatible. This mod has only been tested with SQ3 version 1.018. Savegames are not compatible with vanilla SQ3.
 
-To download the patch, click the green "CODE" button near the top of this page and select "Download Zip". Uncompress the .zip and find the PATCHES folder.
+To download the patch, click the green "CODE" button near the top of this page and select "Download Zip". Uncompress the .zip and copy the "patch" folder into your SQ3 game folder.
 
-DOSBox users <b>must copy the contents</b> of 'patch' into the SQ3 game folder. All the mod files need to be loose inside the folder next to SQ3.bat - this makes uninstalling the mod difficult, so it's recommend you back up your SQ3 game folder or use a copy of SQ3 for this mod.
+Launch using ScummVM as normal.
 
-ScummVM users can move the entire 'patch' folder into the SQ3 game folder. Remove the folder to uninstall.
+Remove the "patch" folder to uninstall.
 
 ## New features
+
+### Virtual Pet
+
+<img src="pics/pet.png"  width="600" alt="The Virtual Pet next to Roger.">
+
+Work in Progress: The player starts with the "Pet" inventory item. Once activated, it follows Roger around and has some very, basic AI behaviors.
+
+On initialization you can name the pet any word that is not already in the SQ3 vocab (names already recognized by the SCI0 parser are invalid).
+
+Pet can be activated/deactivated as desired. Typing the pet's name brings up command options, such as FOLLOW, STAY and MORPH. 
+
+This is a draft version. Pet art and commands are likely to change. 
+
 
 ### AstroChicken Fighting
 
@@ -69,6 +82,12 @@ Threepwang - Backgrounds
 
 
 ## What's changed?
+
+### July 2023
+
+Patch is now ScummVM only due to heap limitations :( 
+
+Added draft version of Virtual Pet.
 
 ### May 2023
 
