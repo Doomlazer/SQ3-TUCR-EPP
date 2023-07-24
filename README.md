@@ -2,27 +2,27 @@
 
 ## What is this? 
 
-A mod for the DOS version of Space Quest III. It add several new planets and features to expole while leaving the base game mostly intact. It is currently under development and unfinished in several places. 
+A mod for the DOS version of Space Quest III. It add several new planets and features to explore while leaving the base game mostly intact. It is currently under development and unfinished in several places. 
 
-Notice: Due to the limitations of SCI0 heap (only 64K!), this mod is only supported in ScummVM and not DOSBox. It's unfortunate, but I believe the freedom to implement complex new features outweighs DOSBox compatibility for this project. 
+Notice: Due to SCI0 memory limitations this mod is supported in ScummVM only. DOSBox will crash with heap errors. It's unfortunate, but I believe the freedom to implement complex new features outweighs DOSBox compatibility for this project. 
 
 ## New features
 
-### New Arcade Cabinet
+### Second Arcade Cabinet
 
-Work in Progress: On planet Ren there is a new videogame that can be played.
+Work in Progress: On planet Ren there is a new game that can be played.
 
 ### Virtual Pet
 
 <img src="pics/pet.png"  width="600" alt="The Virtual Pet next to Roger.">
 
-Work in Progress: The player starts with the "Pet" inventory item. Once activated, it follows Roger around and has some very basic AI behaviors.
+Work in Progress: The player starts with a new "Pet" inventory item (for now). Once activated, it follows Roger around and has some very basic AI behaviors.
 
-On initialization you can name the pet any word that is not already in the SQ3 vocab (words already recognized by the SCI0 parser are invalid).
+On initialization you must name the pet. The name can be any word that is not already in the SQ3 vocab (words already recognized by the SCI0 parser are invalid as pet names).
 
-Pet can be activated/deactivated as desired. Typing the pet's name brings up command options, such as FOLLOW, STAY and MORPH. 
+Pet can be activated/deactivated as desired. Typing the pet's name brings up command options such as FOLLOW, STAY and MORPH. 
 
-'Morph' will cycle through the three different pet styles (see insert image above). The inital style is chosen randomly at the start of a new game, so use the morph to select your preference.
+'Morph' will cycle through the three different pet styles (see insert image above). The inital style is chosen randomly at the start of a new game, so use morph to select your preference.
 
 This is a draft version: Pet art, style variations and commands are likely to change. The pet may show up in inappropriate screens or out of scale until it's been fully debugged. 
 
@@ -31,19 +31,18 @@ This is a draft version: Pet art, style variations and commands are likely to ch
 
 <img src="pics/holofights.png"  width="600" alt="Quirk's Holo-fights. Like a cock-fight, but with astrochickens.">
 
-At the newly renamed "Quirk's Bar" location there is a backroom where Holo-fights take place! Players can now place bets on the outcome (room is still incomplete). 
+At "Quirk's Bar" there is a backroom for Holo-fights. Players can place bets on the outcome, but the room is still feature incomplete. 
 
 
 ### Decoder Ring
 
 <img src="pics/ring.png"  width="600" alt="Monolth Burger Decoder ring changes.">
 
-The Monolth Buger Decoder ring is now a fully functional ceasar cipher. Rotating the dial on the ring changes the letter offset on the ring. It also shows the standard english letters on the videogame screen - however scrambled they might be.
+The Monolth Buger Decoder ring is now a fully functional ceasar cipher. Rotating the dial on the ring changes the letter offset on the ring. It also shows the standard english letters on the AstroChicken videogame screen - however scrambled they might be.
 
 ### Personal Time Disruptor
 
-This new inventory item can temporarily freeze a copy of Roger in time, this will be used for some future puzzles and can also be used to <a href="https://www.youtube.com/watch?v=czkSgwzEfqA">cheat death</a>. This has not been fully tested against all deaths yet, please report bugs.
-
+This new inventory item can temporarily freeze a copy of Roger in time, this will be used for some future puzzles and can also <a href="https://www.youtube.com/watch?v=czkSgwzEfqA">cheat death</a>. This item has not been fully tested against all deaths yet.
 
 ### Mine-Avoidance Goggles
 
@@ -52,6 +51,8 @@ This new inventory item can temporarily freeze a copy of Roger in time, this wil
 Fester now sells an additional item.
 
 ### New Planets
+
+Three new locataions are now able to be visited using the aluminum mallard. 
 
 <img src="pics/23.png"  width="600" alt="AquaVelveeta seen for the first time.">
 
@@ -67,7 +68,7 @@ Copy the "patch" folder into your SQ3 game folder. Launch using ScummVM as norma
 
 Remove the "patch" folder to uninstall.
 
-## I'm trying to test a planet, how can I skip the opening sequence?
+## I'm trying to test some of the new features, how can I skip the opening sequence?
 
 When Roger wakes up and exits the escape pod, type <b>PUMP SHARK</b> to activate debugging. 
 
@@ -75,16 +76,13 @@ You can use the debug command <b>TP</b> to teleport to other rooms, but it's bes
 
 FYI, the QA debug command is only available in the first room. More debugging info <a href="http://sciwiki.sierrahelp.com//index.php?title=SCI_Debug_Modes#Space_Quest_3">here</a> and <a href="https://github.com/Doomlazer/SCI-Debug-Resources">here</a>.
 
-
-
-## CREDITS
+## Credits
 
 DoomLazer - Programming
 
 Threepwang - Backgrounds
 
-
-## What's changed?
+## Recent Changes
 
 ### July 2023
 
