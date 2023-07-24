@@ -24,6 +24,10 @@ Remove the "patch" folder to uninstall.
 
 ## New features
 
+### New Arcade Cabinet
+
+Work in Progress: On planet Ren there is a new videogame that can be played.
+
 ### Virtual Pet
 
 <img src="pics/pet.png"  width="600" alt="The Virtual Pet next to Roger.">
