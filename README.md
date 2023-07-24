@@ -40,7 +40,7 @@ Pet can be activated/deactivated as desired. Typing the pet's name brings up com
 
 'Morph' will cycle through the three different pet styles (see insert image above). The inital style is chosen randomly at the start of a new game, so use the morph to select your preference.
 
-This is a draft version: Pet art, style variations and commands are likely to change. The pet will likely show up in inappropriate screens or out of scale until it's been fully debugged. 
+This is a draft version: Pet art, style variations and commands are likely to change. The pet may show up in inappropriate screens or out of scale until it's been fully debugged. 
 
 
 ### AstroChicken Fighting
