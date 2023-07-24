@@ -1,26 +1,10 @@
 # Space Quest III - The Undiscovered Country Road - Extended Planets Pack!
 
-Notice: Due to the limitations of SCI0 heap (only 64K!), this mod is only supported in ScummVM and not DOSBox. It's unfortunate, but I believe the freedom to implement complex new features outweighs DOSBox compatibility for this project. 
-
 ## What is this? 
 
-A mod for the DOS version of Space Quest III. It adds new planets to the Aluminum Mallard's scanner. Currently, there are two new planets and one new space station. 
+A mod for the DOS version of Space Quest III. It add several new planets and features to expole while leaving the base game mostly intact. It is currently under development and unfinished in several places. 
 
-<img src="pics/23.png"  width="600" alt="AquaVelveeta seen for the first time.">
-
-<img src="pics/27.png"  width="600" alt="Planet REN.">
-
-<img src="pics/70.png"  width="600" alt="Quark's Bar.">
-
-## INSTALLATION
-
-This mod requires the retail version of SQ3. Both the GOG and Steam versions are compatible. This mod has only been tested with SQ3 version 1.018. Savegames are not compatible with vanilla SQ3.
-
-To download the patch, click the green "CODE" button near the top of this page and select "Download Zip". Uncompress the .zip and copy the "patch" folder into your SQ3 game folder.
-
-Launch using ScummVM as normal.
-
-Remove the "patch" folder to uninstall.
+Notice: Due to the limitations of SCI0 heap (only 64K!), this mod is only supported in ScummVM and not DOSBox. It's unfortunate, but I believe the freedom to implement complex new features outweighs DOSBox compatibility for this project. 
 
 ## New features
 
@@ -61,14 +45,27 @@ The Monolth Buger Decoder ring is now a fully functional ceasar cipher. Rotating
 This new inventory item can temporarily freeze a copy of Roger in time, this will be used for some future puzzles and can also be used to <a href="https://www.youtube.com/watch?v=czkSgwzEfqA">cheat death</a>. This has not been fully tested against all deaths yet, please report bugs.
 
 
-
 ### Mine-Avoidance Goggles
 
 <img src="pics/goggles.png"  width="600" alt="The alien salesman Fester pitches the goggles to the player.">
 
 Fester now sells an additional item.
 
+### New Planets
 
+<img src="pics/23.png"  width="600" alt="AquaVelveeta seen for the first time.">
+
+<img src="pics/27.png"  width="600" alt="Planet REN.">
+
+<img src="pics/70.png"  width="600" alt="Quark's Bar."> 
+
+## INSTALLATION
+
+This mod requires the retail version of SQ3. Both the GOG and Steam versions are compatible, but SQ3 version 1.018 is required.
+
+Copy the "patch" folder into your SQ3 game folder. Launch using ScummVM as normal.
+
+Remove the "patch" folder to uninstall.
 
 ## I'm trying to test a planet, how can I skip the opening sequence?
 
