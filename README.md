@@ -32,15 +32,15 @@ Work in Progress: On planet Ren there is a new videogame that can be played.
 
 <img src="pics/pet.png"  width="600" alt="The Virtual Pet next to Roger.">
 
-Work in Progress: The player starts with the "Pet" inventory item. Once activated, it follows Roger around and has some very, basic AI behaviors.
+Work in Progress: The player starts with the "Pet" inventory item. Once activated, it follows Roger around and has some very basic AI behaviors.
 
-On initialization you can name the pet any word that is not already in the SQ3 vocab (names already recognized by the SCI0 parser are invalid).
+On initialization you can name the pet any word that is not already in the SQ3 vocab (words already recognized by the SCI0 parser are invalid).
 
 Pet can be activated/deactivated as desired. Typing the pet's name brings up command options, such as FOLLOW, STAY and MORPH. 
 
-Morph with cycle through the three different pet styles (see insert image above). The starting style is chosen randomly, so use the morph to select your preference.
+'Morph' will cycle through the three different pet styles (see insert image above). The inital style is chosen randomly at the start of a new game, so use the morph to select your preference.
 
-This is a draft version: Pet art, style variations and commands are likely to change. 
+This is a draft version: Pet art, style variations and commands are likely to change. The pet will likely show up in inappropriate screens or out of scale until it's been fully debugged. 
 
 
 ### AstroChicken Fighting
@@ -90,6 +90,8 @@ Threepwang - Backgrounds
 ## What's changed?
 
 ### July 2023
+
+Added draft version of a new arcade cabinet on Ren.
 
 Patch is now ScummVM only due to heap limitations :( 
 
