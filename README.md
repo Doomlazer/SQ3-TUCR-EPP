@@ -34,7 +34,9 @@ On initialization you can name the pet any word that is not already in the SQ3 v
 
 Pet can be activated/deactivated as desired. Typing the pet's name brings up command options, such as FOLLOW, STAY and MORPH. 
 
-This is a draft version. Pet art and commands are likely to change. 
+Morph with cycle through the three different pet styles (see insert image above). The starting style is chosen randomly, so use the morph to select your preference.
+
+This is a draft version: Pet art, style variations and commands are likely to change. 
 
 
 ### AstroChicken Fighting
