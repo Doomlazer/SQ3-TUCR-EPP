@@ -35,6 +35,7 @@
 	IsObjectOnControl 15
 	proc0_16 16
 	EgoDead 17
+	ToUpper 18
 )
 
 (local
@@ -653,7 +654,7 @@
 	petInit
 	petActive ;Roger's pet 
 	petMode ;0-off, 1-auto, 2-follow, 3-stay, 4-wonder
-	petView = 309
+	petView
 	petName = {nermal}
 )
 (procedure (NormalEgo theLoop theView)
@@ -808,22 +809,33 @@
 	)
 )
 
-(procedure (DisplayPet v l c &tmp temp0 [str 100])
+(procedure (DisplayPet v l c &tmp temp0 [str 100] pCel)
+	(cond
+		((== petView 311)
+			(= pCel 3)
+		)
+		((== petView 309)
+			(= pCel 4)
+		)
+		((== petView 310)
+			(= pCel 5)
+		)
+	)
 	(if (not petInit)
 		(Print 
 			{A virtual pet children's toy. It's awaiting initialization.}
-			#icon 242 1 3
+			#icon 242 1 pCel
 		)	
 	else
 		(if petActive
 			(Print 
 				(Format @str {Your virtual pet, %s. Current status: Activated.} petName)
-				#icon 242 1 3
+				#icon 242 1 pCel
 			)
 		else
 			(Print 
 				(Format @str {Your virtual pet, %s. Current status: Deactivated.} petName)
-				#icon 242 1 3
+				#icon 242 1 pCel
 			)
 		)
 	)
@@ -837,17 +849,93 @@
 			petActive
 		)
 		(if
-			(or
-				(not (== curRoomNum 14))
+			(and
+				(not (== curRoomNum 9))	;rails
+				(not (== curRoomNum 10)) ;rails
+				(not (== curRoomNum 11)) ;rails
+				(not (== curRoomNum 12)) ;rails
+				(not (== curRoomNum 14)) ;mallard int
 				(not (== curRoomNum 17))
 				(not (== curRoomNum 18))
 				(not (== curRoomNum 19))
+				(not (== curRoomNum 290)) ;arcade game 1
+				(not (== curRoomNum 470)) ;world o wonder
+				(not (== curRoomNum 690)) ;telescope on lava planet
+				(not (== curRoomNum 807)) ;teleport easter egg
+				(not (== curRoomNum 814)) ;arcade game 2
 			)
 			(if (== (ego script?) 0)
 				(ego setScript: (ScriptID 26 0))	
 			)
 		)
 	)	
+)
+
+(procedure (ToUpper param1 &tmp [str 100] char i) ;string to uppercase
+	(= i 0)
+	(StrCpy @str param1)
+	(while (< i (StrLen @str))
+		(= char (StrAt @str i))
+		(if (and (<= 97 char) (<= char 122))
+			(StrAt @str i (- char 32))
+		else
+			(StrAt @str i char)
+		)
+		(++ i)
+	)
+	(return @str)
+)
+
+(procedure (RingPrint &tmp printObj [str 100] i t decoderNum [ringTable 26])
+	;ringTable = [84 86 88 90 92 94 96 98 100 102 104 106 108 151 153 155 157 159 161 163 165 167 169 171 173 175]
+	(= i 0)
+	(while (< i 13)
+		(= [ringTable i] (+ 84 (* 2 i)))
+		(++ i)
+	)
+	(while (< i 26)
+		(= [ringTable i] (+ (+ 84 (* 2 i)) 41))
+		(++ i)
+	)
+	
+	(= decoderNum (Random 5 20))
+	(while (not (== printObj 2))
+		(Format @str 290 10)
+		(= i 0)
+		(= t 0)
+		(while (< i 26)
+			(= t (+ (StrAt @str [ringTable i]) decoderNum))
+			(if (> t 90)
+				(= t (- t 26))	
+			)
+			(StrAt @str [ringTable i] t)
+			(++ i)
+		)	
+		(= printObj
+			(Print @str
+				#font 777 ;603 use new fixed width "i"
+				#icon 242 0 5
+				#width 240
+				#at -1 143
+				#button {Rotate Left} 1
+				#button {Done} 2 
+				#button {Rotate Right} 3
+				#advance
+			)
+		)
+		(if (== printObj 1)
+			(= decoderNum (- decoderNum 1))
+			(if (< decoderNum 0)
+				(= decoderNum 25)	
+			)
+		)
+		(if (== printObj 3)
+			(= decoderNum (+ decoderNum 1))
+			(if (> decoderNum 25)
+				(= decoderNum 0)	
+			)
+		)
+	)
 )
 
 (instance statusCode of Code
@@ -924,6 +1012,7 @@
 				goggles
 				petInv
 		)
+		(= petView (Random 309 311))
 		(if (GameIsRestarting)
 			(TheMenuBar draw:)
 			(StatusLine enable:)
@@ -934,6 +1023,7 @@
 			(= startingRoom 900)
 			(self newRoom: 777)
 		)
+		(ego get: 7) ;decoder ring for testing
 	)
 	
 	(method (doit &tmp haveMouse)
@@ -941,22 +1031,22 @@
 ;;;		(if (< PTDCountDown 1)
 ;;;			(curRoom eachElementDo: #disposePTD)
 ;;;		)
-		(if adSupported
-			(if 
-				(
-					and
-						(>= curRoomNum 2)
-						(< curRoomNum 900)
-						(not (== curRoomNum 777))
-				)
-				(if (<= adTimer 0)
-					(Print 	100 (Random 4 8) #title {Type "PAY MAGIC" to disable Ads})
-					(= adTimer (Random 4000 10000))
-				else
-					(-- adTimer)
-				)
-			)
-		)
+;;;		(if adSupported
+;;;			(if 
+;;;				(
+;;;					and
+;;;						(>= curRoomNum 2)
+;;;						(< curRoomNum 900)
+;;;						(not (== curRoomNum 777))
+;;;				)
+;;;				(if (<= adTimer 0)
+;;;					(Print 	100 (Random 4 8) #title {Type "PAY MAGIC" to disable Ads})
+;;;					(= adTimer (Random 4000 10000))
+;;;				else
+;;;					(-- adTimer)
+;;;				)
+;;;			)
+;;;		)
 		
 		;EO: this is a recreation, based on the decompiled doit: for Astro Chicken
 		(if
@@ -1180,6 +1270,13 @@
 		(switch (event type?)
 			(saidEvent
 				(cond
+					((Said 'use/decoder,relic')
+					 	(if (ego has: iDecoderRing)
+					 		(RingPrint)
+					 	else
+					 		(DontHave)
+						)
+					)	
 					((Said 'remove,take[<off]/goggles')
 						(if (ego has: iGoggles)
 							(Print 800 7)
@@ -1426,7 +1523,6 @@
 							(Said 'deactivate/pet')
 							(Said 'pet<off')
 						)
-						
 						(cond 
 							((not (ego has: iPetInv))
 								(DontHave)
@@ -1636,23 +1732,30 @@
 		)
 	)
 	
-	(method (wordFail word &tmp [str 100])
+	(method (wordFail word &tmp [str 100] [tWord 100] [tName 100])
 		;don't recognize a word
+		(StrCpy @tWord (ToUpper word))
+		(StrCpy @tName (ToUpper petName))
+		;(Printf {str: %s} @tWord)
+		;(Printf {str2: %s} @tName)
+		
 		(if petActive
-			(if (not (StrCmp word petName)) ;name said
+			;(if (not (StrCmp word petName)) ;name said	
+			(if (not (StrCmp @tWord @tName))
 				(CommandPet)
 			else
 				(if (== petMode 99)
 					(= petMode 1) ;return to auto
 					(StrCpy petName word)
-					(Print (Format @str {"Pet has been successfully renamed: %s".} petName))
+					(Print (Format @str {"Pet has been successfully named: %s. Use your pet's name to access additional features."} petName))
 					(= petInit 1)
 				else
 					(Print (Format @str 0 31 word))
 				)
 			)
 		else
-			(if (not (StrCmp word petName)) ;name said
+			;(if (not (StrCmp word petName)) ;name said
+			(if (not (StrCmp @tWord @tName))
 				(Print {Pet is currently deactivated.})
 			else
 				(Print (Format @str 0 31 word))

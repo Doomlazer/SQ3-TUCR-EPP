@@ -20,12 +20,14 @@
 
 (local
 	morphTimer
+	prevX
+	prevY
 )
 
 (procedure (CommandPet &tmp temp0 [str 100])
 	(= temp0
 		(Print
-			(Format {%s awaiting command?} petName)
+			(Format @str {Tell %s:} petName)
 			#button {Morph} 1
 			#button {Converse} 2
 			#button {Mode} 3
@@ -35,9 +37,21 @@
 	)
 	(switch temp0
 		(1
-			(Print {*MORP*} #title petName #dispose #time 3 #at (- (petActor x?) 25) (- (petActor y?) 40))
-			(= morphTimer (Random 500 1000))
-			(= petView (Random 0 29))
+			(Print {*MORPH*} #title petName #dispose #time 3 #at (- (petActor x?) 25) (- (petActor y?) 40))
+			;(= morphTimer (Random 500 1000))
+			(cond
+				((== petView 309)
+					(= petView 310)
+				)
+				((== petView 310)
+					(= petView 311)
+					(petActor setCycle: Walk)
+				)
+				((== petView 311)
+					(= petView 309)
+					(petActor setCycle: Walk)
+				)
+			)
 			(petActor view: petView)
 		)
 		(2
@@ -50,6 +64,9 @@
 				)
 				(2
 					(Printf {%s says, "NEED INPUT!"} petName)
+				)
+				(4
+					(Printf {"I need to be programed with more responses."})
 				)
 			)
 		)
@@ -78,9 +95,8 @@
 (procedure (PetRename)
 	(Print {"In adhearance with SCI Standards, all virtual pet names must be unique to avoid conflicts with other common voice recognition devices."})
 	(Print {"Names such as LOOK, DOOR, or SHIP are invalid. Names like PICKLES, BLOBBY, or DEFENESTRATION are vaild because they are not officially recognized in SCI Vocaulary."})
-	(Print {"Names are case sensitive and can always be changed by typing the pet's current name and selecting the 'rename' option."})
-	(Print {"Type a unique, one word name for your pet now to initialize."})
-	(= petMode 99)	
+	(Print {"Type a unique name for your pet immediately following this message to initialize."})
+	(= petMode 99)
 )
 
 (instance petActor of Actor
@@ -103,9 +119,6 @@
 			init:
 		)
 		(petActor setScript: petScript)
-		(if (not (== petView 309))
-			(= morphTimer (Random 50 300))
-		)
 		(self dispose:)
 	)
 )
@@ -117,58 +130,52 @@
 		(switch (= state newState)
 			(0
 				(if (not petInit)
+					(client hide:)
 					(Print {A robotic voice eminitates from the device, "Beginning Virtual Pet Initialization..."})
 					(Print {"Welcome to Virtual Pet setup!"})
-					(Printf {"To fully engage with your new pet you must assign it a name."})
+					(Printf {"To activate your new pet you must assign it a name."})
 					(PetRename)
 				)
-;;;				(if (not (StrCmp petName {RESET}))
-;;;					(Print {Thank you for purchasing me. Please give me a name.})
-;;;					(= acceptName 1)
-;;;				)
 			)
 		)
 	)
 	
 	(method (doit)
+		(if (== petView 310) ;comlete jump
+			(if
+				(and
+					(== prevX (client x?))
+					(== prevY (client y?))
+				)
+				(if (< (client cel?) 4)
+					(client setCycle: EndLoop)
+				)
+			else
+				(client setCycle: Walk)
+			)
+			(= prevX (client x?))
+			(= prevY (client y?))
+		)
 		(cond
-;;;			((== petMode 0) ;was off
-;;;				(Print {Virtual Pet Initialization process...})
-;;;				(Printf {Call pet name for interaction.\nNAME IS: %s} petName)
-;;;				(= petActive 1)
-;;;			)
-			((> morphTimer 1)
-				(-- morphTimer)
-			)
-			((== morphTimer 1)
-				(-- morphTimer)
-				(= petView 309)
-				(petActor view: 309)
-			)
 			((== petMode 0) ;was off
 				(self changeState: 0)
 				(petActor show:)
 				(= petMode 1)
 			)
 			((== petMode 1) ;auto
+				(petActor show:)
 				(if (== (Random 0 500) 10)
-					(switch (Random 0 6)
+					(switch (Random 0 5)
 						(1
 							(client
 								setStep: (Random 1 4)
 								setMotion: Wander
 							)
 						)
-						(2 ;morph for a few seconds
-							(Print {*MORPHING*} #dispose #time 3 #at (petActor x?) (- (petActor y?) 15))
-							(= petView (Random 0 29))
-							(petActor view: petView)
-							(= morphTimer (Random 50 120))
-						)
 						(else
 							(client
 								setStep: (Random 1 4)
-								setMotion: Follow ego (Random 5 150)
+								setMotion: Follow ego (Random 15 150)
 							)
 						)
 					)
@@ -177,13 +184,20 @@
 			((== petMode 2) ;Follow
 				(client
 					setStep: (Random 3 4)
-					setMotion: Follow ego (Random 5 40)
+					setMotion: Follow ego (Random 15 40)
 				)
 			)
 			((== petMode 3) ;stay
-				(client
-					setCycle: Forward
-					setMotion: 0
+				(if (== petView 310)
+					(client
+						setCycle: EndLoop
+						setMotion: 0
+					)
+				else
+					(client
+						setCycle: Forward
+						setMotion: 0
+					)
 				)
 			)
 			((== petMode 4) ;wander
@@ -207,31 +221,8 @@
 		(if (event claimed?) (return))
 		(switch (event type?)
 			(saidEvent
-;;;				(cond 
-;;;					((Said 'look>')
-;;;						(cond 
-;;;							((Said '/six') 
-;;;								(Print {"iPet v0.00.01 A Weyland Corp. Product"})
-;;;							)
-;;;;;;							((Said '[<at,around,in][/area,!*]')
-;;;;;;								(Print {Besides Six, your iPet...})
-;;;;;;								(event claimed: FALSE)
-;;;;;;							)
-;;;						)
-;;;					)
-;;;					((Said 'converse/six')
-;;;						(Print {"Hello, Master?" What is your command?})
-;;;					)
-;;;				)
+				;
 			)
 		)
 	)
 )
-
-;;;(instance clunk of Sound
-;;;	(properties
-;;;		number 75
-;;;		priority 5
-;;;	)
-;;;)
-;;;

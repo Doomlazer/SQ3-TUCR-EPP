@@ -18,9 +18,9 @@ Work in Progress: On planet Ren there is a new game that can be played.
 
 Work in Progress: The player starts with a new "Pet" inventory item (for now). Once activated, it follows Roger around and has some very basic AI behaviors.
 
-On initialization you must name the pet. The name can be any word that is not already in the SQ3 vocab (words already recognized by the SCI0 parser are invalid as pet names).
+Use INIT PET or PET ON to initialize and name it. The name can be any word that is not already in the SQ3 vocab (words already recognized by the SCI0 parser are invalid as pet names).
 
-Pet can be activated/deactivated as desired. Typing the pet's name brings up command options such as FOLLOW, STAY and MORPH. 
+Pet can be turned off and on as desired. Typing the pet's name brings up command options such as FOLLOW, STAY and MORPH. 
 
 'Morph' will cycle through the three different pet styles (see insert image above). The inital style is chosen randomly at the start of a new game, so use morph to select your preference.
 
@@ -38,7 +38,7 @@ At "Quirk's Bar" there is a backroom for Holo-fights. Players can place bets on 
 
 <img src="pics/ring.png"  width="600" alt="Monolth Burger Decoder ring changes.">
 
-The Monolth Buger Decoder ring is now a fully functional ceasar cipher. Rotating the dial on the ring changes the letter offset on the ring. It also shows the standard english letters on the AstroChicken videogame screen - however scrambled they might be.
+The Monolth Buger Decoder ring is now a fully functional ceasar cipher. Rotating the dial on the ring changes the letter offset on the ring. It also shows the standard english letters on the AstroChicken videogame screen - however scrambled they might be. The cipher function can be used on any screen.
 
 ### Personal Time Disruptor
 

@@ -23,6 +23,17 @@
 	(properties)
 )
 
+(instance machine of Prop
+	(properties
+		y 125
+		x 20
+		view 56
+		loop 1
+		cel 3
+	)
+)
+
+
 
 (instance Room804 of Room
 	(properties
@@ -42,6 +53,10 @@
 			setPri: 11
 			init:
 		)
+		(machine
+			ignoreActors: FALSE
+			init:
+		)
 		(switch prevRoomNum
 			(803
 				(ego posn: 315 160 loop: 1)
@@ -52,6 +67,9 @@
 			)
 			(807
 				(self setScript: eggReturnScript)
+			)
+			(814 ;from arcade game
+				(ego view: 0 posn: 33 123 loop: 1 setPri: -1)
 			)
 			(else 
 				(ego posn: 150 150 loop: 1)
@@ -125,6 +143,24 @@
 					)
 					((Said 'look/sign')
 						(Print 804 5)
+					)
+					(
+						(or
+							(Said 'look/astro,astro,grafitti,game,device[<grafitti]')
+							(Said 'look/astro<astro')
+						)
+						(Print {It's a currently unnamed prototype arcade cabinet.})
+					)
+					(
+						(or
+							(Said 'play/astro,astro,grafitti,game,device[<grafitti]')
+							(Said 'play/astro<astro')
+						)
+						(if (ego inRect: 21 120 39 126)
+							(curRoom newRoom: 814)
+						else
+							(NotClose)
+						)
 					)
 					((Said 'ask,converse>')
 						(cond 	
