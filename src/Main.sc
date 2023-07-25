@@ -871,6 +871,15 @@
 	)	
 )
 
+(procedure (Capitalize param1 &tmp [str 100] char)
+	(StrCpy @str param1)
+	(= char (StrAt @str 0))
+	(if (and (<= 97 char) (<= char 122))
+		(StrAt @str 0 (- char 32))
+	)
+	(return @str)
+)
+
 (procedure (ToUpper param1 &tmp [str 100] char i) ;string to uppercase
 	(= i 0)
 	(StrCpy @str param1)
@@ -1746,7 +1755,7 @@
 			else
 				(if (== petMode 99)
 					(= petMode 1) ;return to auto
-					(StrCpy petName word)
+					(StrCpy petName (Capitalize word))
 					(Print (Format @str {"Pet has been successfully named: %s. Use your pet's name to access additional features."} petName))
 					(= petInit 1)
 				else
