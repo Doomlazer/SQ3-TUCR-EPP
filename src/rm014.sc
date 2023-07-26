@@ -273,7 +273,16 @@
 			(808 ;Quarks
 				(wallA init: setLoop: 4 setCel: 0)
 				(SitDown)
+				(= global208 2)
 				(= shipLocation shipQUARKS)
+				(if quarkAttacks
+					(= quarksGoonsAttacking 1)
+					(= global175 20) ;countdown to attack
+					(= global209 3) ;current ship speed
+					(= global218 1) ;needed for attack speed enable
+					(= global208 2) ;needed for attack speed enable
+					(Print 14 97)
+				)
 			)
 		)
 		(if (and twoGuysOnBoard (!= prevRoomNum 94))

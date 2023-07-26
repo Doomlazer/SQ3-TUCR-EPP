@@ -56,23 +56,33 @@
 
 (procedure (localproc_0a78)
 	(engine
-		cel: (cond 
-			((!= motivatorState motivatorINSHIP) 2)
-			((== global208 2) 1)
-			(else 0)
-		)
+		cel:
+			(cond 
+				((!= motivatorState motivatorINSHIP)
+					2 ;disabled
+				)
+				((== global208 2)
+					1 ;active
+				)
+				(else
+					0 ;enabled
+				)
+			)
 		draw:
 	)
-	(TLBut
+	(TLBut ;takeoff/land
 		loop:
 			(if
 				(or
-					(and (== global206 2) (!= global207 2))
+					(and
+						(== global206 2)
+						(!= global207 2)
+					)
 					(== global206 0)
 				)
-				2
+				2 ;takeoff loop
 			else
-				3
+				3 ;land loop
 			)
 		cel:
 			(if
@@ -82,9 +92,9 @@
 					(not (== currentSector 62))
 					(not twoGuysOnBoard)
 				)
-				0
+				0 ;enabled
 			else
-				2
+				2 ;disabled
 			)
 		draw:
 	)
@@ -100,17 +110,29 @@
 	(LSpeedBut
 		cel:
 			(cond 
-				((== global209 6) 1)
+				((== global209 6)
+					1 ;active
+				)
 				(
-				(or (not selectedSector) global179 (!= global208 2)) 2)
-				(else 0)
+					(or
+						(not selectedSector)
+						global179
+						(!= global208 2)
+					)
+					2 ;disabled
+				)
+				(else
+					0 ;enabled
+				)
 			)
 		draw:
 	)
-	(ASpeedBut
+	(ASpeedBut ;attack speed
 		cel:
 			(cond 
-				((== global209 3) 1)
+				((== global209 3)
+					1
+				)
 				(
 					(or
 						(and (not selectedSector) (not global218))
@@ -150,203 +172,65 @@
 	)
 	
 	(method (init &tmp [temp0 50])
-		(asm
-			pushi    #setRegions
-			pushi    1
-			pushi    701
-			self     6
-			pushi    #hide
-			pushi    0
-			class    TheMenuBar
-			send     4
-			pushi    #disable
-			pushi    0
-			class    StatusLine
-			send     4
-			lsg      numColors
-			ldi      16
-			lt?     
-			bnt      code_0050
-			pushi    2
-			pushi    129
-			pushi    170
-			callk    Load,  4
-			pushi    #drawPic
-			pushi    1
-			pushi    170
-			self     6
-			pushi    2
-			pushi    128
-			pushi    141
-			callk    Load,  4
-			jmp      code_006a
-code_0050:
-			pushi    2
-			pushi    129
-			pushi    17
-			callk    Load,  4
-			pushi    #drawPic
-			pushi    1
-			pushi    17
-			self     6
-			pushi    2
-			pushi    128
-			pushi    41
-			callk    Load,  4
-code_006a:
-			pushi    2
-			pushi    132
-			pushi    40
-			callk    Load,  4
-			pushi    2
-			pushi    132
-			pushi    83
-			callk    Load,  4
-			pushi    2
-			pushi    132
-			pushi    95
-			callk    Load,  4
-			pushi    2
-			pushi    132
-			pushi    96
-			callk    Load,  4
-			pushi    #init
-			pushi    0
-			super    Room,  4
-			pushi    0
-			callb    HandsOff,  0
-			pushi    #mapKeyToDir
-			pushi    1
-			pushi    0
-			class    User
-			send     6
-			ldi      1
-			sag      global592
-			pushi    #setCursor
-			pushi    2
-			lsg      normalCursor
-			pushi    0
-			callk    HaveMouse,  0
-			push    
-			lag      theGame
-			send     8
-			ldi      1
-			sag      saveDisabled
-			pushi    #add
-			pushi    8
-			lofsa    engine
-			push    
-			lofsa    navBut
-			push    
-			lofsa    TLBut
-			push    
-			lofsa    cruiseBut
-			push    
-			lofsa    LSpeedBut
-			push    
-			lofsa    ASpeedBut
-			push    
-			lofsa    radarBut
-			push    
-			lofsa    weaponBut
-			push    
-			pushi    101
-			pushi    1
-			pushi    90
-			pushi    83
-			pushi    0
-			pToa     controls
-			send     30
-			lag      global167
-			bnt      code_00fd
-			lag      twoGuysOnBoard
-			not     
-			bnt      code_00fd
-			pushi    #setScript
-			pushi    1
-			lofsa    arrivalScript
-			push    
-			self     6
-code_00fd:
-			pushi    0
-			call     localproc_0a78,  0
-			lsg      global206
-			ldi      2
-			eq?     
-			bnt      code_0122
-			lsg      global207
-			ldi      2
-			eq?     
-			bnt      code_0122
-			lofsa    {ASCENT HALTED DUE TO OBSTRUCTION}
-			sal      local33
-			pushi    3
-			push    
-			pushi    104
-			pushi    14
-			call     localproc_0a2c,  6
-code_0122:
-			pushi    3
-			lag      selectedSector
-			bnt      code_013a
-			dup     
-			lea      @local8
-			push    
-			lofsa    {DESTINATION: SECTOR %d}
-			push    
-			lsg      selectedSector
-			callk    Format,  6
-			jmp      code_013d
-code_013a:
-			lofsa    {NO COURSE SELECTED}
-code_013d:
-			push    
-			pushi    154
-			pushi    9
-			call     localproc_0a2c,  6
-			sal      local0
-			pushi    11
-			pushi    17
-			pushi    0
-			pushi    100
-			pushi    20
-			pushi    144
-			pushi    105
-			pushi    600
-			pushi    106
-			pushi    250
-			pushi    102
-			pushi    10
-			callk    Display,  22
-			pushi    11
-			pushi    17
-			pushi    1
-			pushi    100
-			pushi    97
-			pushi    67
-			pushi    105
-			pushi    600
-			pushi    106
-			pushi    180
-			pushi    102
-			pushi    15
-			callk    Display,  22
-			lag      global179
-			bnt      code_019f
-			lag      global181
-			not     
-			bnt      code_019f
-			pushi    2
-			pushi    132
-			pushi    27
-			callk    Load,  4
-			pushi    #setScript
-			pushi    1
-			lofsa    LightWarning
-			push    
-			self     6
-code_019f:
-			ret     
+		(self setRegions: 701) ; travrg
+		(TheMenuBar hide:)
+		(StatusLine disable:)
+		(if (< numColors 16)
+			(Load PICTURE 170)
+			(self drawPic: 170)
+			(Load VIEW 141)
+		else
+			(Load PICTURE 17)
+			(self drawPic: 17)
+			(Load VIEW 41)
+		)
+		(Load SOUND 40)
+		(Load SOUND 83)
+		(Load SOUND 95)
+		(Load SOUND 96)
+		(super init:)
+		(HandsOff)
+		(User mapKeyToDir: 0)
+		(= global592 1)
+		(theGame setCursor: normalCursor (HaveMouse))
+		(= saveDisabled 1)
+		(controls
+			add:
+				engine
+				navBut
+				TLBut
+				cruiseBut
+				LSpeedBut
+				ASpeedBut
+				radarBut
+				weaponBut
+			eachElementDo: #init
+			draw:
+		)
+		(if (and global167 (not twoGuysOnBoard))
+			(self setScript: arrivalScript)
+		)
+		(localproc_0a78) ;set button states
+		(if (and (== global206 2) (== global207 2))
+			(= local33 {ASCENT HALTED DUE TO OBSTRUCTION})
+			(localproc_0a2c local33 104 14)
+		)
+		(= local0
+			(localproc_0a2c
+				(if selectedSector
+					(Format @local8 {DESTINATION: SECTOR %d} selectedSector)
+				else
+					{NO COURSE SELECTED}
+				)
+				154
+				9
+			)
+		)
+		(Display 17 0 p_at 20 144 p_font 600 p_width 250 p_color 10) ; "CURRENT SECTOR:"
+		(Display 17 1 p_at 97 67 p_font 600 p_width 180 p_color 15) ; "PRESS F6 FOR COCKPIT VIEW"
+		(if (and global179 (not global181))
+			(Load SOUND 27)
+			(self setScript: LightWarning)
 		)
 	)
 	

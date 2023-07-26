@@ -86,6 +86,8 @@ Threepwang - Backgrounds
 
 ### July 2023
 
+Quirk's Bar fixes and improvements.
+
 Added draft version of a new arcade cabinet on Ren.
 
 Patch is now ScummVM only due to heap limitations :( 

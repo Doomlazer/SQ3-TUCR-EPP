@@ -206,7 +206,7 @@
 	global176
 	global177
 	twoGuysOnBoard			;saved the Two Guys, and now they're on board
-	global179
+	global179					;lightspeed non functional?
 	fallingIntoLava			;ego is falling into the lava
 	global181
 	wearingUnderwear		;ego is wearing the ThermoWeave shorts, and won't burn
@@ -656,6 +656,9 @@
 	petMode ;0-off, 1-auto, 2-follow, 3-stay, 4-wonder
 	petView
 	petName = {nermal}
+	
+	quarkAttacks
+	quarksGoonsAttacking
 )
 (procedure (NormalEgo theLoop theView)
 	;normalizes ego's animation

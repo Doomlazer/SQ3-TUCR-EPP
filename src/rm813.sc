@@ -162,7 +162,7 @@
 		(pad2 init:)
 		(door init:)
 		;(door2 init:)
-		(ego get: 18)
+		;(ego get: 18)
 		(switch prevRoomNum
 			(814
 				(ego posn: 163 151 loop: 3)

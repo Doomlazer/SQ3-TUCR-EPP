@@ -523,13 +523,22 @@
 					(localproc_0e85 local5 40 125)
 					(= local5 {NEGATIVE})
 					(RadarScript changeState: 0)
-					(Print 18 1)
+					(if quarksGoonsAttacking
+						(Print 18 5)
+					else
+						(Print 18 1)
+					)
 					(curRoom setScript: 0)
-					(theGame changeScore: 100)
+					(if (not quarksGoonsAttacking)
+						(theGame changeScore: 100)
+					)
 					(= global218 0)
 					(= global175 0)
 					(= global594 0)
 					(= global167 0)
+					(if quarksGoonsAttacking
+						(= quarksGoonsAttacking 0)
+					)
 				else
 					(curRoom setScript: ZScript)
 				)

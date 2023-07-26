@@ -36,25 +36,97 @@
 	toldAboutDisruptor
 )
 
-(procedure (buyPTDlocal cost &tmp c)
-	(= c 0)
-	(= c
-		(Printf 808 36 cost
+(procedure (buyPTDlocal cost &tmp ch [strb 50])
+	(= ch 0)
+	(= ch
+		(Print (Format @strb 808 36 cost)
 			#title {Quirk}
 			#mode teJustLeft
 			#button {Yes, I want it.} 1
 			#button {No, thank you.} 2
 		)
 	)
-	(if (== c 1)
-		(Printf 808 37 cost #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))
+	(if (== ch 1)
+		(Print (Format @strb 808 37 cost) #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))
 		(Print 808 38)
 		(= qtab (+ qtab cost))
 		(ego get: 18)
 	)
-	(if (== c 2)
+	(if (== ch 2)
 		(Print 808 39 #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))	
 	)	
+)
+
+(procedure (TalkOther &tmp c i)
+	(= c
+		(if (not (ego has: 18))
+			(Print
+				{"What can I get for you, Hu-mon?"}
+				#title {Quirk}
+				#mode teJustLeft
+				#button {Bar} 1
+				#button {Gambling} 2
+				#button {Work} 3
+				#button {Wares} 4
+			)
+		else
+			(Print
+				{"What can I get for you, Hu-mon?"}
+				#title {Quirk}
+				#mode teJustLeft
+				#button {Bar} 1
+				#button {Gambling} 2
+				#button {Work} 3
+			)
+		)
+		
+	)
+	(switch c
+		(1
+			(Print 808 51)
+		)
+		(2
+			(Print 808 52)
+			(Print 808 53)
+		)
+		(3
+			(if quirkJobKnown
+				(= i 0)
+				(if (ego has: 18)
+					(while (< i 2)
+						(Print 808 (+ 48 i) #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))
+						(++ i)					
+					)
+				else
+					(Print 808 50 #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))
+				)
+			else
+				(while (< i 4)
+					(Print 808 (+ 42 i) #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))
+					(++ i)					
+				)
+				(++ quirkJobKnown)
+				(if (ego has: 18)
+					(Print 808 54 #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))
+				else
+					(Print 808 46 #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))
+				)
+			)
+		)
+		(4
+			(if toldAboutDisruptor
+				(Print 808 40 #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))
+			else
+				(= i 0)
+				(while (< i 3)
+					(Print 808 (+ 32 i) #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))
+					(++ i)
+				)
+				(++ toldAboutDisruptor)
+			)
+			(buyPTDlocal 800)
+		)
+	)
 )
 
 (instance rm808 of Room
@@ -83,6 +155,7 @@
 		)
 		(greenCustomer init:)
 		(greenFeet init:)
+		(CherubCustomer setCycle: Forward init:)
 		(= local1 2)
 		(= standingUp TRUE)
 		(= local5 1)
@@ -135,6 +208,9 @@
 			(greenFeet cel: (Random 0 1))
 			(greenCustomer cel: (Random 0 1))
 		)
+		(if (not (Random 0 100))
+			(CherubCustomer cel: 0 setCycle: EndLoop)
+		)
 		(if
 			(or
 				(== (ego onControl: 0) 4)
@@ -159,43 +235,6 @@
 		(switch (event type?)
 			(saidEvent
 				(cond
-					((Said 'ask[<about]/buy,sell,ptd')
-						(if (== standingUp FALSE)
-							
-							(if (ego has: 18)
-								(Print 808 41 #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))
-							else
-								(if toldAboutDisruptor
-									(Print 808 40 #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))
-								else
-									(while (< choice 4)
-										(Print 808 (+ 32 choice) #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))
-										(++ choice)
-									)
-									(++ toldAboutDisruptor)
-								)
-								(buyPTDlocal 800)
-							)
-						else
-							(Print 808 39 #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))
-						)
-					)
-					((Said 'ask[<about]/work,job')
-						(if quirkJobKnown
-							(= choice 0)
-							(while (< choice 2)
-								(Print 808 (+ 48 choice) #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))
-								(++ choice)					
-							)
-							
-						else
-							(while (< choice 3)
-								(Print 808 (+ 42 choice) #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))
-								(++ choice)					
-							)
-							(++ quirkJobKnown)
-						)
-					)
 					((Said 'look>')
 						(cond 
 							((or (Said '/pane') (Said '<out')) (Print 808 10))
@@ -464,8 +503,9 @@
 				(Print 808 31 #at -1 130 #width 280)
 				(if (> qtab 0)
 					(Print 808 27)
-					(= sawTerminator 0)
-					(= terminatorState 0)
+					;(= sawTerminator 0)
+					;(= terminatorState 0)
+					(= quarkAttacks 1)
 				)
 				(ship setMotion: MoveTo 286 125 self)
 			)
@@ -635,6 +675,22 @@
 	)
 )
 
+(instance CherubCustomer of Prop
+	(properties)
+	
+	(method (init)
+		(super init:)
+		(self
+			view: 300
+			setLoop: 3
+			setCel: 0
+			posn: 101 109
+			setPri: 8
+			ignoreActors: 1
+		)
+	)
+)
+
 (instance greenCustomer of Prop
 	(properties)
 	
@@ -772,14 +828,23 @@
 			(0
 				
 				(= choice
-					(Print
-						{"What can I get for you, Hu-mon?"}
-						#title {Quirk}
-						#mode teJustLeft
-						#button {Food} 1
-						#button {Drink} 2
-						#button {Pay Tab} 3
-						;#button {Other} 4
+					(if quarkAttacks
+						(Print
+							{"You ready to settle your tab now?"}
+							#title {Quirk}
+							#mode teJustLeft
+							#button {Yes} 3
+						)
+					else
+						(Print
+							{"What can I get for you, Hu-mon?"}
+							#title {Quirk}
+							#mode teJustLeft
+							#button {Food} 1
+							#button {Drink} 2
+							#button {Pay Tab} 3
+							#button {Other} 4
+						)
 					)
 				)
 				(if (== choice 1)
@@ -807,41 +872,12 @@
 						(Print (Format @str "%d buckazoids" qtab) #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60)) 
 						(= buckazoids (- buckazoids qtab))
 						(= qtab 0)
+						(= quarkAttacks 0)
 						(Print 808 25 #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))
 					)
 				)
 				(if (== choice 4)
-					(= choice 0)
-					(if (ego has: 18)
-						(Print 808 41 #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))
-					else
-						(if toldAboutDisruptor
-							(Print 808 40 #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))
-						else
-							(Print 808 32 #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))
-							(Print 808 33 #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))
-							(Print 808 34 #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))
-							(Print 808 35 #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))
-							(++ toldAboutDisruptor)
-						)
-						(= choice
-							(Print 808 36
-								#title {Quirk}
-								#mode teJustLeft
-								#button {Yes, I want it.} 1
-								#button {No, thank you.} 2
-							)
-						)
-						(if (== choice 1)
-							(Print 808 37 #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))
-							(Print 808 38)
-							(= qtab (+ qtab 800))
-							(ego get: 18)
-						)
-						(if (== choice 2)
-							(Print 808 39 #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))	
-						)
-					)
+					(TalkOther)
 				)
 				(quark setScript: quarkScript)
 				(quarkScript changeState: 2)
