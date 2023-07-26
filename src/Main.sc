@@ -1032,7 +1032,6 @@
 			(= startingRoom 900)
 			(self newRoom: 777)
 		)
-		(ego get: 7) ;decoder ring for testing
 	)
 	
 	(method (doit &tmp haveMouse)

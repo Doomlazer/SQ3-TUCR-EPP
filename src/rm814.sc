@@ -10,6 +10,7 @@
 (use System)
 (use Wander)
 (use Follow)
+(use User)
 
 (public
 	Room814 0
@@ -35,6 +36,7 @@
 	hScore3 = 30
 	tilesetLoop = 4
 	prevSpeed
+	isPlaying
 )
 
 (procedure (Score)
@@ -54,7 +56,9 @@
 	)
 	(+= pScore 1)
 	(-- dirtyTiles)
-	(cleanSound number: 44 play:)
+	(if isPlaying
+		(cleanSound number: 44 play:)
+	)
 	(Display
 		(Format @str {Score: %d} pScore)
 		p_width 50
@@ -243,8 +247,9 @@
 			p_color vBLACK
 			p_font 600
 		)
-		(Printf {Clean %d dirty tiles.} dirtyTiles)
-		(self setScript: levelScript)
+		;(Printf {Clean %d dirty tiles.} dirtyTiles)
+		;(self setScript: levelScript)
+		(self setScript: gameOverScript)
 	)
 	
 	(method (handleEvent event)
@@ -252,6 +257,19 @@
 		(switch (event type?)
 			(saidEvent
 				(cond 
+					((Said 'insert/buckazoid')
+						(ResetScore)
+						(= isPlaying 1)
+						(ego
+							setMotion: 0
+							setCycle: Walk
+							setPri: 13
+							x: 160
+							y: 40
+						)
+						(DrawPic 814 0) ;-1) ;dpOPEN_INSTANTLY
+						(curRoom setScript: levelChangeScript)
+					)
 					((or (Said 'disembark,quit[/game,device]') (Said '/bye'))
 						(= saveDisabled FALSE)
 						(= inCartoon FALSE)
@@ -313,6 +331,7 @@
 			(if (< maxDeathSquares 15) ;total possilbe death squares
 				(++ maxDeathSquares)
 			)
+			(ego setMotion: 0)
 			(curRoom setScript: levelChangeScript)
 		)
 	)
@@ -325,15 +344,22 @@
 		(= state newState)
 		(switch state
 			(0
-				(HandsOff)
+				;(HandsOff)
+				(User canControl: FALSE canInput: TRUE)
 				(= arrayCounter 0)
-				(ego posn: 160 40 show:)
+				(ego posn: 160 40 setMotion: 0 show:)
 				(hero posn: 120 155 setMotion: 0 show:)
 				(hero2 posn: 200 155 setMotion: 0 show:)
 				(chaseEnemy posn: 160 155 setMotion: 0 show:)
 				(= cycles 5)
 			)
 			(1
+				(if (not isPlaying)
+					(= level (Random 2 9))
+					(= tilesetLoop (Random 4 6))
+					(= maxDeathSquares (Random 0 2))
+					(Print {DEMO} #dispose #time 3 #at 135 27)
+				)
 				(self cue:)
 			)
 			(2
@@ -355,13 +381,17 @@
 						(++ deathSquares)
 						(= pt2 pt1)
 						(= pt1 1)
-						(cleanSound number: 5 play:)
+						(if isPlaying
+							(cleanSound number: 5 play:)
+						)
 					else
 						(if (== temp0 4)
 							(= temp0 (Random 1 3)) ;too many deathSquares change to spill
 						)
 						(++ dirtyTiles)
-						(cleanSound number: 19 play:)
+						(if isPlaying
+							(cleanSound number: 19 play:)
+						)
 						(Display
 							(Format @str {Tiles: %d} dirtyTiles)
 							p_width 50
@@ -398,8 +428,19 @@
 				)
 			)
 			(3
-				(Printf {Level: %d Dirty Tiles: %d} level dirtyTiles) ;(Printf {Clean %d dirty tiles.} dirtyTiles)
-				(HandsOn)
+				(if isPlaying
+					(self cue:)
+				else
+					(= state 4) ;attract mode
+					(self cue:)
+				)
+			)
+			(4
+				(User canControl: TRUE canInput: TRUE)
+				(if isPlaying
+					(Printf {Level: %d Dirty Tiles: %d} level dirtyTiles #dispose #time 3) ;(Printf {Clean %d dirty tiles.} dirtyTiles)
+				)
+				;(HandsOn)
 				(hero posn: 120 155 setMotion: Wander)
 				(if (> level 6)
 					(hero2 posn: 200 155 setMotion: Wander)
@@ -408,6 +449,11 @@
 					(chaseEnemy posn: 160 155 setMotion: Follow ego 0)
 				)
 				(curRoom setScript: levelScript)
+			)
+			(5
+				;(HandsOff)
+				(User canControl: FALSE canInput: TRUE)
+				(curRoom setScript: attractModeScript)
 			)
 		)
 	)
@@ -420,16 +466,28 @@
 		(= state newState)
 		(switch state
 			(0
-				(HandsOff)
+				;(HandsOff)
+				(User canControl: FALSE canInput: TRUE)
 				(= deathSquares 0)
 				(= maxDeathSquares 0)
 				(= arrayCounter 0)
 				(self cue:)
 			)
 			(1
-				(cleanSound number: 26 play:)
-				(Print {GAME OVER})
-				(self cue:)
+				(if isPlaying
+					(cleanSound number: 26 play:)
+					(Print {GAME OVER} #time 3)
+					(= isPlaying 0)
+					(self cue:)
+				else
+;;;					(ego setMotion: 0)
+;;;					(hero setMotion: 0)
+;;;					(hero2 setMotion: 0)
+;;;					(chaseEnemy setMotion: 0)
+;;;					(= cycles 40)
+					(Print {INSERT COIN} #time 3)
+					(curRoom setScript: highScoresScript)
+				)
 			)
 			(2
 				(cond
@@ -459,7 +517,8 @@
 		(= state newState)
 		(switch state
 			(0
-				(HandsOff)
+				;(HandsOff)
+				(User canControl: FALSE canInput: TRUE)
 				(= arrayCounter 0)
 				(ego posn: 160 40 hide:)
 				(hero posn: 120 155 setMotion: 0 hide:)
@@ -533,7 +592,118 @@
 			)
 			(7
 				(ResetScore)
+				;(curRoom setScript: levelChangeScript)
+				(curRoom setScript: titleScript)
+			)
+		)
+	)
+)
+
+(instance titleScript of Script
+	(properties)
+	
+	(method (changeState newState &tmp nsl nst nsr nsb temp0)
+		(= state newState)
+		(switch state
+			(0
+				(DrawPic 815 8) ;dpOPEN_CHECKBOARD
+				(= cycles 40)
+			)
+			(1
+				(Display
+					{INSERT COIN}
+					p_width 100
+					p_at 125 130
+					p_color vYELLOW
+					p_font 600
+				)
+				(= cycles 100)
+			)
+			(2
+				(DrawPic 814 0) ;-1) ;dpOPEN_INSTANTLY
 				(curRoom setScript: levelChangeScript)
+			)
+		)
+	)
+)
+
+(instance attractModeScript of Script
+	(properties)
+	
+	(method (doit &tmp nsl nst nsr nsb)
+		(super doit:)
+		(= arrayCounter 0)
+		(while (< arrayCounter totalTiles)
+			(= nsl ([ta arrayCounter] nsLeft?))
+			(= nst ([ta arrayCounter] nsTop?))
+			(= nsr ([ta arrayCounter] nsRight?))
+			(= nsb ([ta arrayCounter] nsBottom?))
+			(if (ego inRect: nsl nst nsr nsb)
+				(if (== ([ta arrayCounter] cel?) 4)
+					;(Print {DEAD})
+					(curRoom setScript: gameOverScript)
+					(break)
+				else
+					(if (> ([ta arrayCounter] cel?) 0)
+						(= [ta arrayCounter] 0)
+						((= [ta arrayCounter] (Actor new:))
+							view: 814
+							loop: tilesetLoop
+							cel: 0
+							ignoreHorizon:
+							ignoreActors:
+							illegalBits: 0
+							setPri: 7
+							x: (- nsr 8)
+							y: (- nsb 1)
+							addToPic:
+						) 
+						(Score)
+					)
+				)
+			)
+			(++ arrayCounter)		
+		)
+		(if (== dirtyTiles 0)
+			;(NewLevel)
+			(++ level)
+			(++ tilesetLoop)
+			(if (> tilesetLoop 6)
+				(= tilesetLoop 4)
+			)
+			(= deathSquares 0)
+			(if (< maxDeathSquares 15) ;total possilbe death squares
+				(++ maxDeathSquares)
+			)
+			(curRoom setScript: levelChangeScript)
+		)
+	)
+	
+	(method (changeState newState &tmp nsl nst nsr nsb temp0)
+		(= state newState)
+		(switch state
+			(0
+				;(HandsOff)
+				(User canControl: FALSE canInput: TRUE)
+				(ego setMotion: MoveTo (ego x?) (Random 50 140) self)
+				(hero posn: 120 155 setMotion: Wander)
+				(if (> level 6)
+					(hero2 posn: 200 155 setMotion: Wander)
+				)
+				(if (> level 3)
+					(chaseEnemy posn: 160 155 setMotion: Follow ego 0)
+				)
+			)
+			(1
+				(switch (Random 0 1)
+					(0
+						(ego setMotion: MoveTo (Random 60 250) (ego y?) self)
+					)
+					(1
+						(ego setMotion: MoveTo (ego x?) (Random 50 140) self)
+					)
+				)
+				(= state 0)
 			)
 		)
 	)
