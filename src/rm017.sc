@@ -89,7 +89,8 @@
 				(and
 					(== global208 2)
 					(!= shipLocation shipSPACE)
-					(not (== currentSector 62))
+					(not (== currentSector 62)) ;monolithburger
+					(not (== currentSector 70)) ;quirks bar
 					(not twoGuysOnBoard)
 				)
 				0 ;enabled

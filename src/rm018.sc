@@ -525,6 +525,7 @@
 					(RadarScript changeState: 0)
 					(if quarksGoonsAttacking
 						(Print 18 5)
+						(= shipShieldHealth 12)
 					else
 						(Print 18 1)
 					)
