@@ -477,6 +477,7 @@
 				(HandsOn)
 			)
 			(else
+				(ego posn: 160 300)
 				(self setScript: Actions)
 			)
 		)

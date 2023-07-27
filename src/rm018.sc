@@ -526,6 +526,7 @@
 					(if quarksGoonsAttacking
 						(Print 18 5)
 						(= shipShieldHealth 12)
+						(= global176 0) ;reset ships killed
 					else
 						(Print 18 1)
 					)

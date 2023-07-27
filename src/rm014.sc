@@ -281,8 +281,14 @@
 					(= global209 3) ;current ship speed
 					(= global218 1) ;needed for attack speed enable
 					(= global208 2) ;needed for attack speed enable
-					(Print 14 97)
 				)
+			)
+		)
+		(if quarksGoonsAttacking
+			(if (== prevRoomNum 808)
+				(Print 14 97)
+			else
+				(Print 14 98)
 			)
 		)
 		(if (and twoGuysOnBoard (!= prevRoomNum 94))

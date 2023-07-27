@@ -486,6 +486,9 @@
 					(= local183 {TAKEOFF IN PROGRESS})
 				else
 					(= local183 {LANDING/DOCKING IN PROGRESS})
+					;cancel quark attack
+					(= global175 0) 
+					(= quarksGoonsAttacking 0)
 				)
 				(responseScript changeState: 9)
 				(switch shipLocation
@@ -537,32 +540,49 @@
 					)
 				)
 				(= saveDisabled 0)
-				(curRoom
-					newRoom:
-						(cond 
-							((== shipLocation 2) (if (== global206 1) 28 else 31))
-							(
-								(or
-									(== shipLocation 0)
-									(== shipLocation 3)
-									(== shipLocation 4)
-									(== shipLocation 7)
-									(== shipLocation 9) ;aquavelveta
-									(== shipLocation 11) ;2nd new planet
-								)
-								14
-							)
-							(
-								(or
-									(== shipLocation 6)
-									(== shipLocation 5)
-									(== shipLocation 8)
-									(== shipLocation 10) ;aquavelveeta
-									(== shipLocation 12) ;2nd new planet
-								)
-								21
-							)
+				(if quarkAttacks ;harras the player until they pay the bar tab
+					(if
+						(or
+							(== shipLocation shipORTEGA_ORBIT)
+							(== shipLocation shipPHLEEBHUT_ORBIT)
+							(== shipLocation shipPESTULON_ORBIT)
+							(== shipLocation shipAQUAVELVEETA_ORBIT)
+							(== shipLocation shipREN_ORBIT)
 						)
+						(if (Random 0 2) ;1/3 chance they wont attack
+							(= quarksGoonsAttacking 1)
+							(= global175 20) ;countdown to attack
+							(= global209 3) ;current ship speed
+							(= global218 1) ;needed for attack speed enable
+							(= global208 2) ;needed for attack speed enable
+						)
+					)
+				)
+				(curRoom newRoom:
+					(cond 
+						((== shipLocation 2) (if (== global206 1) 28 else 31))
+						(
+							(or
+								(== shipLocation 0)
+								(== shipLocation shipORTEGA_ORBIT)
+								(== shipLocation shipPHLEEBHUT_ORBIT)
+								(== shipLocation shipPESTULON_ORBIT)
+								(== shipLocation shipAQUAVELVEETA_ORBIT)
+								(== shipLocation shipREN_ORBIT)
+							)
+							14
+						)
+						(
+							(or
+								(== shipLocation 6)
+								(== shipLocation 5)
+								(== shipLocation 8)
+								(== shipLocation 10) 
+								(== shipLocation 12) 
+							)
+							21
+						)
+					)
 				)
 			)
 		)
