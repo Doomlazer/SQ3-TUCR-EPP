@@ -105,7 +105,11 @@
 				(ship setMotion: MoveTo 215 108 self)
 			)
 			(3
-				(ship setMotion: MoveTo 215 116 self)
+				(if (== currentSector 86)
+					(curRoom newRoom: 821)
+				else
+					(ship setMotion: MoveTo 215 116 self)
+				)
 			)
 			(4
 				(ship setMotion: MoveTo 208 122 self)
@@ -132,13 +136,13 @@
 						(curRoom newRoom: 28)
 					)
 					((== currentSector 70)
-						(= global206 1) ;needed?
+						;(= global206 1) ;needed?
 						(curRoom newRoom: 808)
 					)
-					((== currentSector 86)
-						(= global206 1) ;needed?
-						(curRoom newRoom: 821)
-					)
+;;;					((== currentSector 86)
+;;;						(= global206 1) ;needed?
+;;;						(curRoom newRoom: 821)
+;;;					)
 				)	
 			)
 		)

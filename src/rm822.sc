@@ -1,5 +1,5 @@
 ;;; Sierra Script 1.0 - (do not remove this comment)
-(script# 821)
+(script# 822)
 (include game.sh)
 (use Main)
 (use Intrface)
@@ -10,29 +10,23 @@
 (use System)
 
 (public
-	Room821 0
+	Room822 0
 )
 
 (local
-	tempX
-	tempY
+	
 )
 
 
-(instance Room821 of Room
+(instance Room822 of Room
 	(properties
 		picture scriptNumber
 	)
 	
 	(method (init)
-		(= tempX (ego x?))
-		(= tempY (ego y?))
 		(super init:)
 		(switch prevRoomNum
-			(27
-				(self setScript: RoomScript)
-			)
-			(822
+			(821
 				(self setScript: RoomScript)
 			)
 			(else 
@@ -45,18 +39,18 @@
 	(method (doit)
 		(super doit:)
 		(if
-			(and
-				(> (ego y?) 180)
-				(== (curRoom script?) 0) 
+			(or
+				(and
+					(> (ego x?) 138)
+					(>= (ego y?) 190)
+					(== (curRoom script?) 0) 
+				)
+				(and
+					(>= (ego x?) 320)
+					(== (curRoom script?) 0) 
+				)
 			)
-			(self setScript: exitScript)
-		)
-		(if
-			(and
-				(> (ego x?) 320)
-				(== (curRoom script?) 0) 
-			)
-			(curRoom newRoom: 822)
+			(curRoom newRoom: 821)
 		)
 ;;;		(if
 ;;;			(and
@@ -104,25 +98,16 @@
 			(0
 				(HandsOff)
 				(switch prevRoomNum
-					(27
-						(ego
-							posn: 196 200 
-							ignoreControl:
-							setMotion: MoveTo 196 170 self
-						)
-					)
-					(822
-						(if (>= tempX 320)
+					(821
+						(if (> (ego y?) 110)
 							(ego
-								posn: 330 140 
-								ignoreControl:
-								setMotion: MoveTo 310 140 self
+								posn: 330 170
+								setMotion: MoveTo 310 160 self
 							)
 						else
 							(ego
-								posn: 330 90 
-								ignoreControl:
-								setMotion: MoveTo 310 90 self
+								posn: 200 195
+								setMotion: MoveTo 190 185 self
 							)
 						)
 					)
@@ -132,24 +117,6 @@
 				(RedrawCast)
 				(HandsOn)
 				(RoomScript dispose:)
-			)
-		)
-	)
-)
-
-(instance exitScript of Script
-	(properties)
-	
-	(method (changeState newState)
-		(= state newState)
-		(switch state
-			(0
-				(HandsOff)			
-				(ego setMotion: MoveTo (ego x?) 200 self)
-			)
-			(1
-				(HandsOn)
-				(curRoom newRoom: 14)
 			)
 		)
 	)

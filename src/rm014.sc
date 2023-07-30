@@ -37,8 +37,7 @@
 	)
 	
 	(method (init &tmp [str 150])
-		(if
-		(not (if (and (== global176 5) global179) global181))
+		(if (not (if (and (== global176 5) global179) global181))
 			(if
 				(not
 					(if (and (== global206 2) (== global207 2))
@@ -171,7 +170,7 @@
 			(20
 				(wallA init: setLoop: 4 setCel: 0)
 				(SitDown)
-				(= shipLocation 1)
+				(= shipLocation shipSPACE)
 				(= global207 1)
 			)
 			(21
@@ -263,12 +262,12 @@
 				(= global208 2)
 				(= global206 3)
 			)
-			(802 ;new 2nd planet
+			(802 ;Ren
 				(wallA init: setLoop: 6 stopUpd:)
 				(StandUp)
 				(theMusic fade:)
 				(= local1 1)
-				(= shipLocation 12) ; new 2nd planet
+				(= shipLocation shipREN_LAND)
 				(= global206 0)
 				(self setScript: rampScript)
 			)
@@ -281,14 +280,15 @@
 					(= quarksGoonsAttacking 1)
 					(= global175 20) ;countdown to attack
 					(= global209 3) ;current ship speed
-					(= global218 1) ;needed for attack speed enable
+					(= global218 1) ;needed for attack speed enable.
 					(= global208 2) ;needed for attack speed enable
 				)
 			)
 			(821 ;From MALL
-				(wallA init: setLoop: 4 setCel: 0)
+				(wallA init: setLoop: 4 setCel: 0) ;BROKEN?!?!?
 				(SitDown)
 				(= global208 2)
+				(= global206 3)
 				(= shipLocation shipMALL)
 			)
 		)
@@ -309,7 +309,10 @@
 			)
 		)
 		(if
-		(or (not (InRoom iReactor)) (not (InRoom iWire)))
+			(or
+				(not (InRoom iReactor))
+				(not (InRoom iWire))
+			)
 			(floorPanel init:)
 		)
 		(if
