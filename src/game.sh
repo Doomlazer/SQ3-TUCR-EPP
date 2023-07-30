@@ -71,7 +71,7 @@
 	shipREN_ORBIT
 	shipREN_LAND
 	shipQUARKS
-	
+	shipMALL
 )
 
 ;Ship shields

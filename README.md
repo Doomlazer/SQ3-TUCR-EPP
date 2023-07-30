@@ -78,9 +78,9 @@ FYI, the QA debug command is only available in the first room. More debugging in
 
 ## Credits
 
-DoomLazer - Programming
+DoomLazer - Programming & Art
 
-Threepwang - Backgrounds
+Threepwang - Backgrounds, Pet Graphics & Misc. Art
 
 ## Recent Changes
 

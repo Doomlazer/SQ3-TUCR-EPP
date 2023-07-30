@@ -32,17 +32,11 @@
 	(= saveBits1
 		(Display
 			param1
-			dsWIDTH
-			135
-			dsALIGN
-			1
-			dsCOORD
-			168
-			12
-			dsCOLOR
-			param2
-			dsFONT
-			600
+			dsWIDTH 135
+			dsALIGN 1
+			dsCOORD 168 12
+			dsCOLOR param2
+			dsFONT 600
 			dsSAVEPIXELS
 		)
 	)
@@ -151,19 +145,12 @@
 			(2
 				(= saveBits2
 					(Display
-						19
-						0
-						dsWIDTH
-						135
-						dsALIGN
-						1
-						dsCOORD
-						168
-						3
-						dsCOLOR
-						14
-						dsFONT
-						600
+						19 0
+						dsWIDTH 135
+						dsALIGN 1
+						dsCOORD 168 3
+						dsCOLOR 14
+						dsFONT 600
 						dsSAVEPIXELS
 					)
 				)
@@ -179,17 +166,11 @@
 					(= saveBits2
 						(Display
 							(Format @str2 {DESTINATION: SECTOR %d} selectedSector)
-							dsWIDTH
-							135
-							dsALIGN
-							1
-							dsCOORD
-							168
-							3
-							dsCOLOR
-							9
-							dsFONT
-							600
+							dsWIDTH 135
+							dsALIGN 1
+							dsCOORD 168 3
+							dsCOLOR 9
+							dsFONT 600
 							dsSAVEPIXELS
 						)
 					)
@@ -217,15 +198,25 @@
 							(!= scanningSector 27)
 							(!= scanningSector 39)
 							(!= scanningSector 62)
+							(!= scanningSector 69)
 							(!= scanningSector 70)
 							(!= scanningSector 82)
-							(!= scanningSector 69)
+							(!= scanningSector 86)
+							
 						)
 						(self changeState: 2)
 					)
 					(
-					(and (== scanningSector 69) (not forceBeamDestroyed)) (self changeState: 2))
-					(local0 (= local0 0) (self changeState: 2))
+						(and
+							(== scanningSector 69)
+							(not forceBeamDestroyed)
+						)
+						(self changeState: 2)
+					)
+					(local0
+						(= local0 0)
+						(self changeState: 2)
+					)
 					(else
 						(if
 							(!=
@@ -289,6 +280,7 @@
 							((== scanningSector 23) 401)
 							((== scanningSector 27) 401)
 							((== scanningSector 70) 401)
+							((== scanningSector 86) 401)
 							(else 50)
 						)
 					setLoop:
@@ -300,6 +292,7 @@
 							((== scanningSector 23) 6)
 							((== scanningSector 27) 1)
 							((== scanningSector 70) 3)
+							((== scanningSector 86) 7)
 						)
 					cel: 0
 					cycleSpeed: 1
@@ -343,6 +336,9 @@
 							((== scanningSector 82)
 								{NAME:\n PLANET ORTEGA\nSECTOR: 82\nHABITANTS: UNKNOWN\nVOLCANIC CRATER-STREWN\nSURFACE}
 							)
+							((== scanningSector 86)
+								{NAME:\n SPACE MALL\nSECTOR: 86\nRETAIL SHOPPING}
+							)
 						)
 						dsWIDTH
 						(if (< global163 7) 220 else 91)
@@ -353,10 +349,8 @@
 							(- (* (- global163 1) 25) 111)
 						)
 						(+ (* (- global164 1) 18) 6)
-						dsFONT
-						600
-						dsCOLOR
-						12
+						dsFONT 600
+						dsCOLOR 12
 						dsSAVEPIXELS
 					)
 				)
@@ -426,17 +420,11 @@
 				(= saveBits4
 					(Display
 						temp0
-						dsWIDTH
-						135
-						dsALIGN
-						1
-						dsCOORD
-						168
-						3
-						dsCOLOR
-						14
-						dsFONT
-						600
+						dsWIDTH 135
+						dsALIGN 1
+						dsCOORD 168 3
+						dsCOLOR 14
+						dsFONT 600
 						dsSAVEPIXELS
 					)
 				)
@@ -459,17 +447,11 @@
 				(= saveBits4
 					(Display
 						{COURSE LOCKED}
-						dsWIDTH
-						135
-						dsALIGN
-						1
-						dsCOORD
-						168
-						3
-						dsCOLOR
-						9
-						dsFONT
-						600
+						dsWIDTH 135
+						dsALIGN 1
+						dsCOORD 168 3
+						dsCOLOR 9
+						dsFONT 600
 						dsSAVEPIXELS
 					)
 				)

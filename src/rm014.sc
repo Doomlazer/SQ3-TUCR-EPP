@@ -87,8 +87,9 @@
 							(== shipLocation shipORTEGA_ORBIT)
 							(== shipLocation shipPESTULON_ORBIT)
 							(== shipLocation shipPHLEEBHUT_ORBIT)
-							(== shipLocation shipREN_ORBIT) ;new 2nd planet
+							(== shipLocation shipREN_ORBIT)
 							(== shipLocation shipQUARKS)
+							(== shipLocation shipMALL)
 							(== shipLocation shipAQUAVELVEETA_ORBIT)
 						)
 						(wallA init: setLoop: 4 setCel: 0)
@@ -124,8 +125,9 @@
 							(== shipLocation shipORTEGA_ORBIT)
 							(== shipLocation shipPESTULON_ORBIT)
 							(== shipLocation shipPHLEEBHUT_ORBIT)
-							(== shipLocation shipREN_ORBIT) ;new 2nd planet
+							(== shipLocation shipREN_ORBIT)
 							(== shipLocation shipQUARKS)
+							(== shipLocation shipMALL)
 						)
 						(wallA init: setLoop: 4 setCel: 0)
 					)
@@ -178,7 +180,7 @@
 					((== shipLocation shipORTEGA_LAND) (wallA init: setLoop: 2 stopUpd:) (= thePlanet {Ortega}))
 					((== shipLocation shipPHLEEBHUT_LAND) (wallA init: setLoop: 3 stopUpd:) (= thePlanet {Phleebhut}))
 					((== shipLocation shipPESTULON_LAND) (wallA init: setLoop: 5 stopUpd:) (= thePlanet {Pestulon}))
-					((== shipLocation shipREN_LAND) (wallA init: setLoop: 6 stopUpd:) (= thePlanet {Ren})) ;2nd new planet
+					((== shipLocation shipREN_LAND) (wallA init: setLoop: 6 stopUpd:) (= thePlanet {Ren})) 
 				)
 				(RedrawCast)
 				(theMusic stop:)
@@ -283,6 +285,12 @@
 					(= global208 2) ;needed for attack speed enable
 				)
 			)
+			(821 ;From MALL
+				(wallA init: setLoop: 4 setCel: 0)
+				(SitDown)
+				(= global208 2)
+				(= shipLocation shipMALL)
+			)
 		)
 		(if quarksGoonsAttacking
 			(if (== prevRoomNum 808)
@@ -381,10 +389,10 @@
 									(cond 
 										(
 											(or
-												(== shipLocation 5)
-												(== shipLocation 6)
-												(== shipLocation 8)
-												(== shipLocation 12) ;2nd new planet
+												(== shipLocation shipORTEGA_LAND)
+												(== shipLocation shipPHLEEBHUT_LAND)
+												(== shipLocation shipPESTULON_LAND)
+												(== shipLocation shipREN_LAND)
 											)
 											(self setScript: rampScript)
 										)

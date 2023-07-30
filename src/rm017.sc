@@ -91,6 +91,7 @@
 					(!= shipLocation shipSPACE)
 					(not (== currentSector 62)) ;monolithburger
 					(not (== currentSector 70)) ;quirks bar
+					(not (== currentSector 86)) ;MALL
 					(not twoGuysOnBoard)
 				)
 				0 ;enabled
@@ -318,13 +319,14 @@
 			(2
 				(= local133
 					(cond 
-						((== currentSector 23) {ORBITING AQUAVELVEETA}) ;new planet
-						((== currentSector 27) {ORBITING PLANET REN}) ;new 2nd planet
+						((== currentSector 23) {ORBITING AQUAVELVEETA})
+						((== currentSector 27) {ORBITING PLANET REN})
 						((== currentSector 39) {ORBITING PLANET PHLEEBHUT})
 						((== currentSector 62) {APPROACHING MONOLITH BURGER})
-						((== currentSector 70) {APPROACHING QUIRK'S BAR}) ;Quarks 
-						((== currentSector 82) {ORBITING PLANET ORTEGA})
 						((== currentSector 69) {ORBITING PESTULON})
+						((== currentSector 70) {APPROACHING QUIRK'S BAR})
+						((== currentSector 82) {ORBITING PLANET ORTEGA})
+						((== currentSector 86) {APPROACHING SPACE MALL})
 					)
 				)
 				(localproc_0a2c local133 134 3)
@@ -333,15 +335,15 @@
 			(3
 				(localproc_0a59 local133 134)
 				(cond 
-					((== currentSector 23) (= global208 0) (= saveDisabled 0) (curRoom newRoom: 800)) ;dump roger on planet for now. TODO: switch to landing.
+					((== currentSector 23) (= global208 0) (= saveDisabled 0) (curRoom newRoom: 800)) ;why 23 listed twice? Fix
 					((== currentSector 23) (= shipLocation shipAQUAVELVEETA_ORBIT))
-					((== currentSector 27) (= shipLocation 11)) ;orbiting 2nd new planet. add to game.sh
-					((== currentSector 62) (= global208 0) (= saveDisabled 0) (curRoom newRoom: 27))
-					((== currentSector 70) (= global208 0) (= saveDisabled 0) (curRoom newRoom: 27))
-					((== currentSector 39) (= shipLocation shipPHLEEBHUT_ORBIT)) ;4
-					((== currentSector 82) (= shipLocation shipORTEGA_ORBIT)) ;3
-					((== currentSector 69) (= shipLocation shipPESTULON_ORBIT)) ;7
-					
+					((== currentSector 27) (= shipLocation shipREN_ORBIT))
+					((== currentSector 39) (= shipLocation shipPHLEEBHUT_ORBIT))
+					((== currentSector 62) (= global208 0) (= saveDisabled 0) (curRoom newRoom: 27)) ;MB
+					((== currentSector 69) (= shipLocation shipPESTULON_ORBIT))
+					((== currentSector 70) (= global208 0) (= saveDisabled 0) (curRoom newRoom: 27)) ;Quirk's
+					((== currentSector 82) (= shipLocation shipORTEGA_ORBIT))
+					((== currentSector 86) (= global208 0) (= saveDisabled 0) (curRoom newRoom: 27)) ;MALL
 				)
 				(= local2 0)
 				(localproc_0a78)
@@ -486,57 +488,64 @@
 					(= local183 {TAKEOFF IN PROGRESS})
 				else
 					(= local183 {LANDING/DOCKING IN PROGRESS})
-					;cancel quark attack
-					(= global175 0) 
-					(= quarksGoonsAttacking 0)
+					(= global175 0) ;cancel quark attack
+					(= quarksGoonsAttacking 0) ;cancel quark attack
 				)
 				(responseScript changeState: 9)
 				(switch shipLocation
-					(3
+					(shipORTEGA_ORBIT
 						(= global206 0)
 						(= global208 0)
-						(= shipLocation 5)
+						(= shipLocation shipORTEGA_LAND)
 					)
-					(4
+					(shipPHLEEBHUT_ORBIT
 						(= global206 0)
 						(= global208 0)
-						(= shipLocation 6)
+						(= shipLocation shipPHLEEBHUT_LAND)
 					)
-					(7
+					(shipPESTULON_ORBIT
 						(= global206 0)
 						(= global208 0)
-						(= shipLocation 8)
+						(= shipLocation shipPESTULON_LAND)
 					)
-					(9 ;AQUAVELVEETA
+					(shipAQUAVELVEETA_ORBIT
 						(= global206 0)
 						(= global208 0)
-						(= shipLocation 10)
+						(= shipLocation shipAQUAVELVEETA_LAND)
 					)
-					(11 ;new planet 2
+					(shipREN_ORBIT
 						(= global206 0)
 						(= global208 0)
-						(= shipLocation 12)
+						(= shipLocation shipREN_LAND)
 					)
-					(2 (= global208 0))
-					(5
-						(= global206 3)
-						(= shipLocation 3)
+					(shipMONOLITH
+						(= global208 0)
 					)
-					(6
-						(= global206 3)
-						(= shipLocation 4)
+					(shipQUARKS
+						(= global208 0)
 					)
-					(8
-						(= global206 3)
-						(= shipLocation 7)
+					(shipMALL
+						(= global208 0)
 					)
-					(10 ;aquavelveeta
+					(shipORTEGA_LAND
 						(= global206 3)
-						(= shipLocation 9)
+						(= shipLocation shipORTEGA_ORBIT)
 					)
-					(12 ;2nd new planet
+					(shipPHLEEBHUT_LAND
 						(= global206 3)
-						(= shipLocation 11)
+						(= shipLocation shipPHLEEBHUT_ORBIT)
+					)
+					(shipPESTULON_LAND
+						(= global206 3)
+						(= shipLocation shipPESTULON_ORBIT)
+					)
+					(shipAQUAVELVEETA_LAND
+						(= global206 3)
+						(= shipLocation shipAQUAVELVEETA_ORBIT)
+					)
+					(shipREN_LAND
+						(= global206 3)
+						(= shipLocation shipREN_ORBIT)
 					)
 				)
 				(= saveDisabled 0)
@@ -549,7 +558,7 @@
 							(== shipLocation shipAQUAVELVEETA_ORBIT)
 							(== shipLocation shipREN_ORBIT)
 						)
-						(if (Random 0 2) ;1/3 chance they wont attack
+						(if (Random 0 2) ;1/3 chance they will NOT attack
 							(= quarksGoonsAttacking 1)
 							(= global175 20) ;countdown to attack
 							(= global209 3) ;current ship speed
@@ -560,10 +569,10 @@
 				)
 				(curRoom newRoom:
 					(cond 
-						((== shipLocation 2) (if (== global206 1) 28 else 31))
+						((== shipLocation shipMONOLITH) (if (== global206 1) 28 else 31))
 						(
 							(or
-								(== shipLocation 0)
+								(== shipLocation shipJUNKBAY)
 								(== shipLocation shipORTEGA_ORBIT)
 								(== shipLocation shipPHLEEBHUT_ORBIT)
 								(== shipLocation shipPESTULON_ORBIT)
@@ -574,11 +583,11 @@
 						)
 						(
 							(or
-								(== shipLocation 6)
-								(== shipLocation 5)
-								(== shipLocation 8)
-								(== shipLocation 10) 
-								(== shipLocation 12) 
+								(== shipLocation shipORTEGA_LAND)
+								(== shipLocation shipPHLEEBHUT_LAND)
+								(== shipLocation shipPESTULON_LAND)
+								(== shipLocation shipAQUAVELVEETA_LAND) 
+								(== shipLocation shipREN_LAND) 
 							)
 							21
 						)

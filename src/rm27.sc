@@ -22,10 +22,16 @@
 		(Load VIEW 39)
 		(Load VIEW 52)
 		(Load SOUND 16)
-		(if (== currentSector 62) ;monoburger
-			(if (not enterpriseLeftMonolithBurger) (enterprise init: stopUpd:))
-		else ;quarks
-		 	(= picture 26)
+		(cond
+			((== currentSector 62) ;monoburger
+				(if (not enterpriseLeftMonolithBurger) (enterprise init: stopUpd:))
+			)
+			((== currentSector 70) ;Quark's 
+		 		(= picture 26)
+			)
+			((== currentSector 86) ;MALL
+				(= picture 820)
+			)
 		)
 		(ship init:)
 		(super init:)
@@ -38,10 +44,16 @@
 			moveSpeed: 0
 			setStep: 3 2
 		)
-		(if (== currentSector 62)
-			(theMusic number: 16 loop: -1 play:)
-		else
-			(theMusic number: 401 loop: -1 play:)
+		(cond
+			((== currentSector 62) ;monoburger
+				(theMusic number: 16 loop: -1 play:)
+			)
+			((== currentSector 70) ;Quark's 
+		 		(theMusic number: 401 loop: -1 play:)
+			)
+			((== currentSector 86) ;MALL
+				;add music
+			)
 		)
 		(self setScript: arrivalScript)
 	)
@@ -52,6 +64,17 @@
 			(saidEvent
 				(if (Said 'look[/area,monolith,burger,cafe]')
 					(Print 27 0)
+					(cond
+						((== currentSector 62) ;monoburger
+							(Print 27 0)
+						)
+						((== currentSector 70) ;Quark's 
+					 		;
+						)
+						((== currentSector 86) ;MALL
+							;
+						)
+					)
 				)
 			)
 		)
@@ -86,7 +109,8 @@
 			)
 			(4
 				(ship setMotion: MoveTo 208 122 self)
-				(if (and
+				(if
+					(and
 						(not enterpriseLeftMonolithBurger)
 						(== currentSector 62)	
 					) 
@@ -98,18 +122,23 @@
 			)
 			(6
 				(ship dispose:)
-				(if (and
-						(== currentSector 62)
-						enterpriseLeftMonolithBurger
-					) 
-					(= global206 1)
-					(curRoom newRoom: 28)
-				)
-				(if  (== currentSector 70)
-					(= global206 1) ;;needed?
-					(curRoom newRoom: 808)
-				else
-					(curRoom newRoom: 808)
+				(cond
+					(
+						(and
+							(== currentSector 62)
+							enterpriseLeftMonolithBurger
+						) 
+						(= global206 1)
+						(curRoom newRoom: 28)
+					)
+					((== currentSector 70)
+						(= global206 1) ;needed?
+						(curRoom newRoom: 808)
+					)
+					((== currentSector 86)
+						(= global206 1) ;needed?
+						(curRoom newRoom: 821)
+					)
 				)	
 			)
 		)

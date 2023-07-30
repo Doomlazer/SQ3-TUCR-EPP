@@ -37,6 +37,7 @@
 	tilesetLoop = 4
 	prevSpeed
 	isPlaying
+	ir
 )
 
 (procedure (Score)
@@ -558,7 +559,7 @@
 				(Display
 					{HIGH SCORES:}
 					p_at 120 60
-					p_color vWHITE
+					p_color 12 ;vWHITE
 					p_font 600
 				)
 				(= cycles 10)
@@ -602,24 +603,61 @@
 (instance titleScript of Script
 	(properties)
 	
-	(method (changeState newState &tmp nsl nst nsr nsb temp0)
+	(method (changeState newState)
 		(= state newState)
 		(switch state
 			(0
+				(= ir 0)
 				(DrawPic 815 8) ;dpOPEN_CHECKBOARD
-				(= cycles 40)
+				(= cycles 10)
 			)
 			(1
 				(Display
-					{INSERT COIN}
+					{MOP}
 					p_width 100
-					p_at 125 130
-					p_color vYELLOW
-					p_font 600
+					p_at 95 55
+					p_color 12 ;4 red
+					p_font 200
 				)
-				(= cycles 100)
+				(cleanSound number: 44 play:)
+				(= cycles 20)
 			)
 			(2
+				(Display
+					{GAME}
+					p_width 100
+					p_at 91 65
+					p_color 12
+					p_font 200
+				)
+				(cleanSound number: 44 play:)
+				(= cycles 20)
+			)
+			(3
+				(Display
+					{INSERT COIN}
+					p_width 100
+					p_at 82 80
+					p_color vWHITE
+					p_font 600
+				)
+				(= cycles 20)
+			)
+			(4
+				(Display
+					{INSERT COIN}
+					p_width 100
+					p_at 82 80
+					p_color 0
+					p_font 600
+				)
+				(if (< ir 4)
+					(= state 2)
+				)
+				(++ ir)
+				(= cycles 20)
+			)
+			(5
 				(DrawPic 814 0) ;-1) ;dpOPEN_INSTANTLY
 				(curRoom setScript: levelChangeScript)
 			)
