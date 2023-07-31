@@ -215,9 +215,6 @@
 				(client setMotion: MoveTo (Random 150 290) (Random 90 115) self)
 			)
 			(1
-				(= cycles (Random 0 20))
-			)
-			(2
 				(= state -1)
 				(self cue:)
 			)
@@ -231,7 +228,7 @@
 	(method (changeState newState)
 		(switch (= state newState)
 			(0
-				(= cycles (Random 30 200))
+				(= seconds (Random 2 10))
 			)
 			(1
 				(leftEye setCycle: EndLoop self)
@@ -263,11 +260,11 @@
 				(= printObj
 					(Print {Hello, and welcom to Virtual Pet. Would you like to buy a pet?} #at -1 10 #width 280 #font 600 #dispose)
 				)
-				(= seconds 5)
+				(= cycles 80)
 			)
 			(2
 				(ClearTalking)
-				(= cycles (Random 30 150))
+				(= cycles (Random 50 200))
 			)
 			(3
 				(= state -1)
@@ -275,15 +272,18 @@
 			)
 			(100
 				(= cycles 0)
-				(= seconds 0)
 				(alienTalks 50 47)
 				(mouth  setCycle: Forward)
 				(= printObj
 					(Print {Sorry, this room is unfinished. Type EXIT to leave the store.} #at -1 10 #width 280 #font 600 #dispose)
 				)
-				(= seconds 5)
+				(= cycles 80)
 			)
 			(101
+				(ClearTalking)
+				(= cycles (Random 50 200))
+			)
+			(102
 				(= state -1)
 				(self cue:)
 			)
@@ -305,6 +305,8 @@
 	)
 	(if (not (== (mouth cel?) 0))
 		(mouth setCycle: BegLoop)
+	else
+		(mouth setCycle: 0)
 	)
 	(= saveDisabled 0)
 )
