@@ -1,5 +1,5 @@
 ;;; Sierra Script 1.0 - (do not remove this comment)
-(script# 822)
+(script# 824)
 (include game.sh)
 (use Main)
 (use Intrface)
@@ -10,32 +10,23 @@
 (use System)
 
 (public
-	Room822 0
+	Room824 0
 )
 
 (local
-	tempX
-	tempY
+	
 )
 
 
-(instance Room822 of Room
+(instance Room824 of Room
 	(properties
 		picture scriptNumber
 	)
 	
 	(method (init)
-		(= tempX (ego x?))
-		(= tempY (ego y?))
 		(super init:)
 		(switch prevRoomNum
-			(821
-				(self setScript: RoomScript)
-			)
-			(823
-				(self setScript: RoomScript)
-			)
-			(824
+			(822
 				(self setScript: RoomScript)
 			)
 			(else 
@@ -50,30 +41,16 @@
 		(if
 			(or
 				(and
-					(> (ego x?) 138)
-					(>= (ego y?) 190)
+					(> (ego x?) 115)
+					(>= (ego y?) 188)
 					(== (curRoom script?) 0) 
 				)
 				(and
-					(>= (ego x?) 320)
+					(>= (ego x?) 318)
 					(== (curRoom script?) 0) 
 				)
 			)
-			(curRoom newRoom: 821)
-		)
-		(if
-			(or
-				(and
-					(< (ego x?) 10)
-					(< (ego y?) 10)
-					(== (curRoom script?) 0) 
-				)
-				(and
-					(< (ego x?) 4)
-					(== (curRoom script?) 0) 
-				)
-			)
-			(curRoom newRoom: 824)
+			(curRoom newRoom: 822)
 		)
 ;;;		(if
 ;;;			(and
@@ -87,7 +64,7 @@
 				(& (ego onControl:) $0008) ;ctlTEAL
 				(== script 0)
 			)
-			(curRoom newRoom: 823)
+			;(curRoom newRoom: 823)
 		)
 ;;;		(if
 ;;;			(and
@@ -121,11 +98,11 @@
 			(0
 				(HandsOff)
 				(switch prevRoomNum
-					(821
-						(if (> (ego y?) 110)
+					(822
+						(if (< (ego y?) 50)
 							(ego
-								posn: 330 170
-								setMotion: MoveTo 310 160 self
+								posn: 330 175
+								setMotion: MoveTo 310 165 self
 							)
 						else
 							(ego
@@ -134,22 +111,9 @@
 							)
 						)
 					)
-					(823
-						(ego setMotion: MoveTo 200 75 self)
-					)
-					(824
-						(if (< tempX 285)
-							(ego
-								posn: -10 80
-								setMotion: MoveTo 10 90 self
-							)
-						else
-							(ego
-								posn: -10 -10
-								setMotion: MoveTo 25 25 self
-							)
-						)
-					)
+;;;					(823
+;;;						(ego setMotion: MoveTo 200 75 self)
+;;;					)
 				)
 			)
 			(1

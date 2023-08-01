@@ -40,6 +40,12 @@ At "Quirk's Bar" there is a backroom for Holo-fights. Players can place bets on 
 
 The Monolth Buger Decoder ring is now a fully functional ceasar cipher. Rotating the dial on the ring changes the letter offset on the ring. It also shows the standard english letters on the AstroChicken videogame screen - however scrambled they might be. The cipher function can be used on any screen.
 
+### VaporCalc
+
+<img src="pics/VaporCalc.png"  width="600" alt="VaporCalc in action.">
+
+The VaporCalc is now fully functional.
+
 ### Personal Time Disruptor
 
 This new inventory item can temporarily freeze a copy of Roger in time, this will be used for some future puzzles and can also <a href="https://www.youtube.com/watch?v=czkSgwzEfqA">cheat death</a>. This item has not been fully tested against all deaths yet.

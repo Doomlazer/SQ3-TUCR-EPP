@@ -659,6 +659,9 @@
 	
 	quarkAttacks
 	quarksGoonsAttacking
+	
+	VCtCel = [0 0 0 0 0 0];new and improved vaporcalc
+	VCbCel = [0 0 0 0 0 0]
 )
 (procedure (NormalEgo theLoop theView)
 	;normalizes ego's animation
@@ -1074,7 +1077,9 @@
 					)
 					((== (User controls?) FALSE)
 						(= haveMouse TRUE)
-						(= oldCursor waitCursor)
+						(if (not calcOn)
+							(= oldCursor waitCursor)
+						)
 					)
 					(else
 						(= oldCursor normalCursor)
@@ -1088,7 +1093,17 @@
 		(if (== vaporCalcCued TRUE)
 			(= vaporCalcCued FALSE)
 			(= calcOn TRUE)
-			(calc init:)
+			;(calc init:)
+			(if
+				(and
+					(== (ego script?) 0)
+					(User canControl?)
+				)
+				(HandsOff)
+				(ego setScript: (ScriptID 30 0))	
+			else
+				(Print {You can't use that at the moment.})
+			)
 		)
 
 		;if ego died, bring up the death handler
@@ -1274,9 +1289,14 @@
 		(if (event claimed?) (return))
 		(super handleEvent: event)
 		(if (== calcOn TRUE)
-			(event claimed: TRUE)
-			(= calcOn FALSE)
-			(calc dispose:)
+			((ScriptID 30 0) handleEvent: event)
+			;(Printf {cliamed: %d} (event claimed?)) 
+			(if (== calcOn FALSE) ;(== (event claimed?) FALSE)	
+				(event claimed: TRUE)
+				;(= calcOn FALSE)
+				((ScriptID 30 0) dispose:)
+				;(calc dispose:)
+			)
 		)
 		(switch (event type?)
 			(saidEvent
