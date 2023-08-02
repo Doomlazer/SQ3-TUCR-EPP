@@ -660,8 +660,7 @@
 	quarkAttacks
 	quarksGoonsAttacking
 	
-	VCtCel = [0 0 0 0 0 0];new and improved vaporcalc
-	VCbCel = [0 0 0 0 0 0]
+	VCCel = [0 0 0 0 0 0 0 0 0 0 0 0] ;new and improved vaporcalc
 )
 (procedure (NormalEgo theLoop theView)
 	;normalizes ego's animation
@@ -1100,9 +1099,9 @@
 					(User canControl?)
 				)
 				(HandsOff)
-				(ego setScript: (ScriptID 30 0))	
+				(ego setScript: (ScriptID 30))	
 			else
-				(Print {You can't use that at the moment.})
+				(Print {You can't use the VaporCalc right now.})
 			)
 		)
 
@@ -1260,7 +1259,7 @@
 			RELDPATH TIMER GROOPER RFEATURE QSCRIPT DPATH SMOOPER COUNT 952
 			FOLLOW STOPWALK DCICON WANDER MOUSER LASTLINK QSOUND SORT CAT GOTOSAID FORCOUNT
 			CHASE NAMEFIND APPROACH TIMEDCUE TEXTRA ORBIT DEMO WINDOW TRACK AVOIDER
-			SIGHT REVERSE 26 ;26=pet
+			SIGHT REVERSE 26 30 ;26=pet 30=VaporCalc
 		)
 		(if debugOn
 			(= debugOn FALSE)
@@ -1289,13 +1288,10 @@
 		(if (event claimed?) (return))
 		(super handleEvent: event)
 		(if (== calcOn TRUE)
-			((ScriptID 30 0) handleEvent: event)
-			;(Printf {cliamed: %d} (event claimed?)) 
-			(if (== calcOn FALSE) ;(== (event claimed?) FALSE)	
+			((ScriptID 30) handleEvent: event)
+			(if (== calcOn FALSE)
 				(event claimed: TRUE)
-				;(= calcOn FALSE)
-				((ScriptID 30 0) dispose:)
-				;(calc dispose:)
+				((ScriptID 30) dispose:)
 			)
 		)
 		(switch (event type?)
