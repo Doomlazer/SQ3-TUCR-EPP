@@ -42,14 +42,30 @@
 			(cond
 				((== petView 309)
 					(= petView 310)
+					(petActor
+						ignoreActors: FALSE
+						illegalBits: cWHITE
+						cycleSpeed: 0
+						;cycle controled by doit
+					)
 				)
 				((== petView 310)
 					(= petView 311)
-					(petActor setCycle: Walk)
+					(petActor
+						setCycle: Forward
+						ignoreActors: TRUE
+						illegalBits: 0
+						cycleSpeed: 2
+					)
 				)
 				((== petView 311)
 					(= petView 309)
-					(petActor setCycle: Walk)
+					(petActor
+						setCycle: Walk
+						ignoreActors: FALSE
+						illegalBits: cWHITE
+						cycleSpeed: 0
+					)
 				)
 			)
 			(petActor view: petView)
@@ -57,7 +73,7 @@
 		(2
 			(switch (Random 0 2)
 				(0
-					(Printf {"Hello, My name is %s. It's a pleasure to follow you around."} petName)
+					(Printf {"Thank you for naming me, %s. It's so much better than what my previous owner named me."} petName)
 				)
 				(1
 					(Printf {"Your lucky numbers are: %d %d %d"} (Random 0 99) (Random 0 99) (Random 0 99))
@@ -79,6 +95,20 @@
 					#button {STAY} 3
 					#button {WANDER} 4
 					#button {OFF} 5
+				)
+			)
+			(if
+				(and
+					(< petMode 5)
+					(> petMode 0)
+				)
+				(switch (Random 0 1)
+					(0
+						(Print {"Yes, master!"} #title petName #dispose #time 3 #at (- (petActor x?) 25) (- (petActor y?) 40))
+					)
+					(1
+						(Print {"As you wish."} #title petName #dispose #time 3 #at (- (petActor x?) 25) (- (petActor y?) 40))
+					)
 				)
 			)
 		)
@@ -109,9 +139,9 @@
 	(method (init)
 		(petActor
 			view: petView ;309
-			setCycle: Walk
-			ignoreActors: FALSE
-			illegalBits: cWHITE
+			setCycle: (if (== petView 311) Forward else Walk)
+			ignoreActors: (if (== petView 311) TRUE else FALSE) ;ghost walks through walls
+			illegalBits: (if (== petView 311) 0 else cWHITE)
 			posn: (ego x?) (ego y?)
 			setStep: 2
 			setMotion: Follow ego (Random 10 75)

@@ -13,7 +13,9 @@
 	Room813 0
 )
 
-(local)
+(local
+	wearingGoggles
+)
 
 (procedure (checkPad pad)
 	(if
@@ -150,6 +152,9 @@
 	)
 	
 	(method (init)
+		(if (== (ego view?) 306)
+			(= wearingGoggles TRUE)
+		)
 		(super init:)
 		(= tdx 0)
 		(= tdy 0)
@@ -220,8 +225,11 @@
 			)
 			(1
 				(RedrawCast)
-				(if (ego has: iGoggles)
+				(if wearingGoggles
+					(= wearingGoggles FALSE)
 					(Print 800 18)
+					(DrawPic 902 100)
+					(DrawPic 813 100)
 				)
 				(HandsOn)
 				(self dispose:)

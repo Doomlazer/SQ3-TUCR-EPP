@@ -456,6 +456,15 @@
 		(HandsOff)
 		(= inCartoon TRUE)
 		(super init:)
+		(mine1 init:)
+		(mine2 init:)
+		(mine3 init:)
+		(mine4 init:)
+		(mine5 init:)
+		(mine6 init:)
+		(mine7 init:)
+		(mine8 init:)
+		(mine9 init:)
 		(switch prevRoomNum
 			(813
 				(ego
@@ -465,12 +474,52 @@
 					setStep: 1 1
 					setPri: 12
 					posn: 160 70
-					setMotion: MoveTo 160 72 self ;176
+					setScript: surfaceScript
+					init:
+				)
+				(ship
+					view: 215
+					setLoop: 0
+					posn: 0 150
+					setCel: 2
+					setPri: 13
+					ignoreHorizon: 1
+					init:
+				)
+				(ramp
+					view: 215
+					setLoop: 3
+					posn: 67 160
+					cel: 2
+					ignoreActors:
+					setPri: 11
+					init:
+				)
+				(cockPit
+					view: 215
+					setLoop: 2
+					cel: 4
+					cycleSpeed: 3
+					setPri: 13
+					posn: 70 149
+					init:
+				)
+				(shadow
+					view: 215
+					setLoop: 1
+					setCel: 0
+					posn: 5 155
+					ignoreActors:
+					ignoreControl: $0002 
+					setPri: 0
 					init:
 				)
 				(if (ego has: iGoggles)
 					(Print 800 19)
-					(= mineToggle 1)
+					(= mineToggle 0)
+					(DrawPic 901 100)
+					(DrawPic 800 100)
+					(MineShow)
 				else
 					(Print 800 20)
 				)
@@ -481,15 +530,7 @@
 				(self setScript: Actions)
 			)
 		)
-		(mine1 init:)
-		(mine2 init:)
-		(mine3 init:)
-		(mine4 init:)
-		(mine5 init:)
-		(mine6 init:)
-		(mine7 init:)
-		(mine8 init:)
-		(mine9 init:)
+		(ego get: iGoggles)
 	)
 
 	(method (handleEvent pEvent)
@@ -521,6 +562,8 @@
 				(if mineToggle
 					(= mineToggle 0)
 					(Print 800 5)
+					(DrawPic 901 100)
+					(DrawPic 800 100)
 					(MineShow)
 				else
 					(Print 800 6)
@@ -545,6 +588,7 @@
 					(mine7 hide:)
 					(mine8 hide:)
 					(mine9 hide:)
+					(DrawPic 902 100)(DrawPic 800 100)
 				)
 			else
 				(Print 800 11)
@@ -577,9 +621,9 @@
 			)
 		else 
 			(if mineToggle
-				(ego view: 68) ;no water w/ glasses
+				(ego view: 68) ;no water no glasses
 			else
-				(ego view: 306) ;no water no glasses
+				(ego view: 306) ;no water w/ glasses
 			)	
 		)
 		(if (ego inRect: 45 150 80 185) 
@@ -611,6 +655,10 @@
 				(ego view: 291 loop: 1 cel: 0 setCycle: EndLoop self)
 			)
 			(2
+				(if (not mineToggle)
+					(DrawPic 902 100)
+					(DrawPic 800 100)
+				)
 				(EgoDead)
 			)
 		)
@@ -708,49 +756,6 @@
 				)	;setMotion: MoveTo 117 130 self)
 				(HandsOn)
 			)
-;;;			(9
-;;;				(Scott ;now astro chicken
-;;;					view: 290 ;215
-;;;					setLoop: 8
-;;;					setCycle: EndLoop
-;;;					setStep: 1 10
-;;;					setPri: 12
-;;;					posn: 117 0
-;;;					setMotion: MoveTo 117 135 self
-;;;					init:
-;;;				)
-;;;				(= seconds 2)	
-;;;			)
-;;;			(10
-;;;				(Mark dispose:) 
-;;;				(Scott ;now astro chicken
-;;;					view: 291
-;;;					setLoop: 0
-;;;					ignoreActors:
-;;;					ignoreHorizon:
-;;;					ignoreControl: 
-;;;					setCycle: EndLoop self
-;;;					setPri: 15
-;;;					posn: 117 135
-;;;				)
-;;;			)
-;;;			(11
-;;;				(Scott ;now astro chicken
-;;;					view: 291 ;215
-;;;					setLoop: 1
-;;;					setCycle: EndLoop self
-;;;					setPri: 15
-;;;					posn: 117 135
-;;;				)
-;;;			
-;;;			)
-;;;			(12
-;;;				(Scott dispose:)
-;;;				(Print {Suddenly, from out of the sky comes an astro chicken careening towards you at supersonic speed. Both you and the chicken are vaporied on impact.})
-;;;				(EgoDead 0 0 8 16)
-;;;				(= inCartoon FALSE)
-;;;				(HandsOn)
-;;;			)
 		)
 	)
 )
@@ -784,6 +789,21 @@
 				(ego
 					ignoreActors: FALSE
 					hide:
+				)
+				(if (not mineToggle)
+					(Print 800 22)
+					(= mineToggle 1)
+					(mine1 hide:)
+					(mine2 hide:)
+					(mine3 hide:)
+					(mine4 hide:)
+					(mine5 hide:)
+					(mine6 hide:)
+					(mine7 hide:)
+					(mine8 hide:)
+					(mine9 hide:)
+					(DrawPic 902 100)
+					(DrawPic 800 100)
 				)
 				(ship startUpd:)
 			;	(shadow stopUpd:)
