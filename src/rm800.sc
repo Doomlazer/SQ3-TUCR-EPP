@@ -38,56 +38,77 @@
 	)
 )
 
-(procedure (MineShow)
-	(mine1 show:)
-	(mine2 show:)
-	(mine3 show:)
-	(mine4 show:)
-	(mine5 show:)
-	(mine6 show:)
-	(mine7 show:)
-	(mine8 show:)
-	(mine9 show:)
+(procedure (MineShow &tmp i)
+	(= i 1)
+	(while (< i 10)
+		((GetMine i) show:)
+		(++ i)
+	)
 )
+
+(procedure (GetMine i)
+	(return
+		(switch i
+			(1 mine1)
+			(2 mine2)
+			(3 mine3)
+			(4 mine4)
+			(5 mine5)
+			(6 mine6)
+			(7 mine7)
+			(8 mine8)
+			(9 mine9)	
+		)
+	)
+)
+
+(procedure (MineInit mine)
+	(mine
+		view: 304
+		ignoreHorizon:
+		illegalBits: 0
+		ignoreActors:
+		setLoop: 1
+		setCel: 0
+		setCycle: Forward
+		hide:
+		x: (Random maxLeft maxRight)
+		y: (Random maxUp maxDown)
+	)
+)
+
+(procedure (MineDoit mine)
+	(if (checkMine mine)
+		(ego setScript: mineDeath)
+		(mine dispose:)
+	)
+	(if (== (Random 0 100) 69)
+		(mine setMotion: MoveTo (Random maxLeft maxRight) (Random maxUp maxDown))
+	else
+		(if
+			(and
+				courtesy
+				mineToggle
+				(< (ego y?) maxDown)
+			)
+			(if (< (GetDistance (ego x?)(ego y?)(mine x?)(mine y?)) maxDist)
+				(mine show:)
+				(mine setMotion: MoveTo (ego x?) (ego y?))
+			)
+		)
+	)
+)
+
 (instance mine1 of Actor
-	
+
 	(method (init)
 		(super init:)
-		(self
-			view: 304
-			ignoreHorizon:
-			illegalBits: 0
-			ignoreActors:
-			setLoop: 1
-			setCel: 0
-			setCycle: Forward
-			hide:
-			x: (Random maxLeft maxRight)
-			y: (Random maxUp maxDown)
-		)
+		(MineInit self)
 	)
 	
 	(method (doit)
 		(super doit:)
-		(if (checkMine self)
-			(ego setScript: mineDeath)
-			(self dispose:)
-		)
-		(if (== (Random 0 100) 69)
-			(self setMotion: MoveTo (Random maxLeft maxRight) (Random maxUp maxDown))
-		else
-			(if
-				(and
-					courtesy
-					mineToggle
-					(< (ego y?) maxDown)
-				)
-				(if (< (GetDistance (ego x?)(ego y?)(self x?)(self y?)) maxDist)
-					(self show:)
-					(self setMotion: MoveTo (ego x?) (ego y?))
-				)
-			)
-		)
+		(MineDoit self)
 	)
 )
 
@@ -95,41 +116,12 @@
 	
 	(method (init)
 		(super init:)
-		(self
-			view: 304
-			ignoreHorizon:
-			illegalBits: 0
-			ignoreActors:
-			setLoop: 1
-			setCel: 0
-			setCycle: Forward
-			hide:
-			x: (Random maxLeft maxRight)
-			y: (Random maxUp maxDown)
-		)
+		(MineInit self)
 	)
 	
 	(method (doit)
 		(super doit:)
-		(if (checkMine self)
-			(ego setScript: mineDeath)
-			(self dispose:)
-		)
-		(if (== (Random 0 100) 69)
-			(self setMotion: MoveTo (Random maxLeft maxRight) (Random maxUp maxDown))
-		else
-			(if
-				(and
-					courtesy
-					mineToggle
-					(< (ego y?) maxDown)
-				)
-				(if (< (GetDistance (ego x?)(ego y?)(self x?)(self y?)) maxDist)
-					(self show:)
-					(self setMotion: MoveTo (ego x?) (ego y?))
-				)
-			)
-		)
+		(MineDoit self)
 	)
 )
 
@@ -137,41 +129,12 @@
 	
 	(method (init)
 		(super init:)
-		(self
-			view: 304
-			ignoreHorizon:
-			illegalBits: 0
-			ignoreActors:
-			setLoop: 1
-			setCel: 0
-			setCycle: Forward
-			hide:
-			x: (Random maxLeft maxRight)
-			y: (Random maxUp maxDown)
-		)
+		(MineInit self)
 	)
 	
 	(method (doit)
 		(super doit:)
-		(if (checkMine self)
-			(ego setScript: mineDeath)
-			(self dispose:)
-		)
-		(if (== (Random 0 100) 69)
-			(self setMotion: MoveTo (Random maxLeft maxRight) (Random maxUp maxDown))
-		else
-			(if
-				(and
-					courtesy
-					mineToggle
-					(< (ego y?) maxDown)
-				)
-				(if (< (GetDistance (ego x?)(ego y?)(self x?)(self y?)) maxDist)
-					(self show:)
-					(self setMotion: MoveTo (ego x?) (ego y?))
-				)
-			)
-		)
+		(MineDoit self)
 	)
 )
 
@@ -179,41 +142,12 @@
 	
 	(method (init)
 		(super init:)
-		(self
-			view: 304
-			ignoreHorizon:
-			illegalBits: 0
-			ignoreActors:
-			setLoop: 1
-			setCel: 0
-			setCycle: Forward
-			hide:
-			x: (Random maxLeft maxRight)
-			y: (Random maxUp maxDown)
-		)
+		(MineInit self)
 	)
 	
 	(method (doit)
 		(super doit:)
-		(if (checkMine self)
-			(ego setScript: mineDeath)
-			(self dispose:)
-		)
-		(if (== (Random 0 100) 69)
-			(self setMotion: MoveTo (Random maxLeft maxRight) (Random maxUp maxDown))
-		else
-			(if
-				(and
-					courtesy
-					mineToggle
-					(< (ego y?) maxDown)
-				)
-				(if (< (GetDistance (ego x?)(ego y?)(self x?)(self y?)) maxDist)
-					(self show:)
-					(self setMotion: MoveTo (ego x?) (ego y?))
-				)
-			)
-		)
+		(MineDoit self)
 	)
 )
 
@@ -221,41 +155,12 @@
 	
 	(method (init)
 		(super init:)
-		(self
-			view: 304
-			ignoreHorizon:
-			illegalBits: 0
-			ignoreActors:
-			setLoop: 1
-			setCel: 0
-			setCycle: Forward
-			hide:
-			x: (Random maxLeft maxRight)
-			y: (Random maxUp maxDown)
-		)
+		(MineInit self)
 	)
 	
 	(method (doit)
 		(super doit:)
-		(if (checkMine self)
-			(ego setScript: mineDeath)
-			(self dispose:)
-		)
-		(if (== (Random 0 100) 69)
-			(self setMotion: MoveTo (Random maxLeft maxRight) (Random maxUp maxDown))
-		else
-			(if
-				(and
-					courtesy
-					mineToggle
-					(< (ego y?) maxDown)
-				)
-				(if (< (GetDistance (ego x?)(ego y?)(self x?)(self y?)) maxDist)
-					(self show:)
-					(self setMotion: MoveTo (ego x?) (ego y?))
-				)
-			)
-		)
+		(MineDoit self)
 	)
 )
 
@@ -263,41 +168,12 @@
 	
 	(method (init)
 		(super init:)
-		(self
-			view: 304
-			ignoreHorizon:
-			illegalBits: 0
-			ignoreActors:
-			setLoop: 1
-			setCel: 0
-			setCycle: Forward
-			hide:
-			x: (Random maxLeft maxRight)
-			y: (Random maxUp maxDown)
-		)
+		(MineInit self)
 	)
 	
 	(method (doit)
 		(super doit:)
-		(if (checkMine self)
-			(ego setScript: mineDeath)
-			(self dispose:)
-		)
-		(if (== (Random 0 100) 69)
-			(self setMotion: MoveTo (Random maxLeft maxRight) (Random maxUp maxDown))
-		else
-			(if
-				(and
-					courtesy
-					mineToggle
-					(< (ego y?) maxDown)
-				)
-				(if (< (GetDistance (ego x?)(ego y?)(self x?)(self y?)) maxDist)
-					(self show:)
-					(self setMotion: MoveTo (ego x?) (ego y?))
-				)
-			)
-		)
+		(MineDoit self)
 	)
 )
 
@@ -305,41 +181,12 @@
 	
 	(method (init)
 		(super init:)
-		(self
-			view: 304
-			ignoreHorizon:
-			illegalBits: 0
-			ignoreActors:
-			setLoop: 1
-			setCel: 0
-			setCycle: Forward
-			hide:
-			x: (Random maxLeft maxRight)
-			y: (Random maxUp maxDown)
-		)
+		(MineInit self)
 	)
 	
 	(method (doit)
 		(super doit:)
-		(if (checkMine self)
-			(ego setScript: mineDeath)
-			(self dispose:)
-		)
-		(if (== (Random 0 100) 69)
-			(self setMotion: MoveTo (Random maxLeft maxRight) (Random maxUp maxDown))
-		else
-			(if
-				(and
-					courtesy
-					mineToggle
-					(< (ego y?) maxDown)
-				)
-				(if (< (GetDistance (ego x?)(ego y?)(self x?)(self y?)) maxDist)
-					(self show:)
-					(self setMotion: MoveTo (ego x?) (ego y?))
-				)
-			)
-		)
+		(MineDoit self)
 	)
 )
 
@@ -347,41 +194,12 @@
 	
 	(method (init)
 		(super init:)
-		(self
-			view: 304
-			ignoreHorizon:
-			illegalBits: 0
-			ignoreActors:
-			setLoop: 1
-			setCel: 0
-			setCycle: Forward
-			hide:
-			x: (Random maxLeft maxRight)
-			y: (Random maxUp maxDown)
-		)
+		(MineInit self)
 	)
 	
 	(method (doit)
 		(super doit:)
-		(if (checkMine self)
-			(ego setScript: mineDeath)
-			(self dispose:)
-		)
-		(if (== (Random 0 100) 69)
-			(self setMotion: MoveTo (Random maxLeft maxRight) (Random maxUp maxDown))
-		else
-			(if
-				(and
-					courtesy
-					mineToggle
-					(< (ego y?) maxDown)
-				)
-				(if (< (GetDistance (ego x?)(ego y?)(self x?)(self y?)) maxDist)
-					(self show:)
-					(self setMotion: MoveTo (ego x?) (ego y?))
-				)
-			)
-		)
+		(MineDoit self)
 	)
 )
 
@@ -389,42 +207,12 @@
 	
 	(method (init)
 		(super init:)
-		(self
-			view: 304
-			ignoreHorizon:
-			illegalBits: 0
-			ignoreActors:
-			setLoop: 1
-			setCel: 0
-			setCycle: Forward
-			hide:
-			x: (Random maxLeft maxRight)
-			y: (Random maxUp maxDown)
-		)
+		(MineInit self)
 	)
 	
 	(method (doit)
 		(super doit:)
-		(if (checkMine self)
-			(ego setScript: mineDeath)
-			(self dispose:)
-		)
-		(if (== (Random 0 100) 69)
-			(self setMotion: MoveTo (Random maxLeft maxRight) (Random maxUp maxDown))
-		else
-			(if
-				(and
-					courtesy
-					mineToggle
-					(< (ego y?) maxDown)
-					
-				)
-				(if (< (GetDistance (ego x?)(ego y?)(self x?)(self y?)) maxDist)
-					(self show:)
-					(self setMotion: MoveTo (ego x?) (ego y?))
-				)
-			)
-		)
+		(MineDoit self)
 	)
 )
 
@@ -442,7 +230,7 @@
 		north 813
 	)
 	
-	(method (init)
+	(method (init &tmp i)
 		(= numVoices (DoSound NumVoices))
 		(Load SOUND 99)
 		(Load SOUND 83)
@@ -456,15 +244,11 @@
 		(HandsOff)
 		(= inCartoon TRUE)
 		(super init:)
-		(mine1 init:)
-		(mine2 init:)
-		(mine3 init:)
-		(mine4 init:)
-		(mine5 init:)
-		(mine6 init:)
-		(mine7 init:)
-		(mine8 init:)
-		(mine9 init:)
+		(= i 1)
+		(while (< i 10)
+			((GetMine i) init:)
+			(++ i)
+		)
 		(switch prevRoomNum
 			(813
 				(ego
@@ -518,7 +302,16 @@
 					(Print 800 19)
 					(= mineToggle 0)
 					(DrawPic 901 100)
-					(DrawPic 800 100)
+					(DrawPic 903 100)
+					(ship cel: 4)
+					(cockPit loop: 9)
+					(shadow cel: 1)
+					(ramp loop: 10)
+					(= i 1)
+					(while (< i 10)
+						((GetMine i) loop: 2)
+						(++ i)	
+					)
 					(MineShow)
 				else
 					(Print 800 20)
@@ -531,9 +324,10 @@
 			)
 		)
 		(ego get: iGoggles)
+		(ego get: iTime_Disruptor)
 	)
 
-	(method (handleEvent pEvent)
+	(method (handleEvent pEvent &tmp i)
 		(super handleEvent: pEvent)
 		
 		(if (Said 'talk/mine')
@@ -563,7 +357,16 @@
 					(= mineToggle 0)
 					(Print 800 5)
 					(DrawPic 901 100)
-					(DrawPic 800 100)
+					(DrawPic 903 100)
+					(ship cel: 4)
+					(cockPit loop: 9)
+					(ramp loop: 10)
+					(shadow cel: 1)
+					(= i 1)
+					(while (< i 10)
+						((GetMine i) loop: 2)
+						(++ i)
+					)
 					(MineShow)
 				else
 					(Print 800 6)
@@ -579,15 +382,15 @@
 					(Print 800 7)				
 				else
 					(= mineToggle 1)
-					(mine1 hide:)
-					(mine2 hide:)
-					(mine3 hide:)
-					(mine4 hide:)
-					(mine5 hide:)
-					(mine6 hide:)
-					(mine7 hide:)
-					(mine8 hide:)
-					(mine9 hide:)
+					(ship cel: 3)
+					(shadow cel: 0)
+					(ramp loop: 3)
+					(cockPit loop: 2)
+					(= i 1)
+					(while (< i 10)
+						((GetMine i) loop: 1 hide:)
+						(++ i)
+					)
 					(DrawPic 902 100)(DrawPic 800 100)
 				)
 			else
@@ -595,7 +398,11 @@
 			)
 		)
 		(if (Said 'read/sign')
-			(Print 800 0)
+			(if mineToggle
+				(Print 800 0)
+			else
+				(Print 800 23) ;can't read sign
+			)
 		)
 		(if (Said 'look>')
 			(cond 
@@ -761,7 +568,7 @@
 )
 
 (instance takeOff of Script
-	(method (changeState newState)
+	(method (changeState newState &tmp i)
 		(switch (= state newState)
 			(0
 				(HandsOff)
@@ -777,7 +584,6 @@
 			(1
 				(cockPit
 					view: 215
-					setLoop: 2
 					cycleSpeed: 3
 					setPri: 13
 					posn: 70 149
@@ -793,15 +599,15 @@
 				(if (not mineToggle)
 					(Print 800 22)
 					(= mineToggle 1)
-					(mine1 hide:)
-					(mine2 hide:)
-					(mine3 hide:)
-					(mine4 hide:)
-					(mine5 hide:)
-					(mine6 hide:)
-					(mine7 hide:)
-					(mine8 hide:)
-					(mine9 hide:)
+					(ship cel: 3)
+					(shadow cel: 0)
+					(ramp loop: 3)
+					(cockPit loop: 2)
+					(= i 1)
+					(while (< i 10)
+						((GetMine i) hide:)
+						(++ i)
+					)
 					(DrawPic 902 100)
 					(DrawPic 800 100)
 				)
