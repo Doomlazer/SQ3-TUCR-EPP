@@ -8,6 +8,7 @@
 (use Game)
 (use Actor)
 (use System)
+(use pet)
 
 (public
 	Room116 0
@@ -74,6 +75,9 @@
 	(method (changeState newState)
 		(switch (= state newState)
 			(0
+				(if petActive
+					(WarpOffScreen)	
+				)
 				(ship
 					view: 215
 					setLoop: 0
@@ -346,6 +350,7 @@
 					setAvoider: Avoider
 					init:
 				)
+				(WarpToEgo)
 				(RedrawCast)
 				(Ken setScript: KenMoveIntoBuilding)
 				(= seconds 1)
@@ -364,6 +369,7 @@
 			)
 			(27
 				(= seconds 7)
+				(WarpOffScreen)
 			)
 			(28
 				(cockPit setCycle: BegLoop self)

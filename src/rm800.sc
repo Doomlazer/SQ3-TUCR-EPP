@@ -9,6 +9,7 @@
 (use Actor)
 (use System)
 (use User)
+(use pet)
 
 (public
 	Room800 0
@@ -473,7 +474,7 @@
 )
 
 (instance Actions of Script
-	(method (changeState newState)
+	(method (changeState newState &tmp s)
 		(switch (= state newState)
 			(0
 				(ship
@@ -553,6 +554,9 @@
 					posn: 64 157 ;107 ;157
 					setMotion: MoveTo 87 176 self ;126 ;176
 					init:
+				)
+				(if petActive
+					(WarpToEgo)
 				)
 			)
 			(8

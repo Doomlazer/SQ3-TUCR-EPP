@@ -16,12 +16,25 @@
 	initScript 0
 	CommandPet 1
 	PetRename 2
+	WarpToEgo 3
+	WarpOffScreen 4
 )
 
 (local
 	morphTimer
 	prevX
 	prevY
+	shrink
+)
+
+(procedure (WarpToEgo)
+	(petActor view: (+ petView shrink) posn: (ego x?) (ego y?))
+	(= petMode 2) ;follow
+)
+
+(procedure (WarpOffScreen)
+	(petActor  view: (+ petView shrink) posn: 1000 1000)
+	(= petMode 3) ;stay
 )
 
 (procedure (CommandPet &tmp temp0 [str 100])
@@ -68,7 +81,7 @@
 					)
 				)
 			)
-			(petActor view: petView)
+			(petActor view: (+ petView shrink))
 		)
 		(2
 			(switch (Random 0 2)
@@ -137,18 +150,30 @@
 	(properties)
 	
 	(method (init)
+		(if
+			(or
+				(== curRoomNum 800)
+				(== curRoomNum 116)
+			)
+			(= shrink 3)	
+		else
+			(= shrink 0)
+		)
 		(petActor
-			view: petView ;309
+			view: (+ petView shrink)
 			setCycle: (if (== petView 311) Forward else Walk)
 			ignoreActors: (if (== petView 311) TRUE else FALSE) ;ghost walks through walls
 			illegalBits: (if (== petView 311) 0 else cWHITE)
-			posn: (ego x?) (ego y?)
-			setStep: 2
+			posn: (if (cast contains: ego) (ego x?) else 1000) (if (cast contains: ego) (ego y?) else 1000)
+			setStep: (if shrink 1 else 2) (if shrink 1 else 2)
 			setMotion: Follow ego (Random 10 75)
 			show:
 			init:
 		)
 		(petActor setScript: petScript)
+		(if (not (cast contains: ego))
+			(= petMode 3) ;stay
+		)
 		(self dispose:)
 	)
 )
@@ -213,7 +238,7 @@
 			)
 			((== petMode 2) ;Follow
 				(client
-					setStep: (Random 3 4)
+					setStep: (if shrink (Random 1 2) else (Random 3 4))
 					setMotion: Follow ego (Random 15 40)
 				)
 			)

@@ -863,6 +863,8 @@
 				(not (== curRoomNum 17))
 				(not (== curRoomNum 18))
 				(not (== curRoomNum 19))
+				(not (== curRoomNum 115)) ;an ending scene (pet can be in 116)
+				(not (== curRoomNum 117)) ;an ending scene
 				(not (== curRoomNum 290)) ;arcade game 1
 				(not (== curRoomNum 470)) ;world o wonder
 				(not (== curRoomNum 690)) ;telescope on lava planet
