@@ -52,6 +52,20 @@
 			)
 			(curRoom newRoom: 822)
 		)
+		(if
+			(or
+				(and
+					(< (ego x?) 10)
+					(< (ego y?) 10)
+					(== (curRoom script?) 0) 
+				)
+				(and
+					(< (ego x?) 4)
+					(== (curRoom script?) 0) 
+				)
+			)
+			(curRoom newRoom: 825)
+		)
 ;;;		(if
 ;;;			(and
 ;;;				(& (ego onControl:) 2) ;darkblue

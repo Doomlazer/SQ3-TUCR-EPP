@@ -1,5 +1,5 @@
 ;;; Sierra Script 1.0 - (do not remove this comment)
-(script# 822)
+(script# 825)
 (include game.sh)
 (use Main)
 (use Intrface)
@@ -10,39 +10,41 @@
 (use System)
 
 (public
-	Room822 0
+	Room825 0
 )
 
 (local
-	tempX
-	tempY
+	
 )
 
+(instance door of Prop
+	(properties
+		x 168
+		y 91
+		view 825
+		loop 0
+		priority 1
+		;signal $4010
+	)
+)
 
-(instance Room822 of Room
+(instance Room825 of Room
 	(properties
 		picture scriptNumber
 	)
 	
 	(method (init)
-		(= tempX (ego x?))
-		(= tempY (ego y?))
 		(super init:)
 		(switch prevRoomNum
-			(821
-				(self setScript: RoomScript)
-			)
-			(823
-				(self setScript: RoomScript)
-			)
 			(824
 				(self setScript: RoomScript)
 			)
 			(else 
-				(ego posn: 150 120 loop: 1)
+				(ego posn: 160 120 loop: 1)
 			)
 		)
 		(ego init:)
+		(door ignoreActors: FALSE init:)
 	)
 	
 	(method (doit)
@@ -50,26 +52,12 @@
 		(if
 			(or
 				(and
-					(> (ego x?) 138)
-					(>= (ego y?) 190)
+					(> (ego x?) 115)
+					(>= (ego y?) 188)
 					(== (curRoom script?) 0) 
 				)
 				(and
-					(>= (ego x?) 320)
-					(== (curRoom script?) 0) 
-				)
-			)
-			(curRoom newRoom: 821)
-		)
-		(if
-			(or
-				(and
-					(< (ego x?) 20)
-					(< (ego y?) 10)
-					(== (curRoom script?) 0) 
-				)
-				(and
-					(< (ego x?) 4)
+					(>= (ego x?) 318)
 					(== (curRoom script?) 0) 
 				)
 			)
@@ -87,7 +75,7 @@
 				(& (ego onControl:) $0008) ;ctlTEAL
 				(== script 0)
 			)
-			(curRoom newRoom: 823)
+			;(curRoom newRoom: 823)
 		)
 ;;;		(if
 ;;;			(and
@@ -99,6 +87,18 @@
 ;;;			)
 ;;;			(curRoom newRoom: 804)
 ;;;		)
+	)
+	
+	(method (handleEvent pEvent &tmp i)
+		(super handleEvent: pEvent)
+		
+		(if (Said 'read,look/sign')
+			(if (ego inRect: 120 80 200 100)
+				(Print {The sign posted on the gate indicates that this location was closed down some time ago due to health code violations.})
+			else
+				(Print {You can't make out the text from here.})
+			)
+		)
 	)
 )
 
@@ -121,35 +121,22 @@
 			(0
 				(HandsOff)
 				(switch prevRoomNum
-					(821
-						(if (> (ego y?) 110)
-							(ego
-								posn: 330 170
-								setMotion: MoveTo 310 160 self
-							)
-						else
-							(ego
-								posn: 200 195
-								setMotion: MoveTo 190 185 self
-							)
-						)
-					)
-					(823
-						(ego setMotion: MoveTo 200 75 self)
-					)
 					(824
-						(if (< tempX 285)
+						(if (< (ego y?) 50)
 							(ego
-								posn: -10 80
-								setMotion: MoveTo 10 90 self
+								posn: 330 116
+								setMotion: MoveTo 310 112 self
 							)
 						else
 							(ego
-								posn: -10 -10
-								setMotion: MoveTo 25 25 self
+								posn: 330 150
+								setMotion: MoveTo 310 148 self
 							)
 						)
 					)
+;;;					(823
+;;;						(ego setMotion: MoveTo 200 75 self)
+;;;					)
 				)
 			)
 			(1
