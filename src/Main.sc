@@ -872,7 +872,10 @@
 				(not (== curRoomNum 814)) ;arcade game 2
 			)
 			(if (== (ego script?) 0)
-				(ego setScript: (ScriptID 26 0))	
+				(ego setScript: (ScriptID 26 0))
+			else
+				(Print {"Error initializing pet. Please try again in another location."})
+				(= petActive 1)	
 			)
 		)
 	)	

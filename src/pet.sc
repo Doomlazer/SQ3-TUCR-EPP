@@ -18,6 +18,7 @@
 	PetRename 2
 	WarpToEgo 3
 	WarpOffScreen 4
+	PetGoggleVision 5
 )
 
 (local
@@ -25,15 +26,26 @@
 	prevX
 	prevY
 	shrink
+	petGoggles
+	wT
+)
+
+(procedure (PetGoggleVision s)
+	(if s
+		(= petGoggles 3)
+	else
+		(= petGoggles 0)
+	)
+	(petActor view: (+ (+ petView shrink) petGoggles))
 )
 
 (procedure (WarpToEgo)
-	(petActor view: (+ petView shrink) posn: (ego x?) (ego y?))
+	(petActor view: (+ (+ petView shrink) petGoggles) posn: (ego x?) (ego y?))
 	(= petMode 2) ;follow
 )
 
 (procedure (WarpOffScreen)
-	(petActor  view: (+ petView shrink) posn: 1000 1000)
+	(petActor  view: (+ (+ petView shrink) petGoggles) posn: 1000 1000)
 	(= petMode 3) ;stay
 )
 
@@ -58,7 +70,7 @@
 					(petActor
 						ignoreActors: FALSE
 						illegalBits: cWHITE
-						cycleSpeed: 0
+						;cycleSpeed: 2
 						;cycle controled by doit
 					)
 				)
@@ -68,7 +80,7 @@
 						setCycle: Forward
 						ignoreActors: TRUE
 						illegalBits: 0
-						cycleSpeed: 2
+						;cycleSpeed: 2
 					)
 				)
 				((== petView 311)
@@ -77,11 +89,11 @@
 						setCycle: Walk
 						ignoreActors: FALSE
 						illegalBits: cWHITE
-						cycleSpeed: 0
+						;cycleSpeed: 1
 					)
 				)
 			)
-			(petActor view: (+ petView shrink))
+			(petActor view: (+ (+ petView shrink) petGoggles))
 		)
 		(2
 			(switch (Random 0 2)
@@ -110,6 +122,7 @@
 					#button {OFF} 5
 				)
 			)
+			(= wT 0)
 			(if
 				(and
 					(< petMode 5)
@@ -150,23 +163,30 @@
 	(properties)
 	
 	(method (init)
+		(= wT 0)
 		(if
 			(or
 				(== curRoomNum 800)
 				(== curRoomNum 116)
 			)
-			(= shrink 3)	
+			(= shrink 6)	
 		else
 			(= shrink 0)
 		)
 		(petActor
-			view: (+ petView shrink)
+			view: (+ (+ petView shrink) petGoggles)
 			setCycle: (if (== petView 311) Forward else Walk)
 			ignoreActors: (if (== petView 311) TRUE else FALSE) ;ghost walks through walls
 			illegalBits: (if (== petView 311) 0 else cWHITE)
 			posn: (if (cast contains: ego) (ego x?) else 1000) (if (cast contains: ego) (ego y?) else 1000)
-			setStep: (if shrink 1 else 2) (if shrink 1 else 2)
-			setMotion: Follow ego (Random 10 75)
+			setStep: (if shrink 1 else 3) (if shrink 1 else 3)
+			setMotion: Follow ego (if shrink 10 else 20)
+;;;			cycleSpeed:
+;;;				(cond
+;;;					((== petView 309) 1)
+;;;					((== petView 310) 2)
+;;;					((== petView 311) 2)
+;;;				)
 			show:
 			init:
 		)
@@ -219,18 +239,18 @@
 			)
 			((== petMode 1) ;auto
 				(petActor show:)
-				(if (== (Random 0 500) 10)
-					(switch (Random 0 5)
+				(if (== (Random 0 100) 10)
+					(switch (Random 0 1)
 						(1
 							(client
-								setStep: (Random 1 4)
-								setMotion: Wander
+								;setStep: (Random 1 4)
+								setMotion: Wander 50
 							)
 						)
 						(else
 							(client
-								setStep: (Random 1 4)
-								setMotion: Follow ego (Random 15 150)
+								;setStep: (Random 1 4)
+								setMotion: Follow ego (Random 15 100)
 							)
 						)
 					)
@@ -238,20 +258,29 @@
 			)
 			((== petMode 2) ;Follow
 				(client
-					setStep: (if shrink (Random 1 2) else (Random 3 4))
-					setMotion: Follow ego (Random 15 40)
+					;setStep: (if shrink 1 else 3)
+					setMotion: Follow ego (if shrink 10 else 20)
 				)
 			)
 			((== petMode 3) ;stay
-				(if (== petView 310)
-					(client
-						setCycle: EndLoop
-						setMotion: 0
+				(cond
+					((== petView 309)
+						(client
+							setCycle: 0
+							setMotion: 0
+						)
 					)
-				else
-					(client
-						setCycle: Forward
-						setMotion: 0
+					((== petView 310)
+						(client
+							setCycle: EndLoop
+							setMotion: 0
+						)
+					)
+					((== petView 311)
+						(client
+							setCycle: Forward
+							setMotion: 0
+						)
 					)
 				)
 			)
@@ -259,9 +288,12 @@
 				(if (== (Random 0 5000) 10)
 					(== petMode 1) ;pet got board of wandering
 				)
-				(client
-					setStep: (Random 1 4)
-					setMotion: Wander
+				(if (== wT 0)
+					(client
+						;setStep: (Random 1 4)
+						setMotion: Wander 50
+					)
+					(++ wT)
 				)
 			)
 			((== petMode 5) ;off

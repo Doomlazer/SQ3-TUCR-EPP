@@ -100,131 +100,6 @@
 	)
 )
 
-(instance mine1 of Actor
-
-	(method (init)
-		(super init:)
-		(MineInit self)
-	)
-	
-	(method (doit)
-		(super doit:)
-		(MineDoit self)
-	)
-)
-
-(instance mine2 of Actor
-	
-	(method (init)
-		(super init:)
-		(MineInit self)
-	)
-	
-	(method (doit)
-		(super doit:)
-		(MineDoit self)
-	)
-)
-
-(instance mine3 of Actor
-	
-	(method (init)
-		(super init:)
-		(MineInit self)
-	)
-	
-	(method (doit)
-		(super doit:)
-		(MineDoit self)
-	)
-)
-
-(instance mine4 of Actor
-	
-	(method (init)
-		(super init:)
-		(MineInit self)
-	)
-	
-	(method (doit)
-		(super doit:)
-		(MineDoit self)
-	)
-)
-
-(instance mine5 of Actor
-	
-	(method (init)
-		(super init:)
-		(MineInit self)
-	)
-	
-	(method (doit)
-		(super doit:)
-		(MineDoit self)
-	)
-)
-
-(instance mine6 of Actor
-	
-	(method (init)
-		(super init:)
-		(MineInit self)
-	)
-	
-	(method (doit)
-		(super doit:)
-		(MineDoit self)
-	)
-)
-
-(instance mine7 of Actor
-	
-	(method (init)
-		(super init:)
-		(MineInit self)
-	)
-	
-	(method (doit)
-		(super doit:)
-		(MineDoit self)
-	)
-)
-
-(instance mine8 of Actor
-	
-	(method (init)
-		(super init:)
-		(MineInit self)
-	)
-	
-	(method (doit)
-		(super doit:)
-		(MineDoit self)
-	)
-)
-
-(instance mine9 of Actor
-	
-	(method (init)
-		(super init:)
-		(MineInit self)
-	)
-	
-	(method (doit)
-		(super doit:)
-		(MineDoit self)
-	)
-)
-
-(instance ship of Actor)
-
-(instance shadow of Actor)
-
-(instance cockPit of Prop)
-
-(instance ramp of Prop)
-
 (instance Room800 of Room
 	(properties
 		picture 800
@@ -308,6 +183,7 @@
 					(cockPit loop: 9)
 					(shadow cel: 1)
 					(ramp loop: 10)
+					(PetGoggleVision 1)
 					(= i 1)
 					(while (< i 10)
 						((GetMine i) loop: 2)
@@ -324,8 +200,8 @@
 				(self setScript: Actions)
 			)
 		)
-		(ego get: iGoggles)
-		(ego get: iTime_Disruptor)
+		;(ego get: iGoggles)
+		;(ego get: iTime_Disruptor)
 	)
 
 	(method (handleEvent pEvent &tmp i)
@@ -363,6 +239,7 @@
 					(cockPit loop: 9)
 					(ramp loop: 10)
 					(shadow cel: 1)
+					(PetGoggleVision 1)
 					(= i 1)
 					(while (< i 10)
 						((GetMine i) loop: 2)
@@ -387,6 +264,7 @@
 					(shadow cel: 0)
 					(ramp loop: 3)
 					(cockPit loop: 2)
+					(PetGoggleVision 0)
 					(= i 1)
 					(while (< i 10)
 						((GetMine i) loop: 1 hide:)
@@ -593,13 +471,13 @@
 					posn: 70 149
 					setCycle: BegLoop self
 				)
-			)
-			(2
-				(cockPit hide:)
 				(ego
 					ignoreActors: FALSE
 					hide:
 				)
+			)
+			(2
+				(cockPit hide:)
 				(if (not mineToggle)
 					(Print 800 22)
 					(= mineToggle 1)
@@ -607,6 +485,8 @@
 					(shadow cel: 0)
 					(ramp loop: 3)
 					(cockPit loop: 2)
+					(WarpOffScreen)
+					(PetGoggleVision 0)
 					(= i 1)
 					(while (< i 10)
 						((GetMine i) hide:)
@@ -650,3 +530,128 @@
 		)
 	)
 )
+
+(instance mine1 of Actor
+
+	(method (init)
+		(super init:)
+		(MineInit self)
+	)
+	
+	(method (doit)
+		(super doit:)
+		(MineDoit self)
+	)
+)
+
+(instance mine2 of Actor
+	
+	(method (init)
+		(super init:)
+		(MineInit self)
+	)
+	
+	(method (doit)
+		(super doit:)
+		(MineDoit self)
+	)
+)
+
+(instance mine3 of Actor
+	
+	(method (init)
+		(super init:)
+		(MineInit self)
+	)
+	
+	(method (doit)
+		(super doit:)
+		(MineDoit self)
+	)
+)
+
+(instance mine4 of Actor
+	
+	(method (init)
+		(super init:)
+		(MineInit self)
+	)
+	
+	(method (doit)
+		(super doit:)
+		(MineDoit self)
+	)
+)
+
+(instance mine5 of Actor
+	
+	(method (init)
+		(super init:)
+		(MineInit self)
+	)
+	
+	(method (doit)
+		(super doit:)
+		(MineDoit self)
+	)
+)
+
+(instance mine6 of Actor
+	
+	(method (init)
+		(super init:)
+		(MineInit self)
+	)
+	
+	(method (doit)
+		(super doit:)
+		(MineDoit self)
+	)
+)
+
+(instance mine7 of Actor
+	
+	(method (init)
+		(super init:)
+		(MineInit self)
+	)
+	
+	(method (doit)
+		(super doit:)
+		(MineDoit self)
+	)
+)
+
+(instance mine8 of Actor
+	
+	(method (init)
+		(super init:)
+		(MineInit self)
+	)
+	
+	(method (doit)
+		(super doit:)
+		(MineDoit self)
+	)
+)
+
+(instance mine9 of Actor
+	
+	(method (init)
+		(super init:)
+		(MineInit self)
+	)
+	
+	(method (doit)
+		(super doit:)
+		(MineDoit self)
+	)
+)
+
+(instance ship of Actor)
+
+(instance shadow of Actor)
+
+(instance cockPit of Prop)
+
+(instance ramp of Prop)
