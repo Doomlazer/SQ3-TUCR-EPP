@@ -1328,8 +1328,11 @@
 					)
 					((Said 'activate,use,press/disruptor[<time]')
 						(if (ego has: 18)
-							(if (== curRoomNum 10) ;disable use
-								(Print 0 43)
+							(if (== curRoomNum 800) ;disable use
+								(Print 800 24)
+								(Print {*BZZTT*} #title {PTD} #at (- (ego x?) 30) (- (ego y?) 40))
+								(Print 800 25)
+								(Print 800 26)
 							else
 								(if (regions contains: (ScriptID 809)) 
 									(Print 0 41)

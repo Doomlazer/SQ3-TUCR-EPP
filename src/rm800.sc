@@ -132,7 +132,7 @@
 					view: 68
 					;setLoop: 4
 					setCycle: Walk
-					setStep: 1 1
+					setStep: 2 1
 					setPri: 12
 					posn: 160 70
 					;setScript: surfaceScript
@@ -145,6 +145,7 @@
 					setCel: 2
 					setPri: 13
 					ignoreHorizon: 1
+					stopUpd:
 					init:
 				)
 				(ramp
@@ -157,14 +158,14 @@
 					init:
 				)
 				(cockPit
-					view: 215
-					setLoop: 2
-					cel: 4
-					cycleSpeed: 3
-					setPri: 13
-					posn: 70 149
-					init:
-				)
+						view: 215
+						setLoop: 2
+						cel: 4
+						cycleSpeed: 3
+						setPri: 13
+						posn: 70 149
+						init:
+					)
 				(shadow
 					view: 215
 					setLoop: 1
@@ -176,12 +177,13 @@
 					init:
 				)
 				(if (ego has: iGoggles)
+					(= saveDisabled TRUE)
 					(Print 800 19)
 					(= mineToggle 0)
 					(DrawPic 901 100)
 					(DrawPic 903 100)
 					(ship cel: 4)
-					(cockPit loop: 9)
+					(cockPit setLoop: 9)
 					(shadow cel: 1)
 					(ramp loop: 10)
 					(PetGoggleVision 1)
@@ -233,6 +235,7 @@
 			(if (ego has: iGoggles)
 				(if mineToggle
 					(= mineToggle 0)
+					(= saveDisabled TRUE)
 					(Print 800 5)
 					(DrawPic 901 100)
 					(DrawPic 903 100)
@@ -261,6 +264,7 @@
 					(Print 800 7)				
 				else
 					(= mineToggle 1)
+					(= saveDisabled FALSE)
 					(ship cel: 3)
 					(shadow cel: 0)
 					(ramp loop: 3)
@@ -314,7 +318,7 @@
 			)	
 		)
 		(if (ego inRect: 45 150 80 185) 
-			(ego setScript: takeOff)
+			(curRoom setScript: takeOff)
 		)
 		(if (< (ego x?) -5)
 			(Print 800 21)
@@ -332,10 +336,11 @@
 )
 
 (instance mineDeath of Script
-	(method (changeState newState)
+	(method (changeState newState &tmp i)
 		(switch (= state newState)
 			(0
 				(HandsOff)
+				(curRoom setScript: 0)
 				(ego view: 291 loop: 0 cel: 0 setMotion: 0 setCycle: EndLoop self)
 			)
 			(1
@@ -343,8 +348,19 @@
 			)
 			(2
 				(if (not mineToggle)
+					(ship cel: 3)
+					(shadow cel: 0)
+					(ramp loop: 3)
+					(cockPit loop: 2)
+					(PetGoggleVision 0)
+					(= i 1)
+					(while (< i 10)
+						((GetMine i) loop: 1)
+						(++ i)
+					)
 					(DrawPic 902 100)
 					(DrawPic 800 100)
+					;(= saveDisabled FALSE)
 				)
 				(EgoDead)
 			)
@@ -482,7 +498,8 @@
 				(if (not mineToggle)
 					(Print 800 22)
 					(= mineToggle 1)
-					(ship cel: 3)
+					(= saveDisabled FALSE)
+					(ship cel: 3 startUpd:)
 					(shadow cel: 0)
 					(ramp loop: 3)
 					(cockPit loop: 2)

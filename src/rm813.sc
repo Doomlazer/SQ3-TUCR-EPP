@@ -237,6 +237,7 @@
 					(door loop: 1)
 					(DrawPic 902 100)
 					(DrawPic 813 100)
+					(= saveDisabled FALSE)
 				)
 				(HandsOn)
 				(self dispose:)
