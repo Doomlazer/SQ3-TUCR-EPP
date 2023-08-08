@@ -14,7 +14,8 @@
 )
 
 (local
-	
+	tempX
+	tempY
 )
 
 
@@ -24,9 +25,14 @@
 	)
 	
 	(method (init)
+		(= tempX (ego x?))
+		(= tempY (ego y?))
 		(super init:)
 		(switch prevRoomNum
 			(822
+				(self setScript: RoomScript)
+			)
+			(825
 				(self setScript: RoomScript)
 			)
 			(else 
@@ -125,9 +131,22 @@
 							)
 						)
 					)
-;;;					(823
-;;;						(ego setMotion: MoveTo 200 75 self)
-;;;					)
+					(825
+						(if (< tempY 130)
+							(ego
+								posn: -10 -10
+								setMotion: MoveTo 25 25 self
+							)
+						else
+							(ego
+								posn: -10 80
+								setMotion: MoveTo 10 90 self
+							)
+						)
+					)
+					(else
+						(ego posn: 150 130)
+					)
 				)
 			)
 			(1

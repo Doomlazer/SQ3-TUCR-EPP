@@ -1,5 +1,5 @@
 ;;; Sierra Script 1.0 - (do not remove this comment)
-(script# 825)
+(script# 826)
 (include game.sh)
 (use Main)
 (use Intrface)
@@ -10,44 +10,32 @@
 (use System)
 
 (public
-	Room825 0
+	Room826 0
 )
 
 (local
-	
+	tempX
+	tempY
 )
 
-(instance door of Prop
-	(properties
-		x 168
-		y 91
-		view 825
-		loop 0
-		priority 1
-		;signal $4010
-	)
-)
-
-(instance Room825 of Room
+(instance Room826 of Room
 	(properties
 		picture scriptNumber
 	)
 	
 	(method (init)
+		(= tempX (ego x?))
+		(= tempY (ego y?))
 		(super init:)
 		(switch prevRoomNum
-			(824
-				(self setScript: RoomScript)
-			)
-			(826
+			(825
 				(self setScript: RoomScript)
 			)
 			(else 
-				(ego posn: 160 120 loop: 1)
+				(ego posn: 160 110 loop: 1)
 			)
 		)
 		(ego init:)
-		(door ignoreActors: FALSE init:)
 	)
 	
 	(method (doit)
@@ -57,15 +45,15 @@
 				(>= (ego x?) 317)
 				(== (curRoom script?) 0) 
 			)
-			(curRoom newRoom: 824)
+			(curRoom newRoom: 825)
 		)
 		(if
 			(and
 				(< (ego x?) 3)
 				(== (curRoom script?) 0) 
 			)
-			(curRoom newRoom: 826)
-		)		
+			(curRoom newRoom: 827)
+		)	
 		(if
 			(and
 				(& (ego onControl:) $0008) ;ctlTEAL
@@ -77,14 +65,6 @@
 	
 	(method (handleEvent pEvent &tmp i)
 		(super handleEvent: pEvent)
-		
-		(if (Said 'read,look/sign')
-			(if (ego inRect: 120 80 200 100)
-				(Print {The sign posted on the gate indicates that this location was closed down some time ago due to health code violations.})
-			else
-				(Print {You can't make out the text from here.})
-			)
-		)
 	)
 )
 
@@ -107,34 +87,21 @@
 			(0
 				(HandsOff)
 				(switch prevRoomNum
-					(824
-						(if (< (ego y?) 50)
+					(825
+						(if (< tempY 115)
 							(ego
-								posn: 330 116
-								setMotion: MoveTo 310 112 self
+								posn: 330 80
+								setMotion: MoveTo 310 90 self
 							)
 						else
 							(ego
-								posn: 330 150
-								setMotion: MoveTo 310 148 self
-							)
-						)
-					)
-					(826
-						(if (< (ego y?) 102)
-							(ego
-								posn: -10 90
-								setMotion: MoveTo 10 95 self
-							)
-						else
-							(ego
-								posn: -10 130
-								setMotion: MoveTo 10 135 self
+								posn: 330 120
+								setMotion: MoveTo 310 130 self
 							)
 						)
 					)
 					(else
-						(ego posn: 160 120)
+						(ego posn: 160 115)
 					)
 				)
 			)
