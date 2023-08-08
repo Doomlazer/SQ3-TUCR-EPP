@@ -8,6 +8,7 @@
 (use Game)
 (use Actor)
 (use System)
+(use pet)
 
 (public
 	Room813 0
@@ -47,7 +48,7 @@
 			ignoreHorizon:
 			illegalBits: 0
 			;ignoreControl: (| cGREEN cRED cWHITE)
-			setLoop: 1
+			setLoop: (if wearingGoggles 2 else 1)
 			setCel: 0
 			setPri: 2
 			x: 160
@@ -154,20 +155,19 @@
 	(method (init)
 		(if (== (ego view?) 306)
 			(= wearingGoggles TRUE)
+			(= picture 904)
 		)
 		(super init:)
 		(= tdx 0)
 		(= tdy 0)
 		(ego
-			view: 0
+			view: (if wearingGoggles 321 else 0)
 			setStep: 3 2
 			init:
 		)	
 		(pad1 init:)
 		(pad2 init:)
 		(door init:)
-		;(door2 init:)
-		;(ego get: 18)
 		(switch prevRoomNum
 			(814
 				(ego posn: 163 151 loop: 3)
@@ -183,8 +183,7 @@
 		(super handleEvent: pEvent)
 		; handle Said's, etc...
 		(if (Said 'look')
-			(= temp0 (GetNumber {Program number:}))
-			(DrawPic temp0 8)
+			(Print {fix me})
 		)	
 	)
 	
@@ -218,6 +217,9 @@
 		(= state newState)
 		(switch state
 			(0
+				(if petActive
+					(PetGoggleVision 1)
+				)
 				(HandsOff)
 				(ego
 					setMotion: MoveTo 160 180 self
@@ -228,6 +230,11 @@
 				(if wearingGoggles
 					(= wearingGoggles FALSE)
 					(Print 800 18)
+					(if petActive
+						(PetGoggleVision 0)
+					)
+					(ego view: 0)
+					(door loop: 1)
 					(DrawPic 902 100)
 					(DrawPic 813 100)
 				)

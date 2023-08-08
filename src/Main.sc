@@ -874,8 +874,7 @@
 			(if (== (ego script?) 0)
 				(ego setScript: (ScriptID 26 0))
 			else
-				(Print {"Error initializing pet. Please try again in another location."})
-				(= petActive 1)	
+				(Print {"Error: Virtual Pet is experiencing issues in this location."})	
 			)
 		)
 	)	

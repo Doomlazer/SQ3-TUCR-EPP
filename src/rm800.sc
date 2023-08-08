@@ -116,7 +116,7 @@
 			(Load SOUND 16)
 		)
 		(= horizon 69) ;-4000)
-		(theGame setSpeed: 5)
+		;(theGame setSpeed: 5)
 		(HandsOff)
 		(= inCartoon TRUE)
 		(super init:)
@@ -127,6 +127,7 @@
 		)
 		(switch prevRoomNum
 			(813
+				(self setScript: surfaceScript)
 				(ego
 					view: 68
 					;setLoop: 4
@@ -134,7 +135,7 @@
 					setStep: 1 1
 					setPri: 12
 					posn: 160 70
-					setScript: surfaceScript
+					;setScript: surfaceScript
 					init:
 				)
 				(ship
@@ -438,7 +439,7 @@
 				)
 			)
 			(8
-				(ego setScript: surfaceScript)
+				(curRoom setScript: surfaceScript)
 				(ego 
 					setLoop: -1
 					setPri: -1

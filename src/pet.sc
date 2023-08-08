@@ -179,7 +179,7 @@
 			ignoreActors: (if (== petView 311) TRUE else FALSE) ;ghost walks through walls
 			illegalBits: (if (== petView 311) 0 else cWHITE)
 			posn: (if (cast contains: ego) (ego x?) else 1000) (if (cast contains: ego) (ego y?) else 1000)
-			setStep: (if shrink 1 else 3) (if shrink 1 else 3)
+			setStep: (if shrink 1 else 2) (if shrink 1 else 2)
 			setMotion: Follow ego (if shrink 10 else 20)
 ;;;			cycleSpeed:
 ;;;				(cond
@@ -272,7 +272,7 @@
 					)
 					((== petView 310)
 						(client
-							setCycle: EndLoop
+							;setCycle: EndLoop
 							setMotion: 0
 						)
 					)
