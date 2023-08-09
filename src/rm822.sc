@@ -18,6 +18,16 @@
 	tempY
 )
 
+(instance door of Prop
+	(properties
+		x 200
+		y 35
+		view 825
+		loop 1
+		priority 13
+	)
+)
+
 
 (instance Room822 of Room
 	(properties
@@ -43,6 +53,7 @@
 			)
 		)
 		(ego init:)
+		(door ignoreActors: FALSE init:)
 	)
 	
 	(method (doit)
@@ -99,6 +110,18 @@
 ;;;			)
 ;;;			(curRoom newRoom: 804)
 ;;;		)
+	)
+	
+	(method (handleEvent pEvent &tmp i)
+		(super handleEvent: pEvent)
+		
+		(if (Said 'read,look/sign')
+			(if (ego inRect: 145 45 230 135)
+				(Print {The sign reads, "Thank you to our loyal customers of electronic components and vidPhone subsriptions. This location has been permanently closed".})
+			else
+				(Print {You can't make out the text from here.})
+			)
+		)
 	)
 )
 
