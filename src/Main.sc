@@ -661,7 +661,13 @@
 	quarksGoonsAttacking
 	
 	VCCel = [0 0 0 0 0 0 0 0 0 0 0 0] ;new and improved vaporcalc
+	
+	hBal = -32768
+	stock1
+	stock2
+	stock3
 )
+
 (procedure (NormalEgo theLoop theView)
 	;normalizes ego's animation
 	(if (> argc 0)

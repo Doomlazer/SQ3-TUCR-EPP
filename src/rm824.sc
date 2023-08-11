@@ -35,6 +35,9 @@
 			(825
 				(self setScript: RoomScript)
 			)
+			(827
+				;return from ATM, do nothing
+			)
 			(else 
 				(ego posn: 150 120 loop: 1)
 			)
@@ -72,30 +75,18 @@
 			)
 			(curRoom newRoom: 825)
 		)
-;;;		(if
-;;;			(and
-;;;				(& (ego onControl:) 2) ;darkblue
-;;;				(== script 0)
-;;;			)
-;;;			(curRoom setScript: FallDown)
-;;;		)		
-		(if
-			(and
-				(& (ego onControl:) $0008) ;ctlTEAL
-				(== script 0)
-			)
-			;(curRoom newRoom: 823)
+	)
+	
+	(method (handleEvent pEvent)
+		(super handleEvent: pEvent)
+		; handle Said's, etc...
+		(if (Said 'look,use/machine,atm')
+			(if (& (ego onControl:) $4000) ;ctlYellow
+				(curRoom newRoom: 827)
+			else
+				(NotClose)
+			)	
 		)
-;;;		(if
-;;;			(and
-;;;				(or 
-;;;					(> (ego y?) 194)
-;;;					(> (ego x?) 323)
-;;;				)
-;;;				(== script 0)
-;;;			)
-;;;			(curRoom newRoom: 804)
-;;;		)
 	)
 )
 
@@ -105,11 +96,6 @@
 	(method (doit)
 		(super doit:)
 		; code executed each game cycle
-	)
-	
-	(method (handleEvent pEvent)
-		(super handleEvent: pEvent)
-		; handle Said's, etc...
 	)
 	
 	(method (changeState newState)
