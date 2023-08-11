@@ -70,6 +70,46 @@
 	)
 )
 
+(instance button5 of Prop
+	(properties
+		view 827
+		loop 1
+		cel 0
+		x 85
+		y 58
+	)
+)
+
+(instance button6 of Prop
+	(properties
+		view 827
+		loop 1
+		cel 0
+		x 85
+		y 74
+	)
+)
+
+(instance button7 of Prop
+	(properties
+		view 827
+		loop 1
+		cel 0
+		x 218
+		y 58
+	)
+)
+
+(instance button8 of Prop
+	(properties
+		view 827
+		loop 1
+		cel 0
+		x 218
+		y 74
+	)
+)
+
 (instance Room827 of Room
 	(properties
 		picture scriptNumber
@@ -81,6 +121,10 @@
 		(button2 init:)
 		(button3 init:)
 		(button4 init:)
+		(button5 init:)
+		(button6 init:)
+		(button7 init:)
+		(button8 init:)
 		(curRoom setScript: RoomScript)
 	)
 	
@@ -98,7 +142,7 @@
 							(Said 'disembark,quit[/atm,device]')
 							(Said '/bye')
 						)
-						(curRoom newRoom: 824)
+						(curRoom newRoom: prevRoomNum)
 					)
 					((Said 'create/account')
 						(if (== comMode 1)
@@ -211,6 +255,66 @@
 					(if (== (event message?) KEY_BACK)
 						(if (> amt 0)
 							(ClearAmt)
+						)
+					)
+				)
+			)
+			(mouseDown
+				(if (ClickedInRect button1 event)
+					(cond
+						((== comMode 2) ;deposit
+							(= comMode 3)
+							(RoomScript changeState: 200)
+						)
+						(;submit
+							(or
+								(== comMode 3)
+								(== comMode 4)
+							)
+							(if (> amt 0)
+								(Submit)
+							else
+								(Print {Enter an ammount greater that zero, Roger.})
+							)
+						)
+					)
+				)
+				(if (ClickedInRect button2 event)
+					(cond
+						((== comMode 1) ;create account
+							(RoomScript changeState: 102)
+						)
+						((== comMode 2) ;withdrawal
+							(= comMode 4)
+							(RoomScript changeState: 200)
+						)
+						(;clear
+							(or
+								(== comMode 3)
+								(== comMode 4)
+							)
+							(ClearAmt)
+						)
+					)
+				)
+				(if (ClickedInRect button3 event)
+					(cond
+						((== comMode 2) ;trade
+							;not yet implemented
+						)
+					)
+				)
+				(if (ClickedInRect button4 event)
+					(cond
+						((== comMode 2)
+							(curRoom newRoom: prevRoomNum)
+						)
+						(;back
+							(or
+								(== comMode 3)
+								(== comMode 4)
+							)
+							(RoomScript changeState: 5)
 						)
 					)
 				)
@@ -670,5 +774,20 @@
 		else
 			(RoomScript changeState: 210)
 		)
+	)
+)
+
+(procedure (ClickedInRect button event)
+	(if
+		(and
+			(> (event x?) (button nsLeft?)) ;left edge
+			(< (event x?) (button nsRight?)) ;right edge
+			(> (event y?) (button nsTop?)) ;top edge
+			(< (event y?) (button nsBottom?)) ;bottom edge
+		)
+		
+		(return TRUE)
+	else
+		(return FALSE)	
 	)
 )
