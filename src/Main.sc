@@ -15,6 +15,7 @@
 (use Actor)
 (use System)
 (use pet)
+(use rm827)
 
 (public
 	SQ3 0
@@ -663,9 +664,8 @@
 	VCCel = [0 0 0 0 0 0 0 0 0 0 0 0] ;new and improved vaporcalc
 	
 	hBal = -32768
-	stock1
-	stock2
-	stock3
+	sValue = [10 130 40 20 500 5]
+	sPosn = [0 0 0 0 0 0]
 )
 
 (procedure (NormalEgo theLoop theView)
@@ -818,6 +818,38 @@
 		(= deathCel theCel)
 		(= certainDeath theDeath)
 	)
+)
+
+(procedure (DoStocks &tmp i)
+	(= i 0)
+	(while (< i 6)
+		(switch (Random 1 3)
+			(1
+				(switch (Random 1 10)
+					(1 
+						(= [sValue i] (- [sValue i] (Random 0 70)))
+					)
+					(else
+						(= [sValue i] (- [sValue i] (Random 0 6)))
+					)
+				)
+			)
+			(else
+				(switch (Random 1 10)
+					(1 
+						(= [sValue i] (+ [sValue i] (Random 0 50)))
+					)
+					(else
+						(= [sValue i] (+ [sValue i] (Random 0 3)))
+					)
+				)
+			)
+		)
+		(if (< [sValue i] 1) (= [sValue i] 1))
+		(if (> [sValue i] 32000) (= [sValue i] 32000))
+		(++ i)
+	)
+	(UpdateStocks)
 )
 
 (procedure (DisplayPet v l c &tmp temp0 [str 100] pCel)
@@ -984,7 +1016,7 @@
 	)
 )
 
-(instance logFile of File)
+;;;(instance logFile of File)
 
 (instance SQ3 of Game
 	
@@ -1243,6 +1275,7 @@
 					(++ gameMinutes)
 					(= gameSeconds 0)
 					(= global223 1)
+					(DoStocks)
 					(if (== gameMinutes 60)
 						(++ gameHours)
 						(= gameMinutes 0)
@@ -2047,20 +2080,20 @@
 	)
 )
 
-(instance calc of Prop
-	
-	(method (init)
-		(super init:)
-		(self
-			view: 27
-			setLoop: 0
-			setCel: 0
-			ignoreActors: TRUE
-			setPri: 15
-			posn: 159 94
-			stopUpd:
-		)
-	)
-)
+;;;(instance calc of Prop
+;;;	
+;;;	(method (init)
+;;;		(super init:)
+;;;		(self
+;;;			view: 27
+;;;			setLoop: 0
+;;;			setCel: 0
+;;;			ignoreActors: TRUE
+;;;			setPri: 15
+;;;			posn: 159 94
+;;;			stopUpd:
+;;;		)
+;;;	)
+;;;)
 
 (instance sysWindow of SysWindow)
