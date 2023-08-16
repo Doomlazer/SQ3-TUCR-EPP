@@ -13,36 +13,8 @@
 	Room823 0
 )
 
-(local
-	printObj
-)
-
-(instance captivePet1 of Actor
+(instance captivePet of Prop
 	(properties)
-)
-
-(instance mouth of Actor
-	(properties)
-)
-
-(instance leftEye of Actor
-	(properties)
-)
-(instance rightEye of Actor
-	(properties)
-)
-
-(instance balloon of Prop
-	(method (init)
-		(super init:)
-		(self
-			view: 81
-			setLoop: 0
-			setCel: 1
-			setPri: 15
-			posn: 1000 1000
-		)
-	)
 )
 
 (instance Room823 of Room
@@ -52,68 +24,35 @@
 	
 	(method (init)
 		(super init:)
-		(captivePet1
-			view: 309
-			setCycle: Walk
-			ignoreActors: FALSE
-			illegalBits: cWHITE
-			posn: (Random 150 290) (Random 90 115)
-			setStep: 2
+		(captivePet
+			view: (Random 309 311)
+			loop: 2
+			setCycle: Forward
+			posn: 25 85
+			setPri: 4
+			cycleSpeed: 4
 			init:
 		)
-		(captivePet1 setScript: captiveScript)
-		(mouth
-			view: 823
-			loop: 0
-			cel: 0
-			posn: 81 91
-			init:
+		(captivePet setScript: captivePetScript)
+		(switch prevRoomNum
+			(824
+				(self setScript: RoomScript)
+			)
+			(else 
+				(ego posn: 150 120 loop: 1)
+			)
 		)
-		(mouth setScript: salesPitch)
-		(leftEye
-			view: 823
-			loop: 1
-			cel: 0
-			posn: 68 64
-			init:
-		)
-		(leftEye setScript: blinkScript)
-		(rightEye
-			view: 823
-			loop: 1
-			cel: 0
-			posn: 92 64
-			init:
-		)
-		(balloon init:)
-;;;		(switch prevRoomNum
-;;;			(821
-;;;				(self setScript: RoomScript)
-;;;			)
-;;;			(else 
-;;;				(ego posn: 150 120 loop: 1)
-;;;			)
-;;;		)
-;;;		(ego init:)
+		(ego init:)
 	)
 	
 	(method (handleEvent event)
 		(super handleEvent: event)
 		; handle Said's, etc...
 		(switch (event type?)
-			(keyDown
-				(if printObj
-					(ClearTalking)
-					(event claimed: TRUE)
-				)
-			)
 			(saidEvent
 				(cond 
 					((or (Said 'disembark,quit') (Said '/bye'))
-						(curRoom newRoom: 822)
-					)
-					((Said '*')
-						(salesPitch changeState: 100)
+						;(curRoom newRoom: 822)
 					)
 				)
 			)
@@ -122,44 +61,13 @@
 	
 	(method (doit)
 		(super doit:)
-;;;		(if
-;;;			(or
-;;;				(and
-;;;					(> (ego x?) 138)
-;;;					(>= (ego y?) 190)
-;;;					(== (curRoom script?) 0) 
-;;;				)
-;;;				(and
-;;;					(>= (ego x?) 320)
-;;;					(== (curRoom script?) 0) 
-;;;				)
-;;;			)
-;;;			(curRoom newRoom: 821)
-;;;		)
-;;;		(if
-;;;			(and
-;;;				(& (ego onControl:) 2) ;darkblue
-;;;				(== script 0)
-;;;			)
-;;;			(curRoom setScript: FallDown)
-;;;		)		
-;;;		(if
-;;;			(and
-;;;				(& (ego onControl:) $4000) ;yellow - back to ship
-;;;				(== script 0)
-;;;			)
-;;;			(curRoom newRoom: 802)
-;;;		)
-;;;		(if
-;;;			(and
-;;;				(or 
-;;;					(> (ego y?) 194)
-;;;					(> (ego x?) 323)
-;;;				)
-;;;				(== script 0)
-;;;			)
-;;;			(curRoom newRoom: 804)
-;;;		)
+		(if
+			(and
+				(& (ego onControl:) $0040) ;ctlBROWN 
+				(== script 0)
+			)
+			(curRoom newRoom: 824)
+		)
 	)
 )
 
@@ -181,132 +89,106 @@
 		(switch state
 			(0
 				(HandsOff)
-				(switch prevRoomNum
-					(821
-						(if (> (ego y?) 110)
-							(ego
-								posn: 330 170
-								setMotion: MoveTo 310 160 self
-							)
-						else
-							(ego
-								posn: 200 195
-								setMotion: MoveTo 190 185 self
-							)
-						)
+				(ego
+					posn: 160 200
+					setMotion: MoveTo 160 185 self
+				)
+			)
+			(1
+				(HandsOn)
+				(self dispose:)
+			)
+		)
+	)
+)
+
+(instance captivePetScript of Script
+	(properties)
+	
+	(method (doit)
+		(super doit:)
+		; code executed each game cycle
+	)
+	
+	(method (handleEvent pEvent)
+		(super handleEvent: pEvent)
+		; handle Said's, etc...
+	)
+	
+	(method (changeState newState)
+		(= state newState)
+		(switch state
+			(0
+				(cond
+					((== (captivePet view?) 309)
+						(captivePet view: 310 posn: 25 85)
+					)
+					((== (captivePet view?) 310)
+						(captivePet view: 311 posn: 25 80 )
+					)
+					((== (captivePet view?) 311)
+						(captivePet view: 309 posn: 25 85)
 					)
 				)
+				(= seconds 4)
 			)
 			(1
-				(RedrawCast)
-				(HandsOn)
-				(RoomScript dispose:)
-			)
-		)
-	)
-)
-
-(instance captiveScript of Script
-	(properties)
-	
-	(method (changeState newState)
-		(switch (= state newState)
-			(0
-				(client setMotion: MoveTo (Random 150 290) (Random 90 115) self)
-			)
-			(1
-				(= state -1)
-				(self cue:)
-			)
-		)
-	)
-)
-
-(instance blinkScript of Script
-	(properties)
-	
-	(method (changeState newState)
-		(switch (= state newState)
-			(0
-				(= seconds (Random 2 10))
-			)
-			(1
-				(leftEye setCycle: EndLoop self)
-				(rightEye setCycle: EndLoop)
+				(captivePet hide:)
+				(Display
+					{virtual}
+					p_width 100
+					p_at 8 55
+					p_color 2 ;green 
+					p_font 600
+				)
+				(= seconds 1)
 			)
 			(2
-				(leftEye setCycle: BegLoop self)
-				(rightEye setCycle: BegLoop)	
+				(Display
+					{pet}
+					p_width 100
+					p_at 17 65
+					p_color vYELLOW 
+					p_font 600
+				)
+				(= seconds 1) 
 			)
 			(3
+				(Display
+					{sale}
+					p_width 100
+					p_at 15 75
+					p_color vRED
+					p_font 600
+				)
+				(= seconds 1)
+			)
+			(4
+				(Display
+					{virtual}
+					p_width 100
+					p_at 8 55
+					p_color vBLACK 
+					p_font 600
+				)
+				(Display
+					{pet}
+					p_width 100
+					p_at 17 65
+					p_color vBLACK
+					p_font 600
+				)
+				(Display
+					{sale}
+					p_width 100
+					p_at 15 75
+					p_color vBLACK
+					p_font 600
+				)
 				(= state -1)
 				(self cue:)
+				(captivePet show:)
 			)
 		)
 	)
-)
-
-(instance salesPitch of Script
-	(properties)
-	
-	(method (changeState newState)
-		(switch (= state newState)
-			(0
-				(= cycles (Random 1 10))
-			)
-			(1
-				(alienTalks 50 47)
-				(mouth  setCycle: Forward)
-				(= printObj
-					(Print {Hello, and welcom to Virtual Pet. Would you like to buy a pet?} #at -1 10 #width 280 #font 600 #dispose)
-				)
-				(= cycles 80)
-			)
-			(2
-				(ClearTalking)
-				(= cycles (Random 50 200))
-			)
-			(3
-				(= state -1)
-				(self cue:)
-			)
-			(100
-				(= cycles 0)
-				(alienTalks 50 47)
-				(mouth  setCycle: Forward)
-				(= printObj
-					(Print {Sorry, this room is unfinished. Type EXIT to leave the store.} #at -1 10 #width 280 #font 600 #dispose)
-				)
-				(= cycles 80)
-			)
-			(101
-				(ClearTalking)
-				(= cycles (Random 50 200))
-			)
-			(102
-				(= state -1)
-				(self cue:)
-			)
-		)
-	)
-)
-
-(procedure (alienTalks x y)
-	(= saveDisabled TRUE)
-	(balloon setCel: 1 posn: x y)
-	(mouth setCycle: Forward)
-)
-
-(procedure (ClearTalking)
-	(if printObj
-		(balloon setCel: 3)
-		(cls)
-		(= printObj 0)
-	)
-	(if (not (== (mouth cel?) 0))
-		(mouth setCycle: BegLoop)
-	else
-		(mouth setCycle: 0)
-	)
-	(= saveDisabled 0)
 )

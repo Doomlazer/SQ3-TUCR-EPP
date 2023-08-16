@@ -38,6 +38,9 @@
 			(827
 				;return from ATM, do nothing
 			)
+			(823
+				(self setScript: RoomScript)
+			)
 			(else 
 				(ego posn: 150 120 loop: 1)
 			)
@@ -74,6 +77,13 @@
 				)
 			)
 			(curRoom newRoom: 825)
+		)
+		(if
+			(and
+				(& (ego onControl:) $0008) ;ctlTEAL
+				(== script 0)
+			)
+			(curRoom newRoom: 823) ;goto pet store
 		)
 	)
 	
@@ -130,15 +140,21 @@
 							)
 						)
 					)
+					(823
+						(ego
+							posn: 215 76
+							setMotion: MoveTo 205 86 self
+						)
+					)
 					(else
 						(ego posn: 150 130)
 					)
 				)
 			)
 			(1
-				(RedrawCast)
+				;(RedrawCast)
 				(HandsOn)
-				(RoomScript dispose:)
+				(self dispose:)
 			)
 		)
 	)

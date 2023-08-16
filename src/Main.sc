@@ -664,8 +664,9 @@
 	VCCel = [0 0 0 0 0 0 0 0 0 0 0 0] ;new and improved vaporcalc
 	
 	hBal = -32768
-	sValue = [10 130 40 20 500 5]
+	sValue = [10 130 90 50 200 5]
 	sPosn = [0 0 0 0 0 0]
+	;itr
 )
 
 (procedure (NormalEgo theLoop theView)
@@ -820,14 +821,14 @@
 	)
 )
 
-(procedure (DoStocks &tmp i)
+(procedure (DoStocks &tmp i t file [str 50])
 	(= i 0)
 	(while (< i 6)
 		(switch (Random 1 3)
 			(1
 				(switch (Random 1 10)
 					(1 
-						(= [sValue i] (- [sValue i] (Random 0 70)))
+						(= [sValue i] (- [sValue i] (Random 10 30)))
 					)
 					(else
 						(= [sValue i] (- [sValue i] (Random 0 6)))
@@ -835,9 +836,9 @@
 				)
 			)
 			(else
-				(switch (Random 1 10)
+				(switch (Random 1 20)
 					(1 
-						(= [sValue i] (+ [sValue i] (Random 0 50)))
+						(= [sValue i] (+ [sValue i] (Random 10 30)))
 					)
 					(else
 						(= [sValue i] (+ [sValue i] (Random 0 3)))
@@ -849,6 +850,19 @@
 		(if (> [sValue i] 32000) (= [sValue i] 32000))
 		(++ i)
 	)
+;;;	;record stock moment
+;;;	(if (< itr 180)
+;;;		(= file (File new:))
+;;;		(if (file name: "Stocks.txt" open: 0); fOPENCREATE)
+;;;			(file write: (Format @str {%d, %d, %d, %d, %d, %d\n}[sValue 0] [sValue 1] [sValue 2] [sValue 3] [sValue 4] [sValue 5]))
+;;;			(file close: dispose:)
+;;;		else
+;;;			(Print {stock file error})
+;;;		)
+;;;		(++ itr)
+;;;	else
+;;;		(Print {3 HOURS DONE})
+;;;	)
 	(UpdateStocks)
 )
 
@@ -1302,7 +1316,7 @@
 			RELDPATH TIMER GROOPER RFEATURE QSCRIPT DPATH SMOOPER COUNT 952
 			FOLLOW STOPWALK DCICON WANDER MOUSER LASTLINK QSOUND SORT CAT GOTOSAID FORCOUNT
 			CHASE NAMEFIND APPROACH TIMEDCUE TEXTRA ORBIT DEMO WINDOW TRACK AVOIDER
-			SIGHT REVERSE 26 30 ;26=pet 30=VaporCalc
+			SIGHT REVERSE 26 30 827 ;26=pet 30=VaporCalc 817=UpdateStocks
 		)
 		(if debugOn
 			(= debugOn FALSE)
