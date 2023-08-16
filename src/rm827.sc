@@ -164,7 +164,7 @@
 							(Print {That is not currently an option.})
 						)
 					)
-					((Said 'withdrawal')
+					((Said 'withdraw')
 						(if (== comMode 2)
 							(= comMode 4)
 							(RoomScript changeState: 200)
@@ -571,7 +571,7 @@
 				)
 				(button1 cel: 1)
 				(Display
-					{WITHDRAWAL}
+					{WITHDRAW}
 					p_width 100
 					p_at 100 99
 					p_color 10
@@ -633,7 +633,7 @@
 				)
 				(button2 cel: 0)
 				(= hBal 0)
-				(= cycles 100)
+				(= cycles 80)
 			)
 			(103
 				(DrawPic 827 100)
@@ -646,7 +646,7 @@
 				)
 				(= hBal 0)
 				(= state 4) ;goto balance screen
-				(= cycles 100)
+				(= cycles 40)
 			)
 			(200
 				(ClearAmt)
@@ -661,7 +661,7 @@
 				(Display
 					(cond
 						((== comMode 3) {Enter deposit amt.})
-						((== comMode 4) {Enter wdrl. amt.})
+						((== comMode 4) {Enter W/D amount.})
 					)
 					p_width 150
 					p_at 105 55
@@ -810,7 +810,7 @@
 				(button2 cel: 0)
 				(button3 cel: 0)
 				(button4 cel: 0)
-				(= cycles 100)
+				(= cycles 80)
 			)
 			(301
 				(DrawPic 827 100)
