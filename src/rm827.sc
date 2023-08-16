@@ -130,7 +130,6 @@
 		(button7 init:)
 		(button8 init:)
 		(curRoom setScript: RoomScript)
-		(= buckazoids 600)
 	)
 	
 	(method (doit)
@@ -353,7 +352,11 @@
 				)
 			)
 			(mouseDown
-				(if (ClickedInRect button1 event)
+				(if
+					(and
+						(ClickedInRect button1 event)
+						(== (button1 cel?) 1)
+					)
 					(cond
 						((== comMode 2) ;deposit
 							(= comMode 3)
@@ -382,7 +385,11 @@
 						)
 					)
 				)
-				(if (ClickedInRect button2 event)
+				(if
+					(and
+						(ClickedInRect button2 event)
+						(== (button2 cel?) 1)
+					)
 					(cond
 						((== comMode 1) ;create account
 							(RoomScript changeState: 102)
@@ -400,7 +407,7 @@
 							)
 							(ClearAmt)
 						)
-						((== comMode 6)
+						((== comMode 6) ;position
 							(RoomScript changeState: 400)
 						)
 						((= comMode 8) ;sell
@@ -409,7 +416,11 @@
 						)
 					)
 				)
-				(if (ClickedInRect button3 event)
+				(if
+					(and
+						(ClickedInRect button3 event)
+						(== (button3 cel?) 1)
+					)
 					(cond
 						((== comMode 2) ;trade
 							(= comMode 5)
@@ -421,7 +432,11 @@
 						)
 					)
 				)
-				(if (ClickedInRect button4 event)
+				(if
+					(and
+						(ClickedInRect button4 event)
+						(== (button4 cel?) 1)
+					)
 					(cond
 						((== comMode 2)
 							(curRoom newRoom: prevRoomNum)
@@ -452,25 +467,41 @@
 						)
 					)
 				)
-				(if (ClickedInRect button5 event)
+				(if
+					(and
+						(ClickedInRect button5 event)
+						(== (button5 cel?) 1)
+					)
 					(if (== comMode 6) ;GPZD
 						(= stockNum 0)
 						(RoomScript changeState: 500)
 					)
 				)
-				(if (ClickedInRect button6 event)
+				(if
+					(and
+						(ClickedInRect button6 event)
+						(== (button6 cel?) 1)
+					)
 					(if (== comMode 6) ;GPZD
 						(= stockNum 1)
 						(RoomScript changeState: 500)
 					)
 				)
-				(if (ClickedInRect button7 event)
+				(if
+					(and
+						(ClickedInRect button7 event)
+						(== (button7 cel?) 1)
+					)
 					(if (== comMode 6) ;SOL
 						(= stockNum 3)
 						(RoomScript changeState: 500)
 					)
 				)
-				(if (ClickedInRect button8 event)
+				(if
+					(and
+						(ClickedInRect button8 event)
+						(== (button8 cel?) 1)
+					)
 					(if (== comMode 6) ;GNTX
 						(= stockNum 4)
 						(RoomScript changeState: 500)
