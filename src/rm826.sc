@@ -31,6 +31,9 @@
 			(825
 				(self setScript: RoomScript)
 			)
+			(828
+				(self setScript: RoomScript)
+			)
 			(else 
 				(ego posn: 160 110 loop: 1)
 			)
@@ -52,7 +55,7 @@
 				(< (ego x?) 3)
 				(== (curRoom script?) 0) 
 			)
-			(curRoom newRoom: 827)
+			(curRoom newRoom: 828)
 		)	
 		(if
 			(and
@@ -97,6 +100,19 @@
 							(ego
 								posn: 330 120
 								setMotion: MoveTo 310 130 self
+							)
+						)
+					)
+					(828
+						(if (< tempY 45)
+							(ego
+								posn: -10 100
+								setMotion: MoveTo 10 99 self
+							)
+						else
+							(ego
+								posn: -10 138
+								setMotion: MoveTo 10 137 self
 							)
 						)
 					)

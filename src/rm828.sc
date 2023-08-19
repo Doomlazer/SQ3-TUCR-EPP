@@ -1,5 +1,5 @@
 ;;; Sierra Script 1.0 - (do not remove this comment)
-(script# 821)
+(script# 828)
 (include game.sh)
 (use Main)
 (use Intrface)
@@ -10,7 +10,7 @@
 (use System)
 
 (public
-	Room821 0
+	Room828 0
 )
 
 (local
@@ -18,8 +18,7 @@
 	tempY
 )
 
-
-(instance Room821 of Room
+(instance Room828 of Room
 	(properties
 		picture scriptNumber
 	)
@@ -29,10 +28,7 @@
 		(= tempY (ego y?))
 		(super init:)
 		(switch prevRoomNum
-			(27
-				(self setScript: RoomScript)
-			)
-			(822
+			(826
 				(self setScript: RoomScript)
 			)
 			(829
@@ -48,30 +44,30 @@
 	(method (doit)
 		(super doit:)
 		(if
-			(and
-				(> (ego y?) 180)
-				(== (curRoom script?) 0) 
+			(or
+				(and
+					(> (ego x?) 296)
+					(<= (ego y?) 20)
+					(== (curRoom script?) 0) 
+				)
+				(and
+					(>= (ego x?) 319)
+					(== (curRoom script?) 0) 
+				)
 			)
-			(self setScript: exitScript)
+			(curRoom newRoom: 826)
 		)
 		(if
-			(and
-				(> (ego x?) 315)
-				(== (curRoom script?) 0) 
-			)
-			(curRoom newRoom: 822)
-		)
-		(if
-			(and
-				(> (ego y?) 180)
-				(== (curRoom script?) 0) 
-			)
-			(self setScript: exitScript)
-		)
-		(if
-			(and
-				(< (ego x?) 5)
-				(== (curRoom script?) 0) 
+			(or
+				(and
+					(< (ego x?) 186)
+					(> (ego y?) 187)
+					(== (curRoom script?) 0) 
+				)
+				(and
+					(< (ego x?) 4)
+					(== (curRoom script?) 0) 
+				)
 			)
 			(curRoom newRoom: 829)
 		)
@@ -84,10 +80,10 @@
 ;;;		)		
 ;;;		(if
 ;;;			(and
-;;;				(& (ego onControl:) $4000) ;yellow - back to ship
+;;;				(& (ego onControl:) $0008) ;ctlTEAL
 ;;;				(== script 0)
 ;;;			)
-;;;			(curRoom newRoom: 802)
+;;;			(curRoom newRoom: 823)
 ;;;		)
 ;;;		(if
 ;;;			(and
@@ -99,6 +95,14 @@
 ;;;			)
 ;;;			(curRoom newRoom: 804)
 ;;;		)
+	)
+	
+	(method (handleEvent pEvent &tmp i)
+		(super handleEvent: pEvent)
+		
+		(if (Said 'read,look/sign')
+
+		)
 	)
 )
 
@@ -121,40 +125,29 @@
 			(0
 				(HandsOff)
 				(switch prevRoomNum
-					(27
-						(ego
-							posn: 196 200 
-							ignoreControl:
-							setMotion: MoveTo 196 170 self
-						)
-					)
-					(822
-						(if (>= tempX 320)
+					(826
+						(if (< tempY 120)
 							(ego
-								posn: 330 140 
-								ignoreControl:
-								setMotion: MoveTo 310 140 self
+								posn: 330 -5
+								setMotion: MoveTo 290 20 self
 							)
 						else
 							(ego
-								posn: 330 90 
-								ignoreControl:
+								posn: 330 80
 								setMotion: MoveTo 310 90 self
 							)
 						)
 					)
 					(829
-						(if (<= tempX 35)
+						(if (< tempY 45)
 							(ego
-								posn: -10 140 
-								ignoreControl:
-								setMotion: MoveTo 10 140 self
+								posn: -10 170
+								setMotion: MoveTo 15 160 self
 							)
 						else
 							(ego
-								posn: -10 90 
-								ignoreControl:
-								setMotion: MoveTo 10 90 self
+								posn: 100 195
+								setMotion: MoveTo 135 185 self
 							)
 						)
 					)
@@ -164,24 +157,6 @@
 				(RedrawCast)
 				(HandsOn)
 				(RoomScript dispose:)
-			)
-		)
-	)
-)
-
-(instance exitScript of Script
-	(properties)
-	
-	(method (changeState newState)
-		(= state newState)
-		(switch state
-			(0
-				(HandsOff)			
-				(ego setMotion: MoveTo (ego x?) 200 self)
-			)
-			(1
-				(HandsOn)
-				(curRoom newRoom: 14)
 			)
 		)
 	)
