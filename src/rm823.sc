@@ -14,6 +14,10 @@
 	Room823 0
 )
 
+(local
+	fc1
+)
+
 (instance captivePet of Prop
 	(properties)
 )
@@ -27,6 +31,10 @@
 )
 
 (instance hen of Actor
+	(properties)
+)
+
+(instance fish1 of Actor
 	(properties)
 )
 
@@ -80,6 +88,18 @@
 			init:
 		)
 		(hen setScript: henScript)
+		(fish1
+			view: 826
+			setCycle: Forward
+			;posn: (Random 85 233) (Random 46 76) ;85 46 233 76
+			posn: 140 46
+			setPri: (Random 2 4)
+			cycleSpeed: 2
+			setStep: 1 1
+			ignoreControl: $ffff
+			init:
+		)
+		(fish1 setScript: fishScript)
 		(switch prevRoomNum
 			(824
 				(self setScript: RoomScript)
@@ -256,18 +276,18 @@
 		(= state newState)
 		(switch state
 			(0
-				(raven setMotion: EndLoop self )
+				(client setMotion: EndLoop self )
 			)
 			(1
 				(switch (Random 1 4)
 					(1 
-						(raven loop: 0)
+						(client loop: 0)
 					)
 					(else
-						(raven loop: 1)
+						(client loop: 1)
 					)	
 				)
-				(raven setMotion: 0 cel: 0)
+				(client setMotion: 0 cel: 0)
 				(= state -1)
 				(= seconds (Random 1 5))
 			)
@@ -292,7 +312,7 @@
 		(= state newState)
 		(switch state
 			(0
-				(cat loop: (Random 4 6) setMotion: 0 posn: (cat x?) 90 setCycle: Forward)
+				(client loop: (Random 4 6) setMotion: 0 posn: (cat x?) 90 setCycle: Forward)
 				(= seconds (Random 20 50))
 			)
 			(1	
@@ -300,7 +320,7 @@
 				(while (< (Abs(- i (cat x?))) 50)
 					(= i (Random 110 230))
 				)
-				(cat
+				(client
 					setCycle: Walk
 					setMotion: MoveTo i 90 self
 				)
@@ -327,18 +347,74 @@
 		(= state newState)
 		(switch state
 			(0
-				(hen setMotion: Wander setCycle: Walk)
+				(client setMotion: Wander setCycle: Walk)
 				(= seconds (Random 2 10))
 			)
 			(1	
-				(hen
-					loop: (if (== (hen loop?) 0) 4 else 5)
+				(client
+					loop: (if (== (client loop?) 0) 4 else 5)
 					setMotion: 0
 					cel: 0
 					setCycle: EndLoop self
 				)
 				
 				(= state -1)
+			)
+		)
+	)
+)
+
+(instance fishScript of Script
+	(properties)
+	
+	(method (doit)
+		(super doit:)
+		; code executed each game cycle
+		(++ fc1)
+		(if
+			(or
+				(and
+					(< (client x?) 190)
+					(< (client y?) 51)
+				)
+				(and
+					(> (client x?) 147)
+					(< (client x?) 190)
+					(< (client y?) 59)
+				)
+			)
+			(if (> fc1 100)
+				(= fc1 0)
+				(client setPri: (if (== (client priority?) 4) 2 else 4))
+			)
+		)
+	)
+	
+	(method (handleEvent pEvent)
+		(super handleEvent: pEvent)
+		; handle Said's, etc...
+	)
+	
+	(method (changeState newState &tmp fx fy)
+		(= state newState)
+		(= fx (Random 85 233))
+		(= fy (Random 46 76))
+		(switch state
+			(0
+				(client posn: fx fy)
+				(self cue:)
+			)
+			(1
+				(= fx (Random 85 233))
+				(= fy (Random 46 76))
+				(client
+					loop: (if (>= fx (client x?)) 0 else 1)
+					setMotion: MoveTo fx fy self
+				)
+			)
+			(2	
+				(= state 0)
+				(= seconds (Random 1 3))
 			)
 		)
 	)
