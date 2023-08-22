@@ -108,7 +108,6 @@
 		)
 		(door init:)
 		(super init:)
-		(ego get: iPetInv)
 	)
 	
 	(method (doit)
