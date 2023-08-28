@@ -666,7 +666,11 @@
 	hBal = -32768
 	sValue = [10 130 90 50 200 5]
 	sPosn = [0 0 0 0 0 0]
-	;itr
+	
+	owned = [302 301 0 0 0 0 0 0 0 0 0 0]
+	bookmark = [3 3 3 3 3 3 3 3 3 3 3 3]
+	readerX
+	readerY
 )
 
 (procedure (NormalEgo theLoop theView)
@@ -1081,6 +1085,7 @@
 				Time_Disruptor
 				goggles
 				petInv
+				eSlab
 		)
 		(= petView (Random 309 311))
 		(if (GameIsRestarting)
@@ -1096,26 +1101,6 @@
 	)
 	
 	(method (doit &tmp haveMouse)
-;;;		(-- PTDCountDown)
-;;;		(if (< PTDCountDown 1)
-;;;			(curRoom eachElementDo: #disposePTD)
-;;;		)
-;;;		(if adSupported
-;;;			(if 
-;;;				(
-;;;					and
-;;;						(>= curRoomNum 2)
-;;;						(< curRoomNum 900)
-;;;						(not (== curRoomNum 777))
-;;;				)
-;;;				(if (<= adTimer 0)
-;;;					(Print 	100 (Random 4 8) #title {Type "PAY MAGIC" to disable Ads})
-;;;					(= adTimer (Random 4000 10000))
-;;;				else
-;;;					(-- adTimer)
-;;;				)
-;;;			)
-;;;		)
 		
 		;EO: this is a recreation, based on the decompiled doit: for Astro Chicken
 		(if
@@ -1339,6 +1324,9 @@
 			(= petMode 1) ;no name was chosen
 		)
 		(ActivatePet)
+		(if (== prevRoomNum 300)
+			(ego posn: readerX readerY)
+		)
 	)
 	
 	(method (handleEvent event &tmp item obj evt temp3 nextRoom evtX evtY evtMod temp8 [str 50])
@@ -1398,28 +1386,19 @@
 							(DontHave)
 						)
 					) 
-;;;					((Said 'pay/magic')
-;;;						(if adSupported
-;;;							(if (>= buckazoids 20)
-;;;								(Print 100 0)
-;;;								(theGame changeScore: 5)
-;;;								(= buckazoids (- buckazoids 20))
-;;;								(= adSupported 0)
-;;;							else
-;;;								(Print 100 1)
-;;;							)
-;;;						else
-;;;							(Print 100 2)
-;;;						)
-;;;					)
-;;;					((Said 'pay/nothing')
-;;;						(if adSupported
-;;;							(= adSupported 0)
-;;;							(Print 100 3)
-;;;						else
-;;;							(Print 100 2)
-;;;						)
-;;;					)
+					((Said 'use/eslab')
+						(if (ego has: iESlab)
+							(if (== (ego script?) 0)
+								(= readerX (ego x?))
+								(= readerY (ego y?))
+								(curRoom newRoom: 300)
+							else
+								(Print 300 4)	
+							)
+						else
+							(Print 300 5)
+						)
+					)
 					((Said 'tp')
 						(if (not debugging)
 							(event claimed: FALSE)
@@ -2081,7 +2060,7 @@
 (instance petInv of InvItem
 	(properties
 		said '/pet'
-		description {Your virtual pet}
+		description {Your virtual pet.}
 		owner 470
 		view 242
 		loop 1
@@ -2091,6 +2070,18 @@
 	
 	(method (showSelf)
 		(DisplayPet)
+	)
+)
+
+(instance eSlab of InvItem
+	(properties
+		said '/eslab'
+		description {The eSlab document reader allows you to store and view documents using a proprietary format.}
+		owner 470
+		view 242
+		loop 1
+		cel 6
+		name "eSlab"
 	)
 )
 

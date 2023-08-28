@@ -143,7 +143,7 @@
 		(Load VIEW 64)
 		(Load VIEW 137)
 		(Load VIEW 213)
-		(Load SOUND 16)
+		(Load SOUND 401)
 		(super init:)
 		(ship init:)
 		(collar init: stopUpd:)

@@ -22,6 +22,7 @@
 		(Load VIEW 39)
 		(Load VIEW 52)
 		(Load SOUND 16)
+		(Load SOUND 401)
 		(cond
 			((== currentSector 62) ;monoburger
 				(if (not enterpriseLeftMonolithBurger) (enterprise init: stopUpd:))

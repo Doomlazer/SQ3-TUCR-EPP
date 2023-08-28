@@ -81,6 +81,7 @@
 	)
 	
 	(method (init)
+		(Load SOUND 401)
 		(super init:)
 		(= local0 3)
 		(= local1 3)

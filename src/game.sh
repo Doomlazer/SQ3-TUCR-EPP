@@ -32,6 +32,7 @@
 	iTime_Disruptor			;18
 	iGoggles				;19
 	iPetInv					;20
+	iESlab					;21
 )
 
 ;Locales and Regions
