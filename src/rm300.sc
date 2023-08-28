@@ -20,7 +20,7 @@
 	selected
 	allowInput
 	curPage
-	bSel
+	bSel = 0
 	menuLevel
 	
 )
@@ -68,7 +68,7 @@
 (instance button5 of Prop
 	(properties
 		view 322
-		loop 4
+		loop 5
 		cel 0
 		x 285
 		y 130
@@ -270,9 +270,10 @@
 			)
 			(5
 				(= allowInput TRUE)
-				(= bSel 2)
-				(button3 cel: 1)
-				(button5 cel: 0)
+				;(= bSel 2)
+				;(button3 cel: 1)
+				;(button5 cel: 0)
+				(changeButt)
 			)
 			(100
 				(changeButt)
@@ -309,8 +310,8 @@
 	(Display
 		[owned selected] 0
 		p_width 200
-		p_at 25 15
-		p_mode teJustLeft
+		p_at 35 15
+		p_mode teJustCenter
 		p_font textFont
 		p_color 15 ;textColor
 	)
@@ -325,8 +326,8 @@
 	(Display
 		(Format @str {Page %d} (- curPage 2))
 		p_width 200
-		p_at 25 170
-		p_mode teJustLeft
+		p_at 35 170
+		p_mode teJustCenter
 		p_font textFont
 		p_color 8 ;textColor
 	)
@@ -347,7 +348,7 @@
 	)
 )
 
-(procedure (doButt)
+(procedure (doButt &tmp i)
 	(switch bSel
 		(0
 			(curRoom newRoom: prevRoomNum)
@@ -394,6 +395,7 @@
 					(if (not (== [owned selected] 0))
 						(= curPage [bookmark selected])
 						(= menuLevel 1)
+						(button5 loop: 4) ;view selected
 						(displayPage)
 					)
 				)
@@ -406,11 +408,28 @@
 				)
 			)
 		)
-		(4 ;back
+		(4 ;back/delte button
 			(switch menuLevel
+				(0
+					(if (not (== [owned selected] 0))
+						(= i selected)
+						(while (< i 11)
+							(= [owned i] [owned (+ i 1)])
+							(= [bookmark i] [bookmark (+ i 1)])
+							(++ i)
+						)
+						(= [owned 11] 0)
+						(= [bookmark 11] 3)
+						(DrawPic 905 5)
+						(RoomScript changeState: 2)
+					)
+					
+				)
 				(1
 					(= menuLevel 0)
+					(= bSel 3)
 					(DrawPic 905 5)
+					(button5 loop: 5) ;delete
 					(RoomScript changeState: 2)
 				)
 			)
