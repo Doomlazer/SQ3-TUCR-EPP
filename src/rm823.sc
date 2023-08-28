@@ -177,25 +177,15 @@
 			(824
 				(self setScript: RoomScript)
 			)
+			(300
+				(= greet TRUE)
+				(= introduced TRUE)
+			)
 			(else 
-				(ego posn: 150 120 loop: 1)
+				(self setScript: RoomScript)
 			)
 		)
 		(ego init:)
-	)
-	
-	(method (handleEvent event)
-		(super handleEvent: event)
-		; handle Said's, etc...
-		(switch (event type?)
-			(saidEvent
-				(cond 
-					((or (Said 'disembark,quit') (Said '/bye'))
-						;(curRoom newRoom: 822)
-					)
-				)
-			)
-		)
 	)
 	
 	(method (doit)
@@ -253,11 +243,6 @@
 				(self cue:)
 			)
 		)
-	)
-	
-	(method (handleEvent pEvent)
-		(super handleEvent: pEvent)
-		; handle Said's, etc...
 	)
 	
 	(method (changeState newState)
@@ -746,6 +731,29 @@
 						)
 						(event claimed: TRUE)
 					)
+					(
+						(or
+							(Said 'manual')
+							(Said '*/manual')
+							(Said '*[<*]/manual')
+							(Said '*[<about]/manual')
+							(Said 'manual/*')
+						)
+						(if (ego has: iPetInv)
+							(salesPrint 823 38)
+							(if (ego has: iESlab)
+								(if (syncDoc)
+									(salesPrint 823 34)	
+								else
+									(salesPrint 823 35)
+								)
+							else
+								(salesPrint 823 36)
+							)
+						else
+							(salesPrint 823 37)
+						)
+					)
 				)
 			)
 		)
@@ -809,7 +817,7 @@
 
 	)
 
-	(method (changeState newState &tmp fx fy)
+	(method (changeState newState &tmp fx fy temp0)
 		(= state newState)
 		(switch state
 			(0
@@ -838,7 +846,41 @@
 				(ego get: iPetInv)
 				(salesPrint 823 22)
 				(Print 823 25)
-				(salesman setScript: salesmanScript)
+				(= temp0 
+					(Print 
+						823 29
+						#width 220
+						#title {Clerk}
+						#at -1 10
+						#button {OK} 1
+						#button {No, Thanks} 2
+						#button {A what?} 3
+					)
+				)
+				(switch temp0
+					(1
+						(if (ego has: iESlab)
+							(if (syncDoc)
+								(salesPrint 823 34)	
+							else
+								(salesPrint 823 35)
+							)
+						else
+							(salesPrint 823 36)
+						)
+					)
+					(2
+						(salesPrint 823 30)
+					)
+					(3
+						(salesPrint 823 31)
+						(salesPrint 823 32)
+					)
+					(else
+						(salesPrint 823 33)
+					)
+				)
+ 				(salesman setScript: salesmanScript)
 				(salesmanScript changeState: 1)
 				(HandsOn)
 			)
@@ -848,4 +890,21 @@
 
 (procedure (salesPrint text line)
 	(Print text line #title {Clerk} #at -1 10)
+)
+
+(procedure (syncDoc &tmp i r)
+	(= i 0)
+	(= r 0)
+	(while (< i 12)
+		(if
+			(and
+				(== [owned i] 0)
+				(not r)
+			)
+			(= r 1)
+			(= [owned i] 301) ;upload virtual pet manual
+		)
+		(++ i)
+	)
+	(return r)
 )

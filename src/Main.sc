@@ -667,7 +667,7 @@
 	sValue = [10 130 90 50 200 5]
 	sPosn = [0 0 0 0 0 0]
 	
-	owned = [302 301 0 0 0 0 0 0 0 0 0 0]
+	owned = [302 0 0 0 0 0 0 0 0 0 0 0]
 	bookmark = [3 3 3 3 3 3 3 3 3 3 3 3]
 	readerX
 	readerY
