@@ -15,14 +15,13 @@
 
 (local
 	textColor = 1
-	textFont = 1
+	textFont = 888
 	itr
 	selected
 	allowInput
 	curPage
 	bSel = 0
-	menuLevel
-	
+	menuLevel	
 )
 
 (instance button1 of Prop

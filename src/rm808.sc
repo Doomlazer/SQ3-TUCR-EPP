@@ -61,7 +61,7 @@
 	(= c
 		(if (not (ego has: 18))
 			(Print
-				{"What can I get for you, Hu-mon?"}
+				808 55
 				#title {Quirk}
 				#mode teJustLeft
 				#button {Bar} 1
@@ -71,7 +71,7 @@
 			)
 		else
 			(Print
-				{"What can I get for you, Hu-mon?"}
+				808 55
 				#title {Quirk}
 				#mode teJustLeft
 				#button {Bar} 1
@@ -84,6 +84,9 @@
 	(switch c
 		(1
 			(Print 808 51)
+			(Print 808 56)
+			(Print 808 57)
+			(buyBook)
 		)
 		(2
 			(Print 808 52)
@@ -186,6 +189,37 @@
 				(= global206 1)
 				(= local0 4)
 				(self setScript: dockScript)
+			)
+			(300
+				;return from ereader
+				(collar setCel: 0)
+				(ship x: 286 y: 115 stopUpd:)
+				(chairMan setCel: 7 init:)
+				(collar stopUpd:)
+				(HandsOn)
+				(ego init:)
+				(if
+					(and 
+						(== (ego x?) 76)
+						(== (ego y?) 115)
+					)
+					(ego
+						view: 300
+						illegalBits: 0
+						setLoop: 0
+						setPri: 14
+						setCel: 0
+					)
+					(= standingUp FALSE)
+				else
+					(ego illegalBits: cWHITE view: 0  setCel: 0)
+					(RedrawCast)
+					(NormalEgo 2 0)
+					(= standingUp TRUE)
+				)
+				(ship stopUpd:)
+				(= global206 0)
+				(= local0 1)
 			)
 			(else ; dock testing from TP debug
 				(collar setCel: 7)
@@ -1085,4 +1119,52 @@
 		(door stopUpd:)
 		(= local1 (if (== local1 1) 0 else 2))
 	)
+)
+
+
+(procedure (buyBook &tmp temp0)
+	(= temp0 
+		(Print 
+			808 58
+			#width 220
+			#at -1 10
+			#button {Sure, why not?} 1
+			#button {No, thank you.} 2
+		)
+	)
+	(switch temp0
+		(1
+			(if (ego has: iESlab)
+				(if (syncDoc)
+					(Print 808 61)
+					(= qtab (+ qtab 10))
+				else
+					(Print 808 62)
+				)
+			else
+				(Print 808 59)
+				(Print 808 60)
+			)
+		)
+		(else
+			(Print 808 63)
+		)
+	)
+)
+
+(procedure (syncDoc &tmp i r)
+	(= i 0)
+	(= r 0)
+	(while (< i 12)
+		(if
+			(and
+				(== [owned i] 0)
+				(not r)
+			)
+			(= r 1)
+			(= [owned i] 303) ;upload Quirk's autobiography
+		)
+		(++ i)
+	)
+	(return r)
 )
