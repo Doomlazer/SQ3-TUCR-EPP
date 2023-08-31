@@ -138,7 +138,7 @@
 					((Said 'look/booth')
 						(Print 804 3)
 					)
-					((Said 'look/alien,attendant,et')
+					((Said 'look/alien,attendant')
 						(Print 804 4)
 					)
 					((Said 'look/sign')
@@ -164,7 +164,7 @@
 					)
 					((Said 'ask,converse>')
 						(cond 	
-							((Said '/alien,attendant,et')
+							((Said '/alien,attendant')
 								(if (& (ego onControl:) $2000)
 									(if towed
 										(Print 804 24)

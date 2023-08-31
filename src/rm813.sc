@@ -71,7 +71,6 @@
 				(self setStep: 2 1 setMotion: MoveTo (self x?) 115)
 			)
 		)
-
 		(if (< (self y?) 75)
 			(ego illegalBits: (| cGREEN cWHITE))
 		else
@@ -172,6 +171,9 @@
 			(814
 				(ego posn: 163 151 loop: 3)
 			)
+			(840
+				(self setScript: exitScript)
+			)
 			(else
 				(ego posn: 160 200)
 				(self setScript: RoomScript)
@@ -189,11 +191,27 @@
 	
 	(method (doit)
 		(super doit:)
-		(if (< (ego y?) 105)
-			(curRoom newRoom: 800) ;814)	
+		(if
+			(and
+				(< (ego y?) 105)
+				(== (curRoom script?) 0)
+			)
+			(curRoom newRoom: 840)	
 		)
-		(if (> (ego y?) 205)
+		(if
+			(and
+				(> (ego y?) 185)
+				(== (curRoom script?) 0)
+			)
 			(curRoom newRoom: 800)
+		)
+		(if (< (ego x?) -5)
+			(Print 800 21)
+			(ego setMotion: MoveTo 10 (ego y?))
+		)
+		(if (> (ego x?) 325)
+			(Print 800 21)
+			(ego setMotion: MoveTo 315 (ego y?))
 		)
 	)
 )
@@ -209,7 +227,7 @@
 		(super handleEvent: pEvent)
 		; handle Said's, etc...
 		(if (Said 'look')
-			(DrawPic 804 9)
+
 		)	
 	)
 	
@@ -246,9 +264,33 @@
 	)
 )
 
-(instance fallSound of Sound
-	(properties
-		number 45
-		priority 3
+(instance exitScript of Script
+	(properties)
+	
+	(method (doit)
+		(super doit:)
+	)
+	
+	(method (handleEvent pEvent)
+		(super handleEvent: pEvent)
+		; handle Said's, etc...
+	)
+	
+	(method (changeState newState)
+		(= state newState)
+		(switch state
+			(0
+				(HandsOff)
+				(door posn: 160 60)
+				(ego
+					posn: 160 90
+					setMotion: MoveTo 160 125 self
+				)
+			)
+			(1
+				(HandsOn)
+				(self dispose:)
+			)
+		)
 	)
 )
