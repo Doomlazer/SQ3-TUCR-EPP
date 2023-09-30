@@ -27,7 +27,7 @@
   clear: both;
 }
 </style>
-<body onload="firstLoad()">
+<body onload="firstLoad()" style="background-color:#fafafa;">
   <div class="row">
     <div class="column" style="width: 350">
 
@@ -424,30 +424,32 @@
       Document Title:<br>
       <input type="text" id="title" name="title" size="30" value="title" oninput="update()"><br>
       Document Author:<br>
-      <input type="text" id="author" name="author" size="30" value="author"><br>
+      <input type="text" id="author" name="author" size="30"><br>
       Document Description:<br>
       <input type="text" id="desc" name="desc" size="30"><br>
       <p>
+      <div id="pageCount">
+        Page 1 of 1.
+      </div>
         <button onclick="prevPage()">Prev. Page</button>
         <button onclick="nextPage()">Next Page</button><br>
       </p>
       <p>
-      <button onclick="importWarn(1)">Import Patch</button>
-      <button onclick="exportPatch()">Export Patch</button><br>
+        <button onclick="insertPage()">Insert Page</button>
+        <button onclick="deletePage()">Delete Current Page</button><br>
+      </p>
+      <p>
+        <button onclick="importWarn(1)">Import Patch</button>
+        <button onclick="exportPatch()">Export Patch</button><br>
       </p>
       <p>
       <button onclick="importWarn(0)">Import Text</button>
       <button onclick="exportText()">Export Text</button><br>
       </p>
-      <div id="pageCount">
-        Page 1 of 1.
-      </div>
-      <button onclick="insertPage()">Insert Page</button>
-      <button onclick="deletePage()">Delete Current Page</button><br>
       <p>
       Formatting:<br>\n = NewLine.<br>\t = tab/indent.<br>
       <input onchange="warnChange()" type="checkbox" id="warn" name="warn">
-      <label for="warn">Save Warning</label><br>
+      <label for="warn">Save Warnings</label><br>
       <a href="https://github.com/Doomlazer/SQ3-TUCR-EPP/wiki/eSlab-Document-Reader">More Info</a>
       </p>
     </div>
