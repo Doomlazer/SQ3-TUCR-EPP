@@ -50,7 +50,6 @@
       ctx.scale(2, 2);
       ctx.drawImage(img, 0, 0);
 
-
       function update() {
         unsaved = 1;
         ctx.font = "16px SQ3font";
@@ -75,13 +74,37 @@
       };
 
       function firstLoad() {
+        let l = localStorage.getItem("warnKey");
+        if (l === null) {
+          document.getElementById('warn').checked = true;
+        } else {
+          if (l == "on") {
+            document.getElementById('warn').checked = true;
+          } else {
+            document.getElementById('warn').checked = false; 
+          }
+        }
         update();
         unsaved = 0;
       }
 
+      function warnChange() {
+        if (document.getElementById('warn').checked) {
+          localStorage.setItem("warnKey", "on");
+        } else {
+          localStorage.setItem("warnKey", "off");
+        }
+      }
+
+      window.addEventListener("beforeunload", function (e) {
+        if (unsaved && document.getElementById('warn').checked) {
+          e.preventDefault();
+          e.returnValue = '';
+        }
+      });
+
       function getLines(ctx, text, maxWidth, tabAsSpace) {
         var lines = [];
-        //let newLine = String.raw`\n`;
         var paragraphs = text.split(newLine);
 
         for (var p = 0; p < paragraphs.length; p++) {
@@ -89,7 +112,6 @@
           var currentLine = [];
 
           for (var i = 0; i < words.length; i++) {
-            //let tab = String.raw`\t`;
             var phrase = words[i].split(tab);
             var word = "";
 
@@ -166,25 +188,28 @@
         }
       }
 
-      function importWarn() {
-        if (unsaved) {
-          var w = confirm("Warning: You have made changes since the last patch export. Importing a patch will overwrite the exiting data. Click ok to continue import.");
+      function importWarn(PatchOrText) {
+        if (unsaved && document.getElementById('warn').checked) {
+          var str;
+          if (PatchOrText) {
+            str = " a patch ";
+          } else {
+            str = " text ";
+          }
+          var w = confirm("Warning: You have made changes since the last patch export. Importing" + str + "will overwrite all exiting data and cannot be undone. Click ok to continue import.");
           if (w == true) {
-            importPatch();
+            if (PatchOrText == 1) {
+              importPatch();
+            } else {
+              importText();
+            }
           }
         } else {
-          importPatch();
-        }
-      }
-
-      function importWarn2() {
-        if (unsaved) {
-          var w = confirm("Warning: You have made changes since the last patch export. Importing a patch will overwrite the exiting data. Click ok to continue import.");
-          if (w == true) {
+          if (PatchOrText == 1) {
+            importPatch();
+          } else {
             importText();
           }
-        } else {
-          importText();
         }
       }
 
@@ -283,9 +308,7 @@
           const reader = new FileReader();
           var fData = "";
 
-          reader.addEventListener(
-            "load",
-            () => {
+          reader.addEventListener("load", () => {
               fData = reader.result.slice(2).split('\x0A');
               for (let x in fData) {
                 fData[x] = fData[x].replaceAll("\x09", tab);
@@ -331,10 +354,6 @@
                     }
                   }
                 }
-                if (c % 15 == 0 && c > 0) {
-                  crunched.push(pageString);
-                  pageString = "";
-                }
                 ++ c;
                 ++ i; 
               }
@@ -377,25 +396,14 @@
       }
 
       function deletePage() {
-        //if trying to delete page 1 make sure there is more than one page.
-        if (page > 0) {
-          doDeletePage();
-        } else {
-          if (pageCount > 1) {
-            doDeletePage();
-          }
-        }
-      }
-
-      function doDeletePage() {
-        var i = page;
+        if (pageCount > 1) {
+          var i = page;
           while (i < pageCount - 1) {
             if (typeof pageArray[i+1] != "undefined" || (pageArray[i+1] != "")) {
               pageArray[i] = pageArray[i+1];
             }
             ++ i;
           }
-          pageArray.pop();
           -- pageCount;
           if (page > pageCount - 1) {
             -- page;
@@ -403,7 +411,9 @@
           if (typeof pageArray[page] != "undefined") {
             document.getElementById('tArea').value = pageArray[page];
           }
+          pageArray.pop()
           update();
+        }
       }
 
       </script>
@@ -422,21 +432,24 @@
         <button onclick="nextPage()">Next Page</button><br>
       </p>
       <p>
-      <button onclick="importWarn()">Import Patch</button>
+      <button onclick="importWarn(1)">Import Patch</button>
       <button onclick="exportPatch()">Export Patch</button><br>
       </p>
       <p>
-      <button onclick="importWarn2()">Import Text</button>
+      <button onclick="importWarn(0)">Import Text</button>
       <button onclick="exportText()">Export Text</button><br>
-      Import text formatting may not be 100% correct
-      </p>
-        Formatting:<br>\n = NewLine.<br>\t = tab/indent.<br><a href="https://github.com/Doomlazer/SQ3-TUCR-EPP/wiki/eSlab-Document-Reader">More Info</a>
       </p>
       <div id="pageCount">
         Page 1 of 1.
       </div>
       <button onclick="insertPage()">Insert Page</button>
-      <button onclick="deletePage()">Delete Current Page</button>
+      <button onclick="deletePage()">Delete Current Page</button><br>
+      <p>
+      Formatting:<br>\n = NewLine.<br>\t = tab/indent.<br>
+      <input onchange="warnChange()" type="checkbox" id="warn" name="warn">
+      <label for="warn">Save Warning</label><br>
+      <a href="https://github.com/Doomlazer/SQ3-TUCR-EPP/wiki/eSlab-Document-Reader">More Info</a>
+      </p>
     </div>
   </div>
 </body>
