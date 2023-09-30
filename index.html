@@ -46,6 +46,7 @@
       var page = 0;
       var pageCount = 1;
       var unsaved = 0;
+      var eSlabWidth = 210;
       ctx.scale(2, 2);
       ctx.drawImage(img, 0, 0);
 
@@ -57,7 +58,7 @@
         ctx.drawImage(img, 0, 0);
         setTitle();
         ctx.fillStyle = "blue";
-        lineArray = getLines(ctx, document.getElementById('tArea').value, 210);
+        lineArray = getLines(ctx, document.getElementById('tArea').value, eSlabWidth, 1);
         for (var i = 0; i < lineArray.length; i++) {
           ctx.fillText(lineArray[i], 35, 40+(9*i));
         }
@@ -78,9 +79,9 @@
         unsaved = 0;
       }
 
-      function getLines(ctx, text, maxWidth) {
+      function getLines(ctx, text, maxWidth, tabAsSpace) {
         var lines = [];
-        let newLine = String.raw`\n`;
+        //let newLine = String.raw`\n`;
         var paragraphs = text.split(newLine);
 
         for (var p = 0; p < paragraphs.length; p++) {
@@ -88,14 +89,18 @@
           var currentLine = [];
 
           for (var i = 0; i < words.length; i++) {
-            let tab = String.raw`\t`;
+            //let tab = String.raw`\t`;
             var phrase = words[i].split(tab);
             var word = "";
 
             if (phrase.length > 1) {
               for (var x = 0; x < phrase.length; x++) {
                 if (phrase[x].length < 1) {
-                  word += "  ";
+                  if (tabAsSpace == 1) {
+                    word += "  ";
+                  } else {
+                    word += tab;
+                  }
                 } else {
                   word += phrase[x];
                 }
@@ -172,6 +177,17 @@
         }
       }
 
+      function importWarn2() {
+        if (unsaved) {
+          var w = confirm("Warning: You have made changes since the last patch export. Importing a patch will overwrite the exiting data. Click ok to continue import.");
+          if (w == true) {
+            importText();
+          }
+        } else {
+          importText();
+        }
+      }
+
       function importPatch() {
         var input = document.createElement('input');
         input.type = 'file';
@@ -240,6 +256,126 @@
         unsaved = 0;
       }
 
+      function exportText() {
+        var data = new Uint8Array();
+        data += "\x00"
+        data += "Document Title: " + document.getElementById('title').value + "\x0A";
+        data += "Document Author: " + document.getElementById('author').value + "\x0A";
+        data += "Document Description: " + document.getElementById('desc').value + "\x0A";
+        var i = 0;
+        while (i < pageArray.length) {
+          var tempStr = pageArray[i].replaceAll(tab, "\x09");
+          tempStr = tempStr.replaceAll(newLine, "\x0A");
+          data += "\x0A" + tempStr + "\x0c";
+          (++ i)
+        }
+        //data += "\x0A" + "ENDOFDOC" + "\x0c";
+        download(data, document.getElementById('title').value + ".txt", {type: "text/plain"});
+        //unsaved = 0;
+      }
+
+      function importText() {
+        var input = document.createElement('input');
+        input.type = 'file';
+
+        input.onchange = e => { 
+          var file = e.target.files[0];
+          const reader = new FileReader();
+          var fData = "";
+
+          reader.addEventListener(
+            "load",
+            () => {
+              fData = reader.result.slice(2).split('\x0A');
+              for (let x in fData) {
+                fData[x] = fData[x].replaceAll("\x09", tab);
+              }
+              document.getElementById('title').value = fData[0].slice(14);
+              document.getElementById('author').value = fData[1].slice(17);
+              document.getElementById('desc').value = fData[2].slice(22);
+              var i = 3;
+              pageArray = [];
+              page = 0;
+              pageCount = 1;
+              
+              //cat
+              allLines =[];
+              crunched = [];
+              while (i < fData.length ) {
+                var tLineA = getLines(ctx, fData[i], eSlabWidth, 0);
+                var i2 = 0;
+                while (i2 < tLineA.length) {
+                  allLines.push(tLineA[i2]);
+                  ++ i2;
+                }
+                ++ i;
+              }
+              var c = 0;
+              i = 1;
+              var pageString = "";
+              while (i < allLines.length) {
+                if (allLines[i] == "") {
+                  pageString += newLine;
+                } else {
+                  if (allLines[i].includes("\x0c")) {
+                    pageString += allLines[i]
+                    crunched.push(pageString);
+                    pageString = "";
+                    c = 0;
+                  } else {
+                    var width = ctx.measureText(allLines[i] + "\n").width;
+                    if (width < eSlabWidth) {
+                      pageString += allLines[i] + newLine;
+                    } else {
+                      pageString += allLines[i] + " ";
+                    }
+                  }
+                }
+                if (c % 15 == 0 && c > 0) {
+                  crunched.push(pageString);
+                  pageString = "";
+                }
+                ++ c;
+                ++ i; 
+              }
+              //create pages
+              i = 0;
+              while (i < crunched.length) {
+                var tempStr = crunched[i].replaceAll("\x09", tab);
+                document.getElementById('tArea').value = tempStr;
+                if (i < crunched.length - 1) {
+                  nextPage();
+                } else {
+                  pageArray[page] = document.getElementById('tArea').value;
+                  page = 0;
+                  document.getElementById('tArea').value = pageArray[page];
+                  update();
+                  unsaved = 0;
+                }
+                ++ i;
+              }
+            },
+            false,
+          );
+          if (file) {
+            reader.readAsText(file);
+          }
+        }
+        input.click();
+      }
+
+      function insertPage() {
+        var i = pageCount;
+          while (i >= page) {
+              pageArray[i+1] = pageArray[i];
+            -- i;
+          }
+          pageArray.pop();
+          ++ pageCount;
+          document.getElementById('tArea').value = "";
+          update();
+      }
+
       function deletePage() {
         //if trying to delete page 1 make sure there is more than one page.
         if (page > 0) {
@@ -285,14 +421,21 @@
         <button onclick="prevPage()">Prev. Page</button>
         <button onclick="nextPage()">Next Page</button><br>
       </p>
-      <button onclick="importWarn()">Import Patch</button>
-      <button onclick="exportPatch()">Export Patch</button>
       <p>
+      <button onclick="importWarn()">Import Patch</button>
+      <button onclick="exportPatch()">Export Patch</button><br>
+      </p>
+      <p>
+      <button onclick="importWarn2()">Import Text</button>
+      <button onclick="exportText()">Export Text</button><br>
+      Import text formatting may not be 100% correct
+      </p>
         Formatting:<br>\n = NewLine.<br>\t = tab/indent.<br><a href="https://github.com/Doomlazer/SQ3-TUCR-EPP/wiki/eSlab-Document-Reader">More Info</a>
       </p>
       <div id="pageCount">
         Page 1 of 1.
       </div>
+      <button onclick="insertPage()">Insert Page</button>
       <button onclick="deletePage()">Delete Current Page</button>
     </div>
   </div>
