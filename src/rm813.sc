@@ -157,6 +157,18 @@
 			(= picture 904)
 		)
 		(super init:)
+		(Display 841 0
+			p_at 220 68
+			p_font 600
+			p_width 10
+			p_color vBLACK
+		)
+		(Display 841 sDoorCodeDistance
+			p_at 77 68
+			p_font 777
+			p_width 10
+			p_color vBLACK
+		)
 		(= tdx 0)
 		(= tdy 0)
 		(ego

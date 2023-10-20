@@ -485,6 +485,11 @@
 			(33
 				(Print 29 35)
 				(ego get: iDecoderRing)
+				(if (ego has: iESlab)
+					(if (syncDoc)
+						(Print 29 37) ; your eSlab has synced a new document
+					)
+				)
 				(theGame changeScore: 10)
 				(= seconds 3)
 			)
@@ -904,4 +909,24 @@
 		(door stopUpd:)
 		(= local0 (if (== local0 1) 0 else 2))
 	)
+)
+
+(procedure (syncDoc &tmp i r)
+	(= i 0)
+	(= r 0)
+	(while (< i 12)
+		(if (== [owned i] 307) 
+			(return 0) ;prevent duplicate 307s
+		)
+		(if
+			(and
+				(== [owned i] 0)
+				(not r)
+			)
+			(= r 1)
+			(= [owned i] 307) ;upload decoder ring manual
+		)
+		(++ i)
+	)
+	(return r)
 )

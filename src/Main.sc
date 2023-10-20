@@ -671,6 +671,8 @@
 	bookmark = [3 3 3 3 3 3 3 3 3 3 3 3]
 	readerX
 	readerY
+	
+	sDoorCodeDistance
 )
 
 (procedure (NormalEgo theLoop theView)
@@ -1088,6 +1090,7 @@
 				eSlab
 		)
 		(= petView (Random 309 311))
+		(= sDoorCodeDistance (Random 3 20))
 		(if (GameIsRestarting)
 			(TheMenuBar draw:)
 			(StatusLine enable:)

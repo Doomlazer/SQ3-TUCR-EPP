@@ -36,7 +36,7 @@
 	(method (init)
 		(super init:)
 		(switch prevRoomNum
-			(813
+			(841
 				(self setScript: RoomScript)
 			)
 			(else 
@@ -54,7 +54,7 @@
 				(> (ego y?) 185)
 				(== (curRoom script?) 0) 
 			)
-			(curRoom newRoom: 813)
+			(curRoom newRoom: 841)
 		)
 	)
 	
