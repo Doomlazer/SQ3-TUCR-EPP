@@ -28,7 +28,7 @@
 	
 	(method (init)
 		(= decoderNum (Random 2 23))
-		(= code (+ 0 26)) ;bobalu	
+		(= code (Random 26 114))	
 		(super init:)
 		(ego get: iDecoderRing)
 		(switch prevRoomNum
@@ -43,7 +43,6 @@
 			)
 		)
 		(ego init:)
-		;(showCode)
 		(Decrypt)
 	)
 	
@@ -73,6 +72,7 @@
 				(= ringToggle TRUE)
 				(Decrypt)
 		 		(CryptShift)
+		 		(Decrypt)
 		 	else
 		 		(DontHave)
 			)
@@ -82,7 +82,7 @@
 				(Said 'use/keypad')
 				(Said 'enter/password')
 			)
-			(GetInput @pass 50 {Enter Password:})
+			(GetInput @pass 20 {Enter Password:})
 				(StrCpy @upper (ToUpper (Format @str 841 code)))
 			(if (not (StrCmp @upper (ToUpper @pass)))
 				(Print {Password Accepted})	
@@ -128,10 +128,10 @@
 	)
 )
 
-(procedure (Decrypt &tmp i [str 200] t f offsetNum stepper)
+(procedure (Decrypt &tmp i [str 200] t f x offsetNum stepper)
 	(= stepper 0)
 	(if ringToggle
-		(= f 600)
+		(= f 778)
 	else
 		(= f 777)
 	)
@@ -143,16 +143,11 @@
 		(= offsetNum (- offsetNum 26))
 	)
 	(curRoom drawPic: 841)
-;;;	(Display 841 code
-;;;		p_at 130 65
-;;;		p_font 600
-;;;		p_width 90
-;;;		p_color vBLACK
-;;;	)
-	(Format @str 841 code)
+	(StrCpy @str (ToUpper (Format @str 841 code)))
 	(= i 0)
 	(= t 0)
 	(while (< i (StrLen @str))
+		;(Printf {was: %s} (StrAt @str i))
 		(if
 			(or
 				(== 10 (StrAt @str i)) ;line break
@@ -163,8 +158,18 @@
 			)
 			(StrAt @str i (StrAt @str i))
 		else
-			;(= t (+ (StrAt @str i) decoderNum))
-			(= t (+ (StrAt @str i) (+ offsetNum stepper)))
+			(if ringToggle
+				(= x (+ offsetNum stepper))
+			else
+				(= x stepper)
+			)
+			(if (< x 0)
+				(= x (+ x 26))
+			)
+			(if (> x 25)
+				(= x (- x 26))
+			)
+			(= t (+ (StrAt @str i) x))
 			(if (> t 90)
 				(= t (- t 26))	
 			)
@@ -172,12 +177,15 @@
 		)
 		(++ i)
 		(++ stepper)
+		;(Printf {now: %s} (StrAt @str i))
 	)
+	;(Printf {x at: %d} (- 160 (* 8 (/ (StrLen @str) 2))))
+	;(Printf {minus: %d} (* 8 (/ (StrLen @str) 2)))	
 	(= printObj
 		(Display @str 
-			p_at 130 65
-			p_width 50
-			p_color 2 ;vWHITE
+			p_at (- 150 (/ (* (StrLen @str) 7) 2)) 65
+			;p_width 50
+			p_color 4
 			p_back 7 ;vBLACK
 			p_font f 
 		)
