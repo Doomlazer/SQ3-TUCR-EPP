@@ -674,6 +674,8 @@
 	
 	sDoorCodeDistance
 	meetSV
+	
+	slabInChute ;for store 830
 )
 
 (procedure (NormalEgo theLoop theView)

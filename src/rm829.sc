@@ -34,6 +34,9 @@
 			(821
 				(self setScript: RoomScript)
 			)
+			(830
+				(self setScript: RoomScript)
+			)
 			(else 
 				(ego posn: 150 120 loop: 1)
 			)
@@ -79,13 +82,13 @@
 ;;;			)
 ;;;			(curRoom setScript: FallDown)
 ;;;		)		
-;;;		(if
-;;;			(and
-;;;				(& (ego onControl:) $0008) ;ctlTEAL
-;;;				(== script 0)
-;;;			)
-;;;			(curRoom newRoom: 823)
-;;;		)
+		(if
+			(and
+				(& (ego onControl:) $0008) ;ctlTEAL
+				(== script 0)
+			)
+			(curRoom newRoom: 830)
+		)
 ;;;		(if
 ;;;			(and
 ;;;				(or 
@@ -126,6 +129,12 @@
 			(0
 				(HandsOff)
 				(switch prevRoomNum
+					(830 ;from store
+						(ego
+							posn: 70 40
+							setMotion: MoveTo 125 85 self
+						)
+					)
 					(828
 						(if (< tempY 187)
 							(ego

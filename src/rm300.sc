@@ -88,7 +88,6 @@
 		(button4 init:)
 		(button5 init:)
 		(self setScript: RoomScript)
-
 	)
 	
 	(method (handleEvent event)
