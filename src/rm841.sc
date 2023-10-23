@@ -57,7 +57,7 @@
 		)
 		(if
 			(and
-				(< (ego y?) 25)
+				(< (ego y?) 90)
 				(== (curRoom script?) 0) 
 			)
 			(curRoom newRoom: 840)

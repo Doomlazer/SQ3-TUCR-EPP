@@ -673,6 +673,7 @@
 	readerY
 	
 	sDoorCodeDistance
+	meetSV
 )
 
 (procedure (NormalEgo theLoop theView)
