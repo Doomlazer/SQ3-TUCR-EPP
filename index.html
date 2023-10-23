@@ -262,12 +262,14 @@
       }
 
       function exportPatch() {
+        // make sure the current page is updated in pageArray before export
+        pageArray[page] = document.getElementById('tArea').value;
+
         var data = new Uint8Array();
         data += "\x83".toString(16);
         data += "\x00" + document.getElementById('title').value;
         data += "\x00" + document.getElementById('author').value;
         data += "\x00" + document.getElementById('desc').value;
-        pageArray[page] = document.getElementById('tArea').value;
         var i = 0;
         while (i < pageArray.length) {
 
@@ -282,16 +284,21 @@
       }
 
       function exportText() {
+        // make sure the current page is updated in pageArray before export
+        pageArray[page] = document.getElementById('tArea').value;
+
         var data = new Uint8Array();
         data += "\x00"
         data += "Document Title: " + document.getElementById('title').value + "\x0A";
         data += "Document Author: " + document.getElementById('author').value + "\x0A";
         data += "Document Description: " + document.getElementById('desc').value + "\x0A";
         var i = 0;
+        data += "\x00";
         while (i < pageArray.length) {
           var tempStr = pageArray[i].replaceAll(tab, "\x09");
           tempStr = tempStr.replaceAll(newLine, "\x0A");
-          data += "\x0A" + tempStr + "\x0c";
+          //data += "\x0A" + tempStr; //+ "\x0c";
+          data += tempStr; //+ "\x0c";
           (++ i)
         }
         //data += "\x0A" + "ENDOFDOC" + "\x0c";
@@ -311,7 +318,7 @@
           reader.addEventListener("load", () => {
               fData = reader.result.slice(2).split('\x0A');
               for (let x in fData) {
-                fData[x] = fData[x].replaceAll("\x09", tab);
+                fData[x] = fData[x].replaceAll("\x09", "\t"); //tab);
               }
               document.getElementById('title').value = fData[0].slice(14);
               document.getElementById('author').value = fData[1].slice(17);
@@ -322,9 +329,9 @@
               pageCount = 1;
               
               //cat
-              allLines =[];
+              allLines = [];
               crunched = [];
-              while (i < fData.length ) {
+              while (i < fData.length) {
                 var tLineA = getLines(ctx, fData[i], eSlabWidth, 0);
                 var i2 = 0;
                 while (i2 < tLineA.length) {
@@ -333,15 +340,18 @@
                 }
                 ++ i;
               }
+              
               var c = 0;
               i = 1;
               var pageString = "";
+            
               while (i < allLines.length) {
+                ++ c;
                 if (allLines[i] == "") {
                   pageString += newLine;
                 } else {
                   if (allLines[i].includes("\x0c")) {
-                    pageString += allLines[i]
+                    pageString += allLines[i].slice(0, allLines[i].length-1);
                     crunched.push(pageString);
                     pageString = "";
                     c = 0;
@@ -352,9 +362,14 @@
                     } else {
                       pageString += allLines[i] + " ";
                     }
+              
                   }
                 }
-                ++ c;
+                if (c > 14) {
+                  crunched.push(pageString);
+                  pageString = "";
+                  c = 0;
+                }
                 ++ i; 
               }
               //create pages
