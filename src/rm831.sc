@@ -17,7 +17,7 @@
 (local
 	menuDepth
 	currentBook
-	availableBooks = [303 308 305 306 309 310]
+	availableBooks = [303 308 305 306 309 310 311 312]
 	length = 6 ; must be set to number of AvailableBooks
 )
 
