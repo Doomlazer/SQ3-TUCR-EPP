@@ -22,6 +22,7 @@
 	curPage
 	bSel = 0
 	menuLevel	
+	eraseCol = 0
 )
 
 (instance button1 of Prop
@@ -215,7 +216,7 @@
 					p_at 30 15
 					p_mode teJustLeft
 					p_font textFont
-					p_color 7 ;vlitegray
+					p_color eraseCol ;vlitegray
 				)
 				(= cycles 10)
 				(if (< itr 1)
@@ -226,9 +227,9 @@
 			(2
 				(= itr 0)
 				(Display
-					300 1
+					300 1 ;eSlab reader ver
 					p_width 200
-					p_at 30 15
+					p_at 25 15
 					p_mode teJustLeft
 					p_font textFont
 					p_color textColor
@@ -237,7 +238,7 @@
 			)
 			(3
 				(Display
-					300 2
+					300 2 ;chose document
 					p_width 200
 					p_at 30 35
 					p_mode teJustLeft
@@ -255,7 +256,7 @@
 					p_font textFont
 					p_color 
 						(if (== [owned itr] 0)
-							(if (== selected itr) 4 else 0) ;red if non-selectable, black for empty slots
+							(if (== selected itr) 4 else 7) ;red if non-selectable, grey for empty slots
 						else
 							(if (== selected itr) 2 else textColor)
 						)
@@ -294,7 +295,7 @@
 			p_font textFont
 			p_color 
 				(if (== [owned i] 0)
-					(if (== selected i) 4 else 0) ;red if non-selectable, black for empty slots
+					(if (== selected i) 4 else 7) ;red if non-selectable, grey for empty slots
 				else
 					(if (== selected i) 2 else textColor)
 				)
@@ -308,7 +309,7 @@
 	(Display
 		[owned selected] 0
 		p_width 200
-		p_at 35 15
+		p_at 35 20
 		p_mode teJustCenter
 		p_font textFont
 		p_color 15 ;textColor
