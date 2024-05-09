@@ -61,7 +61,11 @@
 		(switch (= state newState)
 			(0
 				(= saveBits
-					(Display 117 0
+					;(Display 117 0
+					(Display {Roger feels a sense of relief returning\n
+						to his own uninverse. Sure Xenon has it's\n
+						problems, but it's a hell of a lot better\n
+						than that shithole Earth!}
 						p_width 250
 						p_at 35 25
 						p_mode teJustCenter
@@ -87,7 +91,8 @@
 			)
 			(5
 				(Display 117 1 p_restore saveBits)
-				(curRoom setScript: endScript)
+				;(curRoom setScript: endScript)
+				(curRoom newRoom: 14)
 			)
 		)
 	)

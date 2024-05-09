@@ -33,7 +33,11 @@
 		(Load SOUND 93)
 		(spaceShip init:)
 		(super init:)
-		(self setScript: startShip)
+		(if completedEnding
+			(curRoom setScript: altScript)
+		else
+			(curRoom setScript: startShip)
+		)
 	)
 )
 
@@ -159,5 +163,115 @@
 	(method (init)
 		(super init:)
 		(self posn: 154 100 hide:)
+	)
+)
+
+(instance altScript of Script
+;;;	(method (doit)
+;;;		(if (and (== (self state?) 3) (== (theMusic prevSignal?) 10))
+;;;			(self cue:)
+;;;		)
+;;;		(super doit:)
+;;;	)
+	
+	(method (changeState newState)
+		(switch (= state newState)
+			(0
+				(= saveBits
+					(Display
+						{All sense of time and speed are again lost.\n
+						...It does seem to take a while though.}
+						p_width 250
+						p_at 35 80
+						p_mode teJustCenter
+						p_font 300
+						p_color vYELLOW
+						p_save
+					)
+				)
+				(Timer setReal: self 8)
+			)
+			(1
+				(Display 98 0 p_restore saveBits)
+				(= saveBits
+					(Display
+						{Finally...}
+						p_width 250
+						p_at 35 95
+						p_mode teJustCenter
+						p_font 300
+						p_color vYELLOW
+						p_save
+					)
+				)
+				(Timer setReal: self 3)
+			)
+			(2
+				(Display 98 0 p_restore saveBits)
+				(= saveBits
+					(Display
+						{...you emerge through the\n
+						back hole into the parallel universe.}
+						p_width 250
+						p_at 35 70
+						p_mode teJustCenter
+						p_font 300
+						p_color vYELLOW
+						p_save
+					)
+				)
+				(Timer setReal: self 5)
+			)
+			(3 (= seconds 1)) ;in place of doit action
+			(4
+				(Display 98 0 p_restore saveBits)
+				(spaceShip show:)
+				(curRoom overlay: 201 WIPEDOWN)
+				(Timer setCycle: self 1)
+			)
+			(5
+				(curRoom overlay: 202 WIPEDOWN)
+				(Timer setCycle: self 1)
+			)
+			(6
+				(curRoom overlay: 203 WIPEDOWN)
+				(Timer setCycle: self 1)
+			)
+			(7
+				(curRoom overlay: 204 WIPEDOWN)
+				(Timer setCycle: self 1)
+			)
+			(8
+				(curRoom overlay: 205 WIPEDOWN)
+				(Timer setCycle: self 1)
+			)
+			(9
+				(curRoom overlay: 206 WIPEDOWN)
+				(Timer setCycle: self 1)
+			)
+			(10
+				(curRoom overlay: 207 WIPEDOWN)
+				(Timer setCycle: self 1)
+			)
+			(11
+				(if (< (spaceShip cel?) (spaceShip lastCel:))
+					(spaceShip
+						setCel: (+ (spaceShip cel?) 1)
+						posn: (spaceShip x?) (- (spaceShip y?) 2)
+					)
+					(-- state)
+					(Timer setCycle: self 1)
+				else
+					(self cue:)
+				)
+			)
+			(12
+				(spaceShip hide:)
+				(Timer setReal: self 2)
+			)
+			(13
+				(curRoom newRoom: 115)
+			)
+		)
 	)
 )

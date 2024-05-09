@@ -17,6 +17,7 @@
 
 (local
 	notAPrettySight
+	notAPrettySight2
 	local1
 	printObj
 	local3
@@ -296,7 +297,7 @@
 				(= programControl TRUE)
 				(ego
 					setStep: 5 5
-					setPri: 9
+					setPri: 8 ;9
 					setCycle: 0
 					setMotion: JumpTo 199 162 self
 				)
@@ -305,18 +306,29 @@
 				(ego hide:)
 				(grind play:)
 				((= notAPrettySight (Prop new:))
-					view: 20
+					view: 35 ;20
 					setLoop: 1
-					posn: 203 176
-					setPri: 15
+					posn: 190 160 ;203 176
+					setPri: 10 ;15
 					init:
-					setCycle: Forward
+					setCycle: EndLoop ;Forward
 					ignoreActors: TRUE
 				)
+				((= notAPrettySight2 (Prop new:))
+					view: 35 ;20
+					setLoop: 2
+					posn: 190 160 ;203 176
+					setPri: 11 ;15
+					init:
+					setCycle: EndLoop ;Forward
+					ignoreActors: TRUE
+				)
+				(shredder setLoop: 2)
 				(= seconds 3)
 			)
 			(3
 				(notAPrettySight dispose:)
+				(notAPrettySight2 dispose:)
 				(grind fade:)
 				(= cycles 5)
 			)

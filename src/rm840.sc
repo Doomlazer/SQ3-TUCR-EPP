@@ -81,7 +81,7 @@
 		(super handleEvent: pEvent)
 		
 		(if (Said 'talk/vohaul')
-			(if (< (ego distanceTo: sludge) 50)
+			(if (< (ego distanceTo: sludge) 20)
 				(LocalSpeak 1 0) ;procedure (LocalSpeak who line)
 			else 
 				(LocalSpeak 0 0)	
@@ -193,10 +193,20 @@
 			(6
 				(LocalSpeak 1 15)
 				(LocalSpeak 1 16)
+				(LocalSpeak 0 25) ;fer sure
 				(LocalSpeak 1 17)
 				(LocalSpeak 0 18)
+				(LocalSpeak 1 20)
+				(LocalSpeak 1 21)
+				(ego setMotion: MoveTo 205 95 self)
+			)
+			(7
+				(Print 840 24) ;hands package for quirk
+				(ego get: iMcGuffin)
+				(LocalSpeak 1 22)
+				(LocalSpeak 1 23)
 				(HandsOn)
-				(RoomScript dispose:)
+				(RevealScript dispose:)
 			)
 		)
 	)

@@ -75,6 +75,8 @@
 	(method (changeState newState)
 		(switch (= state newState)
 			(0
+				(= completedEnding 1)
+				(= selectedSector 68) ; black hole
 				(if petActive
 					(WarpOffScreen)	
 				)

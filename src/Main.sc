@@ -632,8 +632,7 @@
 	thePostcard
 	mallardRisenFromDebris
 	
-	adSupported = 0 ;enable ads with 1 (disabled because nobody likes this feature)
-	adTimer = 600 ;time between ads
+	completedEnding
 	towed ;is roger's ship towed?
 	ticketed ;did roger buy the booth ticket on planet REN?
 	gaveGem ;traded the gem to get ship out of impound
@@ -1091,6 +1090,7 @@
 				goggles
 				petInv
 				eSlab
+				McGuffin
 		)
 		(= petView (Random 309 311))
 		(= sDoorCodeDistance (Random 3 20))
@@ -1104,6 +1104,7 @@
 			(= startingRoom 900)
 			(self newRoom: 777)
 		)
+		(ego get: 21)
 	)
 	
 	(method (doit &tmp haveMouse)
@@ -2088,6 +2089,18 @@
 		loop 1
 		cel 6
 		name "eSlab"
+	)
+)
+
+(instance McGuffin of InvItem
+	(properties
+		said '/mcguffin,package'
+		description {Right now it's just a package to deliver.}
+		owner 470
+		view 242
+		loop 1
+		cel 7
+		name "McGuffin"
 	)
 )
 

@@ -33,6 +33,7 @@
 	iGoggles				;19
 	iPetInv					;20
 	iESlab					;21
+	iMcGuffin				;22
 )
 
 ;Locales and Regions
@@ -73,6 +74,7 @@
 	shipREN_LAND
 	shipQUARKS
 	shipMALL
+	shipBLACKHOLE
 )
 
 ;Ship shields

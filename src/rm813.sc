@@ -183,7 +183,7 @@
 			(814
 				(ego posn: 163 151 loop: 3)
 			)
-			(840
+			(841
 				(self setScript: exitScript)
 			)
 			(else
@@ -306,3 +306,4 @@
 		)
 	)
 )
+

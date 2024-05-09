@@ -90,6 +90,7 @@
 					(== global208 2)
 					(!= shipLocation shipSPACE)
 					(not (== currentSector 62)) ;monolithburger
+					(not (== currentSector 68)) ;Black hole
 					(not (== currentSector 70)) ;quirks bar
 					(not (== currentSector 86)) ;MALL
 					(not twoGuysOnBoard)
@@ -323,6 +324,7 @@
 						((== currentSector 27) {ORBITING PLANET REN})
 						((== currentSector 39) {ORBITING PLANET PHLEEBHUT})
 						((== currentSector 62) {APPROACHING MONOLITH BURGER})
+						((== currentSector 68) {APPROACHING BLACK HOLE})
 						((== currentSector 69) {ORBITING PESTULON})
 						((== currentSector 70) {APPROACHING QUIRK'S BAR})
 						((== currentSector 82) {ORBITING PLANET ORTEGA})
@@ -340,6 +342,7 @@
 					((== currentSector 27) (= shipLocation shipREN_ORBIT))
 					((== currentSector 39) (= shipLocation shipPHLEEBHUT_ORBIT))
 					((== currentSector 62) (= global208 0) (= saveDisabled 0) (curRoom newRoom: 27)) ;MB
+					((== currentSector 68) (= global208 0) (= saveDisabled 0) (curRoom newRoom: 99)) ;BLACK HOLE
 					((== currentSector 69) (= shipLocation shipPESTULON_ORBIT))
 					((== currentSector 70) (= global208 0) (= saveDisabled 0) (curRoom newRoom: 27)) ;Quirk's
 					((== currentSector 82) (= shipLocation shipORTEGA_ORBIT))

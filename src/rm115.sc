@@ -29,7 +29,11 @@
 		(Load VIEW 801)
 		(Load SOUND 93)
 		(super init:)
-		(self setScript: startShip)
+		(if completedEnding
+			(self setScript: altScript)
+		else
+			(self setScript: startShip)
+		)
 	)
 )
 
@@ -94,7 +98,11 @@
 		(super doit:)
 		(if (< local1 local2)
 			(self dispose:)
-			(startShip cue:)
+			(if completedEnding
+				(altScript cue:)
+			else
+				(startShip cue:)
+			)
 		else
 			(-= local1 local2)
 			(= local3 (mod (+ local3 local4 360) 360))
@@ -105,6 +113,49 @@
 				(++ cel)
 			)
 			(self stopUpd:)
+		)
+	)
+)
+
+(instance altScript of Script
+;;;	(method (doit)
+;;;		(if (and (== (self state?) 1) (== (theMusic prevSignal?) 20))
+;;;			(self cue:)
+;;;		)
+;;;		(super doit:)
+;;;	)
+	
+	(method (changeState newState)
+		(switch (= state newState)
+			(0
+				(= saveBits
+					(Display
+						{You cut the engines to sub-lightspeed as\n
+						you near planet Earth.}
+						p_width 250
+						p_at 35 140
+						p_mode teJustCenter
+						p_font 300
+						p_color vYELLOW
+						p_save
+					)
+				)
+				(Timer setReal: self 4)
+			)
+			(1 (= seconds 1)) ;in place of doit
+			(2
+				(Display 115 0 p_restore saveBits)
+				(Timer setReal: self 2)
+			)
+			(3
+				(spaceShip init:)
+			)
+			(4
+				(Timer setReal: self 2)
+			)
+			(5
+				(curRoom newRoom: 116)
+			)
 		)
 	)
 )

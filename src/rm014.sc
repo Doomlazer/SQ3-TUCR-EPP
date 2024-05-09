@@ -89,6 +89,7 @@
 							(== shipLocation shipREN_ORBIT)
 							(== shipLocation shipQUARKS)
 							(== shipLocation shipMALL)
+							(== shipLocation shipBLACKHOLE)
 							(== shipLocation shipAQUAVELVEETA_ORBIT)
 						)
 						(wallA init: setLoop: 4 setCel: 0)
@@ -127,6 +128,7 @@
 							(== shipLocation shipREN_ORBIT)
 							(== shipLocation shipQUARKS)
 							(== shipLocation shipMALL)
+							(== shipLocation shipBLACKHOLE)
 						)
 						(wallA init: setLoop: 4 setCel: 0)
 					)
@@ -252,6 +254,19 @@
 				(= global206 3)
 				(= global179 1)
 				(= global208 2)
+			)
+			(117 ;return from black hole
+				(wallA init: setLoop: 4 setCel: 0)
+				(SitDown)
+				(= global208 2)
+				(= shipLocation shipBLACKHOLE)
+				(if quarkAttacks
+					(= quarksGoonsAttacking 1)
+					(= global175 20) ;countdown to attack
+					(= global209 3) ;current ship speed
+					(= global218 1) ;needed for attack speed enable.
+					(= global208 2) ;needed for attack speed enable
+				)
 			)
 			(800 ;Aquavelvetta
 				(wallA init: setLoop: 4 setCel: 0)

@@ -198,6 +198,7 @@
 							(!= scanningSector 27)
 							(!= scanningSector 39)
 							(!= scanningSector 62)
+							(!= scanningSector 68) ;black hole
 							(!= scanningSector 69)
 							(!= scanningSector 70)
 							(!= scanningSector 82)
@@ -210,6 +211,13 @@
 						(and
 							(== scanningSector 69)
 							(not forceBeamDestroyed)
+						)
+						(self changeState: 2)
+					)
+					(
+						(and
+							(== scanningSector 68)
+							(not completedEnding) ;hide black hole
 						)
 						(self changeState: 2)
 					)
@@ -279,6 +287,7 @@
 						(cond 
 							((== scanningSector 23) 401)
 							((== scanningSector 27) 401)
+							((== scanningSector 68) 401)
 							((== scanningSector 70) 401)
 							((== scanningSector 86) 401)
 							(else 50)
@@ -288,6 +297,7 @@
 							((== scanningSector 82) 1)
 							((== scanningSector 39) 2)
 							((== scanningSector 62) 3)
+							((== scanningSector 68) 8)
 							((== scanningSector 69) 5)
 							((== scanningSector 23) 6)
 							((== scanningSector 27) 1)
@@ -326,6 +336,9 @@
 							)
 							((== scanningSector 62)
 								{NAME:\n MONOLITH BURGER FAST FOOD DIVE\nSECTOR: 62\n\nA FINITE\nNUMBER SERVED}
+							)
+							((== scanningSector 68)
+								{NAME:\n Unknown\nSECTOR: 68\nUnlisted black hole}
 							)
 							((== scanningSector 69)
 								{NAME:\n PESTULON\nSECTOR: 69\nHABITANTS: UNKNOWN\nSURFACE UNCHARTED.\nIT FIGURES...}

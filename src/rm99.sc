@@ -43,7 +43,11 @@
 			((= [spiralStar i] (SpiralStar new:)) init:)
 		)
 		(theMusic number: 94 loop: -1 play:)
-		(curRoom setScript: startShip)
+		(if completedEnding
+			(curRoom setScript: altScript)
+		else
+			(curRoom setScript: startShip)
+		)
 	)
 )
 
@@ -168,7 +172,11 @@
 			(1 (= local5 0))
 			(2
 				(= local7 0)
-				(startShip cue:)
+				(if completedEnding
+					(altScript cue:)
+				else
+					(startShip cue:)
+				)
 			)
 		)
 		(if local6
@@ -216,5 +224,70 @@
 			)
 		)
 		(self doit:)
+	)
+)
+
+(instance altScript of Script
+	(method (changeState newState)
+		(switch (= state newState)
+			(0
+				(Timer setReal: self 5)
+			)
+			(1
+				(= local7 1)
+				(theMusic number: 93 loop: -1 play:)
+				(Timer setReal: self 2)
+			)
+			(2
+				(= local6 1)
+			)
+			(3
+				(Timer setReal: self 1)
+			)
+			(4
+				(= local8 4)
+				(Timer setReal: self 1)
+			)
+			(5
+				(if local8
+					(-- state)
+					(Timer setCycle: self 1)
+				else
+					(self cue:)
+				)
+			)
+			(6
+				(= saveBits
+					(Display
+						{Once again you travel through the\n
+						black hole, but it's not quite as\n
+						thrilling as the first time.}
+						p_width 250
+						p_at 35 65
+						p_mode teJustCenter
+						p_font 300
+						p_color vYELLOW
+						p_save
+					)
+				)
+				(Timer setReal: self 4)
+			)
+			(7
+				(= local8 5)
+				(Timer setReal: self 1)
+			)
+			(8
+				(if (> local8 1)
+					(-- state)
+					(Timer setCycle: self 3)
+				else
+					(self cue:)
+				)
+			)
+			(9
+				(Display 99 0 p_restore saveBits)
+				(curRoom newRoom: 98)
+			)
+		)
 	)
 )
