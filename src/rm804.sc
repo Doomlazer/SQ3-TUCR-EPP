@@ -339,7 +339,7 @@
 			)
 			(401
 				(Print 804 17)
-				(EgoDead 0 1 1 18)
+				(EgoDead 0 1 1 28)
 				(= inCartoon FALSE)
 				(HandsOn)
 			)

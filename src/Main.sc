@@ -1233,21 +1233,23 @@
 					(= deathMessage {As your life sputters to a close, you decide to cut down on desserts.})
 				)
 				;no 16-19
-				(16
-					(= deathTitle {It's a Bird...})
-					(= deathMessage {What are the chances of something like that even happening? Hope you remmebered to save.})
-				)
-				(17 ;falling on Planet REN
-					(= deathTitle {Hopefully, Nobody Heard You Scream!})
-					(= deathMessage {You'd think you'd eventually learn to be more careful around ledges. Then again, you never cease to amaze.})
-				)
-				(18 ;frozen in space from teleporter on REN
-					(= deathTitle {Brrr... It's Cold Up Here})
-					(= deathMessage {Looks like Roger finally learned to "chill" out! Seriously though, you asphyxiated long before you even started to freeze.})
-				)
+				; normally 16-19 do not exist, but the game calls them for several deaths, triggering the generic 'else' message
 				(20
 					(= deathTitle {Be More Careful With Explosives})
 					(= deathMessage {Didn't mom always tell you not to play with firecrackers?})
+				)
+				;new TUCR deaths
+				(26
+					(= deathTitle {It's a Bird...})
+					(= deathMessage {What are the chances of something like that even happening? Hope you remmebered to save.})
+				)
+				(27 ;falling on Planet REN
+					(= deathTitle {Hopefully, Nobody Heard You Scream!})
+					(= deathMessage {You'd think you'd eventually learn to be more careful around ledges. Then again, you never cease to amaze.})
+				)
+				(28 ;frozen in space from teleporter on REN
+					(= deathTitle {Brrr... It's Cold Up Here})
+					(= deathMessage {Looks like Roger finally learned to "chill" out! Seriously though, you asphyxiated long before you even started to freeze.})
 				)
 				(else
 					(= deathTitle {Congratulations On Your Recent Death !})

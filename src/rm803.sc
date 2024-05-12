@@ -127,7 +127,7 @@
 				(ohnoScript changeState: 0)
 			)
 			(1
-				(EgoDead 0 0 0 17)
+				(EgoDead 0 0 0 27)
 			)
 		)
 	)
