@@ -97,7 +97,13 @@
 		(switch (= state newState)
 			(0
 				(cond 
-					((== prevRoomNum 93) (ego posn: 245 1 setMotion: MoveTo 245 30 self))
+					((== prevRoomNum 93)
+						(if (== killedElmo 1)
+							(++ killedElmo)
+							(= state 99)
+						)
+						(ego posn: 245 1 setMotion: MoveTo 245 30 self)
+					)
 					((== prevRoomNum 90)
 						(HandsOff)
 						(ego posn: 158 190 setMotion: MoveTo 158 183 self)
@@ -112,6 +118,12 @@
 				(and (== prevRoomNum 90) (not scumSoftAlerted))
 					(fink1 setScript: finkScript)
 				)
+			)
+			(100
+				(rm91 south: 90)
+				(ShakeScreen 3 3)
+				(HandsOn)
+				(Print 93 20)	
 			)
 		)
 	)

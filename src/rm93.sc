@@ -24,6 +24,9 @@
 	)
 	
 	(method (init)
+		(if killedElmo
+			(= picture 87)
+ 		)
 		(super init:)
 		(self setRegions: SCUMSOFT)
 		(Load VIEW 131)
@@ -68,13 +71,21 @@
 			(= elmoAtDesk FALSE)
 			(trash1 myNerd: 0)
 			(if ((inventory at: iKeycard) ownedBy: curRoomNum)
-				(keycard init:)
+				(if killedElmo
+					; key card is now impossible to get
+				else
+					(keycard init:)
+				)
 			)
 		else
-			(= elmoAtDesk TRUE)
-			(elmo init:)
-			(trash1 setCel: (= [trashVaporized 0] 0))
-			(trash1 vaporized: 0)
+			(if killedElmo
+				;; ded	
+			else
+				(= elmoAtDesk TRUE)
+				(elmo init:)
+				(trash1 setCel: (= [trashVaporized 0] 0))
+				(trash1 vaporized: 0)
+			)
 		)
 		(self setScript: rmScript)
 	)
@@ -88,14 +99,34 @@
 						(if elmoAtDesk
 							(Print 93 0)
 						else
-							(Print 93 1)
-						)
+							(if killedElmo
+								(Print 93 19)
+							else
+								(Print 93 1)
+							)
+						)	
 					)
 					((Said 'look/man,boss')
 						(if (and elmoAtDesk (ego inRect: 225 86 320 149))
 							(Print 93 2)
 						else
 							(Print 93 3)
+						)
+					)
+					((Said 'give/package')
+						(if (ego has: iPackage)
+							(if elmoAtDesk
+								(if (ego inRect: 225 86 320 149)
+									(ego put: iPackage 93)
+									(Print 93 18)
+									(Print 93 17)
+									(= killedElmo 1)
+								else
+									(NotClose)
+								)
+							else
+								(Print 93 16)
+							)
 						)
 					)
 					((Said '*/complex')
