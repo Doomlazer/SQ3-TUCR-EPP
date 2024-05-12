@@ -83,7 +83,11 @@
 				(localproc_03be MarkHead 1)
 				(= markSpeaking 1)
 				(= printObj
-					(Print 22 2 #at 10 25 #width 100 #font 600 #dispose)
+					(if killedElmo
+						(Print 22 3 #at 10 25 #width 100 #font 600 #dispose)
+					else
+						(Print 22 2 #at 10 25 #width 100 #font 600 #dispose)
+					)
 				)
 				(= seconds 12)
 			)

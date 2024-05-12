@@ -45,7 +45,27 @@
 					setMotion: MoveTo 300 121 self
 				)
 			)
-			(120
+			(95 ; KilledElmo skip arena
+				(User canInput: FALSE canControl: FALSE)
+				(= inCartoon TRUE)
+				(Load SOUND 38)
+				(Load SOUND 40)
+				(addToPics add: ship1 ship2 ship3 ship4 ship5)
+				(addToPics doit:)
+				(ego
+					view: 68
+					setLoop: -1
+					setCel: -1
+					setStep: 6 3
+					setPri: 14
+					posn: 52 195 ;176
+					init:
+				)
+				(Scott init: setScript: ScottScript)
+				(Mark init: setMotion: Follow Scott 10)
+				(self setScript: RunAway)
+			)
+			(120 ; from arena
 				(User canInput: FALSE canControl: FALSE)
 				(= inCartoon TRUE)
 				(Load SOUND 38)
@@ -144,7 +164,11 @@
 				(ego setMotion: MoveTo 200 182 self)
 			)
 			(1
-				(balloon init: stopUpd:)
+				(if killedElmo
+					(Print 95 39)
+				else 
+					(balloon init: stopUpd:)
+				)
 				(ego setMotion: MoveTo 261 182 self)
 			)
 			(2
@@ -160,6 +184,9 @@
 				(Mark dispose:)
 				(ship setCel: 1)
 				(= seconds 5)
+				(if killedElmo
+					(Print 95 40)
+				)
 			)
 			(5
 				(ship setMotion: MoveTo 228 115 self)
@@ -172,7 +199,11 @@
 			)
 			(8
 				(= local0 1)
-				(balloon dispose:)
+				(if killedElmo
+					;nothing
+				else
+					(balloon dispose:)
+				)
 			)
 			(9
 				(warpOut play:)
@@ -220,7 +251,7 @@
 		(self
 			view: 195
 			loop: 0
-			posn: 52 144
+			posn: 52 190 ;144
 			setCycle: Walk
 			setStep: 6 3
 			setPri: 14
@@ -236,7 +267,7 @@
 		(self
 			view: 196
 			loop: 0
-			posn: 52 144
+			posn: 52 200 ;144
 			setCycle: Walk
 			setStep: 6 3
 			setPri: 14

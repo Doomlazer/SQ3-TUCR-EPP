@@ -14,6 +14,7 @@
 
 (public
 	bug 0
+	cage 1
 )
 
 (local
@@ -32,6 +33,27 @@
 	(method (delete)
 		(super delete:)
 		(DisposeScript 511)
+	)
+)
+
+(instance cage of Actor
+	(method (init)
+		(super init:)
+		(self
+			view: 833
+			loop: 0
+			cel: 0
+			posn: (if (== cageX 1000) (ego x?) (ego y?) else cageX cageY)
+		)
+		(= cageX (ego x?))
+		(= cageY (ego y?))
+		(Printf {cageX: %d, cageY: %d, ego X: %d, ego Y: %d} cageX cageY (ego x?) (ego y?))
+	)
+	
+	(method (delete)
+		(super delete:)
+		(= cageX 1000)
+		(= cageY 1000)
 	)
 )
 

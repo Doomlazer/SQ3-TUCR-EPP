@@ -410,8 +410,12 @@
 				(Print 95 31 #at -1 20 #width 280)
 				(Print 95 32)
 				(Print 95 33 #at -1 20 #width 280)
-				(bridgeFront setCycle: BegLoop self)
-				(bridgeSound play:)
+				(if killedElmo
+					(= state 99)
+				else
+					(= state 119)
+				)
+				(self cue:)	
 			)
 			(5
 				(if (!= (bridgeSound prevSignal?) -1)
@@ -608,6 +612,28 @@
 				(ego put: 12 -1 put: 13 -1 put: 11 -1 put: 15 -1)
 				(curRoom newRoom: 121)
 			)
+			(100
+				;(Print 95 34 #at -1 20 #width 280)
+				(Print 95 38)
+				(mrScott
+					ignoreControl: -1
+					setMotion: MoveTo 170 170
+				)
+				(mrMark 
+					ignoreControl: -1
+					setMotion: MoveTo 150 160
+				)
+				(ego setMotion: MoveTo 160 180 self)
+			)
+			(101
+				(curRoom newRoom: 94)
+			)
+			(120
+				(bridgeFront setCycle: BegLoop self)
+				(bridgeSound play:)
+				(= state 4) ; back to normal
+			)
+			
 		)
 	)
 )

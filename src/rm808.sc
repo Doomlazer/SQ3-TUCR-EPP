@@ -34,6 +34,27 @@
 	greetCust
 	choice
 	toldAboutDisruptor
+	queueGivePackage
+)
+
+(procedure (DoGivePackage)
+	(ego put: iPackage 808)
+	(= queueGivePackage 0)
+	(Print
+		808 67
+		#title {Quirk}
+		#mode teJustLeft
+	)
+	(Print
+		808 68
+		#title {Quirk}
+		#mode teJustLeft
+	)
+	(Print
+		808 69
+	)
+	(= buckazoids (+ buckazoids 300))
+	(= killedQuirk 1)
 )
 
 (procedure (buyPTDlocal cost &tmp ch [strb 50])
@@ -95,13 +116,21 @@
 		(3
 			(if quirkJobKnown
 				(= i 0)
-				(if (ego has: 18)
-					(while (< i 2)
-						(Print 808 (+ 48 i) #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))
-						(++ i)					
+				(if (ego has: iPackage)
+					(Print
+						808 70 ;come back with my property
+						#title {Quirk}
+						#mode teJustLeft
 					)
 				else
-					(Print 808 50 #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))
+					(if (ego has: iTime_Disruptor)
+						(while (< i 2)
+							(Print 808 (+ 48 i) #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))
+							(++ i)					
+						)
+					else
+						(Print 808 50 #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))
+					)
 				)
 			else
 				(while (< i 4)
@@ -304,6 +333,27 @@
 					)
 					((Said 'open,close/door') (Print 808 11 #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60)))
 					((Said 'call,converse/quark') (Print 810 14))
+					((Said 'give/package')
+						(if (ego has: iPackage)
+							(if standingUp
+								(Print 808 12)	
+							else
+								(if (and 
+										(== (quark loop?) 0)
+										(>= (quark x?) 50)
+									)
+									(DoGivePackage)	
+								else
+									(Print 808 66) ;You wave Quirk over to where you're seated.
+									(= queueGivePackage 1)
+									(= greetCust 0)
+									(quarkScript changeState: 0)		
+								)
+							)
+						else
+							(DontHave)
+						)
+					)
 					((Said 'call,converse/clerk,bartender,quirk,waiter')
 						(if standingUp
 							(Print 808 12)	
@@ -549,7 +599,14 @@
 			(4
 				(= global206 3)
 				(= inCartoon 0)
-				(curRoom newRoom: 14)
+				;handle quirk expoloeds
+				(if (= killedQuirk 1)
+					(++ killedQuirk)
+					(cast eachElementDo: #dispose)
+					(curRoom setScript: killQuirkScript)
+				else
+					(curRoom newRoom: 14)
+				)
 			)
 		)
 	)
@@ -598,113 +655,6 @@
 				(HandsOn)
 				(client setScript: 0)
 			)
-		)
-	)
-)
-
-
-
-(instance AlienScript of Script
-	(properties)
-	
-	(method (changeState newState)
-		(switch (= state newState)
-			(0 (= seconds (Random 3 10)))
-			(1
-				(if
-				(or local2 (!= (ego mover?) 0) (!= (rm808 script?) 0))
-					(self changeState: 4)
-				else
-					(= cycles 2)
-				)
-			)
-			(2
-				(= local2 1)
-				(switch (= local7 (Random 0 4))
-					;(0 (al1 setCycle: Forward))
-					(1 (arm setCycle: Forward))
-					(2 (tail setCycle: Forward))
-					(3 (sa2 setCycle: Forward))
-					(4 (sa3Mouth setCycle: Forward))
-				)
-				(= seconds 3)
-			)
-			(3
-				(switch local7
-					;(0 (al1 setCycle: 0 stopUpd:))
-					(1 (arm setCycle: 0 stopUpd:))
-					(2 (tail setCycle: 0 stopUpd:))
-					(3 (sa2 setCycle: 0 stopUpd:))
-					(4
-						(sa3Mouth setCycle: 0 stopUpd:)
-					)
-				)
-				(= local2 0)
-				(= cycles 2)
-			)
-			(4 (= cycles 2))
-			(5 (self changeState: 1))
-		)
-	)
-)
-
-(instance sa1Script of Script
-	(properties)
-	
-	(method (changeState newState)
-		(switch (= state newState)
-			(0 (= seconds (Random 1 5)))
-			(1
-				(if
-				(or local2 (!= (ego mover?) 0) (!= (rm808 script?) 0))
-					(self changeState: 13)
-				else
-					(= cycles 2)
-				)
-			)
-			(2
-				(= local2 1)
-				(switch (Random 1 3)
-					(1 (self changeState: 3))
-					(2 (self changeState: 6))
-					(3 (self changeState: 9))
-				)
-			)
-			(3
-				(sa1 setLoop: 0 setCycle: EndLoop)
-				(= seconds 3)
-			)
-			(4 (sa1 setCycle: BegLoop self))
-			(5 (self changeState: 12))
-			(6
-				(sa1 setLoop: 1 setCycle: EndLoop self)
-			)
-			(7
-				(sa1 setLoop: 2 setCycle: Forward)
-				(= seconds 3)
-			)
-			(8
-				(sa1 setLoop: 0)
-				(self changeState: 12)
-			)
-			(9
-				(sa1 setLoop: 3 setCycle: EndLoop self)
-			)
-			(10
-				(sa1 setLoop: 4 setCycle: Forward)
-				(= seconds 3)
-			)
-			(11
-				(sa1 setLoop: 0)
-				(self changeState: 12)
-			)
-			(12
-				(sa1 setLoop: 0 setCycle: 0 stopUpd:)
-				(= local2 0)
-				(= seconds (Random 10 20))
-			)
-			(13 (= cycles 2))
-			(14 (self changeState: 1))
 		)
 	)
 )
@@ -830,11 +780,22 @@
 				(if standingUp
 					(= seconds (Random 2 15))
 				else
-					(if greetCust
-						(= seconds (Random 2 15))
-					else
-						(++ greetCust)
-						(quark setScript: quarkTalkScript)
+					(if (ego has: iPackage)
+						(Print
+							808 65 ; did you get my stolen property?
+							#title {Quirk}
+							#mode teJustLeft
+						)
+						(if queueGivePackage
+							(DoGivePackage)
+						)
+					else 
+						(if greetCust
+							(= seconds (Random 2 15))
+						else
+							(++ greetCust)
+							(quark setScript: quarkTalkScript)
+						)
 					)
 				)
 			)
@@ -929,136 +890,6 @@
 	)
 )
 
-(instance al3 of PicView
-	(properties
-		y 137
-		x 11
-		view 43
-		loop 3
-		priority 10
-	)
-)
-
-(instance al4 of PicView
-	(properties
-		y 137
-		x 69
-		view 43
-		loop 4
-	)
-)
-
-(instance al5 of PicView
-	(properties
-		y 121
-		x 95
-		view 43
-		loop 4
-		cel 1
-	)
-)
-
-(instance slop of PicView
-	(properties
-		y 171
-		x 22
-		view 43
-		loop 7
-		priority 15
-		signal ignrAct
-	)
-)
-
-(instance sa3 of PicView
-	(properties
-		y 145
-		x 145
-		view 53
-		loop 6
-		priority 14
-	)
-)
-
-(instance arm of Prop
-	(properties)
-	
-	(method (init)
-		(super init:)
-		(self
-			view: 43
-			setLoop: 5
-			setCel: 0
-			x: 70
-			y: 128
-			setPri: 10
-		)
-	)
-)
-
-(instance tail of Prop
-	(properties)
-	
-	(method (init)
-		(super init:)
-		(self
-			view: 43
-			setLoop: 6
-			setCel: 0
-			x: 123
-			y: 125
-			setPri: 8
-		)
-	)
-)
-
-(instance sa1 of Prop
-	(properties)
-	
-	(method (init)
-		(super init:)
-		(self
-			view: 53
-			setLoop: 0
-			setCel: 0
-			x: 88
-			y: 160
-			setPri: 14
-		)
-	)
-)
-
-(instance sa2 of Prop
-	(properties)
-	
-	(method (init)
-		(super init:)
-		(self
-			view: 53
-			setLoop: 5
-			setCel: 0
-			x: 118
-			y: 151
-			setPri: 14
-		)
-	)
-)
-
-(instance sa3Mouth of Prop
-	(properties)
-	
-	(method (init)
-		(super init:)
-		(self
-			view: 53
-			setLoop: 7
-			setCel: 0
-			x: 141
-			y: 142
-			setPri: 15
-		)
-	)
-)
-
 (instance chairMan of Prop
 	(properties)
 	
@@ -1071,15 +902,6 @@
 			setPri: 6
 			ignoreActors: 1
 		)
-	)
-)
-
-(instance balloon of Prop
-	(properties)
-	
-	(method (init)
-		(super init:)
-		(self view: 64 setLoop: 1 setCel: 0 ignoreActors: 1)
 	)
 )
 
@@ -1167,4 +989,62 @@
 		(++ i)
 	)
 	(return r)
+)
+
+(instance shipLeaving of Actor
+	(properties)
+)
+
+(instance explode of Actor
+)
+
+(instance killQuirkScript of Script
+	(properties)
+	
+	(method (changeState newState)
+		(switch (= state newState)
+			(0
+				(ship 
+					view: 52
+					loop: 1
+					cel: 2
+					posn: 250 120
+					setPri: 4
+					init:
+				)
+				(curRoom drawPic: 26)
+				(shipLeaving
+					view: 52
+					loop: 1
+					cel: 2
+					posn: 250 120
+					setPri: 4
+					setCycle: EndLoop
+					setStep: 3 1
+					setMotion: MoveTo 150 80 self
+					init:
+				)
+			)
+			(1
+				(ShakeScreen 1 1)
+				(explode
+					posn: 185 125
+					view: 832
+					loop: 0
+					cel: 0
+					setCycle: EndLoop
+					init:
+				) 
+				(shipLeaving
+					setStep: 1 1
+					setCycle: 0
+					setMotion: MoveTo 70 50 self
+				)
+			)
+			(2
+				(Print 808 64)
+				(curRoom newRoom: 14)
+			)
+		)
+	)
 )

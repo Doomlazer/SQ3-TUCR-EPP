@@ -673,8 +673,14 @@
 	
 	sDoorCodeDistance
 	meetSV
+	killedQuirk
+	killedElmo
 	
 	slabInChute ;for store 830
+	
+	cageHasBug
+	cageX = 1000
+	cageY = 1000
 )
 
 (procedure (NormalEgo theLoop theView)
@@ -1090,7 +1096,8 @@
 				goggles
 				petInv
 				eSlab
-				McGuffin
+				Package
+				Trap
 		)
 		(= petView (Random 309 311))
 		(= sDoorCodeDistance (Random 3 20))
@@ -1104,7 +1111,7 @@
 			(= startingRoom 900)
 			(self newRoom: 777)
 		)
-		(ego get: 21)
+		(ego get: 21 22 iTrap)
 	)
 	
 	(method (doit &tmp haveMouse)
@@ -1355,7 +1362,21 @@
 					 	else
 					 		(DontHave)
 						)
-					)	
+					)
+					((Said 'get/trap') ; Fallback if not in a bug region
+						(if (ego has: iTrap)
+							(AlreadyDone)
+						else
+							(Print 0 47) ; not here to take
+						)
+					)
+					((Said 'drop,place,set/trap') ; Fallback if not in a bug region
+						(if (ego has: iTrap)
+							(Print 0 48)
+						else
+							(DontHave)
+						)
+					)
 					((Said 'remove,take[<off]/goggles')
 						(if (ego has: iGoggles)
 							(Print 800 7)
@@ -2092,15 +2113,27 @@
 	)
 )
 
-(instance McGuffin of InvItem
+(instance Package of InvItem
 	(properties
-		said '/mcguffin,package'
-		description {Right now it's just a package to deliver.}
+		said '/package'
+		description {A package intended for Quirk.}
 		owner 470
 		view 242
 		loop 1
 		cel 7
-		name "McGuffin"
+		name "Suspicious package"
+	)
+)
+
+(instance Trap of InvItem
+	(properties
+		said '/cage,trap'
+		description {The trap's patented one-way force field technology allow things to enter, but not leave. They might even live a while in there.}
+		owner -1
+		view 242
+		loop 1
+		cel 8
+		name "A small trap"
 	)
 )
 

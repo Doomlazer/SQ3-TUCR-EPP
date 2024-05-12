@@ -33,7 +33,8 @@
 	iGoggles				;19
 	iPetInv					;20
 	iESlab					;21
-	iMcGuffin				;22
+	iPackage				;22
+	iTrap					;23
 )
 
 ;Locales and Regions

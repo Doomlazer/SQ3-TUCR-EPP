@@ -258,23 +258,31 @@
 		(switch (event type?)
 			(saidEvent
 				(cond 
-					((Said 'insert/buckazoid')
-						(ResetScore)
-						(= isPlaying 1)
-						(ego
-							setMotion: 0
-							setCycle: Walk
-							setPri: 13
-							x: 160
-							y: 40
+					(
+						(or
+							(Said 'insert/buckazoid')
+							(Said 'play/game')
 						)
-						(DrawPic 814 0) ;-1) ;dpOPEN_INSTANTLY
-						(curRoom setScript: levelChangeScript)
+						(if (> buckazoids 0)
+							(-- buckazoids)
+							(ResetScore)
+							(= isPlaying 1)
+							(ego
+								setMotion: 0
+								setCycle: Walk
+								setPri: 13
+								x: 160
+								y: 40
+							)
+							(DrawPic 814 0) ;-1) ;dpOPEN_INSTANTLY
+							(curRoom setScript: levelChangeScript)
+						)
 					)
 					((or (Said 'disembark,quit[/game,device]') (Said '/bye'))
 						(= saveDisabled FALSE)
 						(= inCartoon FALSE)
 						(theGame setSpeed: prevSpeed) ;restore old speed
+						(HandsOn)
 						(curRoom newRoom: 804)
 					)
 				)

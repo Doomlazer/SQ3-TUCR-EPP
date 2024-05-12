@@ -344,7 +344,11 @@
 								{NAME:\n PESTULON\nSECTOR: 69\nHABITANTS: UNKNOWN\nSURFACE UNCHARTED.\nIT FIGURES...}
 							)
 							((== scanningSector 70)
-								{NAME:\n QUIRK's BAR\nSECTOR: 70\nHABITANTS: \nVILE SCUMM\nOVERPRICED DRINKS.\nGAMBLING.}
+								(if killedQuirk
+									{NAME:\n QUIRK's BAR\nSECTOR: 70\nCLOSED INDEFINITELY}
+								else
+									{NAME:\n QUIRK's BAR\nSECTOR: 70\nHABITANTS: \nVILE SCUMM\nOVERPRICED DRINKS.\nGAMBLING.}
+								)
 							)
 							((== scanningSector 82)
 								{NAME:\n PLANET ORTEGA\nSECTOR: 82\nHABITANTS: UNKNOWN\nVOLCANIC CRATER-STREWN\nSURFACE}
@@ -417,10 +421,19 @@
 			)
 			(1
 				(= temp0
-					(if (== scanningSector currentSector)
-						{COURSE ALREADY ACHIEVED}
+					(if
+						(and
+							(== scanningSector 70) ;quarks
+							killedQuirk
+						)
+						{LOCATION UNAVAILABLE}
 					else
-						{STANDBY\nCALCULATING COURSE}
+						(if (== scanningSector currentSector)
+							{COURSE ALREADY ACHIEVED}
+						else
+						
+							{STANDBY\nCALCULATING COURSE}
+						)
 					)
 				)
 				(if (!= scanningSector currentSector)
@@ -441,7 +454,11 @@
 						dsSAVEPIXELS
 					)
 				)
-				(if (== temp0 {COURSE ALREADY ACHIEVED})
+				(if 
+					(or 
+						(== temp0 {COURSE ALREADY ACHIEVED})
+						(== temp0 {LOCATION UNAVAILABLE})
+					)
 					(scanBut state: 0 cel: 2 draw:)
 					(courseBut state: 0 cel: 1 draw:)
 					(returnBut state: 0 cel: 1 draw:)
@@ -532,7 +549,14 @@
 	)
 	
 	(method (doit)
-		(if (!= scanningSector currentSector)
+		(if
+			(or 
+				(!= scanningSector currentSector)
+				(and
+					(!= scanningSector 70) ;quirks
+					killedQuirk
+				)
+			)
 			(self cel: 2 state: 0 draw:)
 			(scanBut state: 0 cel: 2 draw:)
 			(returnBut state: 0 cel: 1 draw:)

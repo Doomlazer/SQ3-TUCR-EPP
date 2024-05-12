@@ -19,6 +19,52 @@
 	printObj
 	decoderNum ;mod
 	ringTable = [84 86 88 90 92 94 96 98 100 102 104 106 108 151 153 155 157 159 161 163 165 167 169 171 173 175]
+	doorOpen = 0
+)
+
+(instance door of Actor
+	
+	(method (init)
+		(super init:)
+		(self
+			view: 303
+			ignoreHorizon:
+			illegalBits: 0
+			;ignoreControl: (| cGREEN cRED cWHITE)
+			setLoop: 1
+			setCel: 0
+			setPri: 2
+			x: 160
+			y: 115
+		)
+	)
+	
+	(method (doit)
+		(super doit:)
+		(if doorOpen
+			(if (> (self y?) 40)
+				(self setStep: 2 3 setMotion: MoveTo (self x?) 40)
+			)	
+		else
+			(if (< (self y?) 115)
+				(self setStep: 2 1 setMotion: MoveTo (self x?) 115)
+			)
+		)
+		(if (< (self y?) 75)
+			(ego illegalBits: (| cGREEN cWHITE))
+		else
+			(ego illegalBits: (| cGREEN cRED cWHITE))
+;;;			(if
+;;;				(and
+;;;					(& (ego onControl:) cRED)
+;;;					(< (self y?) 80)
+;;;					(> (self y?) 75)
+;;;				)
+;;;				(Print {the door crushes your skull.})
+;;;				(EgoDead 901 0 15 1)
+;;;			)
+		)
+	)
 )
 
 (instance Room841 of Room
@@ -30,7 +76,6 @@
 		(= decoderNum (Random 2 23))
 		(= code (Random 26 114))	
 		(super init:)
-		(ego get: iDecoderRing)
 		(switch prevRoomNum
 			(813
 				(self setScript: RoomScript)
@@ -42,6 +87,7 @@
 				(ego posn: 150 120 loop: 1)
 			)
 		)
+		(door init:)
 		(ego init:)
 		(Decrypt)
 	)
@@ -144,6 +190,7 @@
 	)
 	(curRoom drawPic: 841)
 	(StrCpy @str (ToUpper (Format @str 841 code)))
+	;(Printf {%s offset: %d } @str offsetNum)
 	(= i 0)
 	(= t 0)
 	(while (< i (StrLen @str))
@@ -193,6 +240,7 @@
 )
 
 (procedure (CryptShift &tmp i [str 200] t)
+	;; draw encrypted display
 	(= inCartoon TRUE)
 	(RedrawCast)
 	(while (not (== printObj 2))

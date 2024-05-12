@@ -28,6 +28,8 @@
 	local5
 	scorpion
 	[local7 12]
+	cage
+	cageRoomNum
 )
 (procedure (proc501_2 param1 &tmp temp0)
 	(return
@@ -103,6 +105,18 @@
 		(Load VIEW 108)
 		(User mapKeyToDir: FALSE)
 		(super init:)
+		;(ego get: iTrap) ; testing only
+	)
+	
+	(method (doit)
+		(if (== cageRoomNum curRoomNum)
+			(if (cast contains: cage)
+				(Print {cast does contin cage})
+			else 
+				(Print {cast doesnt contain cage})
+				((= cage (ScriptID 511 1)) init:)
+			)	
+		)
 	)
 	
 	(method (dispose)
@@ -287,6 +301,40 @@
 										else
 											(Print 501 8)
 										)
+									)
+									((Said '/trap')
+										(if (cast contains: cage)
+											(if (< (ego distanceTo: cage) 10)
+												(if cageHasBug
+													(Print 501 25)
+												else
+													(Print 501 24)
+												)
+												(ego get: iTrap)
+												(cage delete:)
+											else
+												(NotClose)
+											)
+										else
+											(if (ego has: iTrap)
+												(Print 501 26) ;already have the cage
+											else 
+												(Print 0 47) ;not here to take 	
+											)
+										)
+									)
+								)
+							)
+							((Said 'drop,place,set/trap') ; Fallback if not in a bug region
+								(if (ego has: iTrap)
+									((= cage (ScriptID 511 1)) init:)
+									(= cageRoomNum curRoomNum)
+									(ego put: iTrap curRoomNum)
+								else
+									(if (cast contains: cage)
+										(DontHave)
+									else
+										(AlreadyDone)
 									)
 								)
 							)

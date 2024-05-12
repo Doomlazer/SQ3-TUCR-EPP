@@ -156,7 +156,7 @@
 							(Said 'play/astro,astro,grafitti,game,device[<grafitti]')
 							(Said 'play/astro<astro')
 						)
-						(if (ego inRect: 21 120 39 126)
+						(if (ego inRect: 21 118 42 128)
 							(curRoom newRoom: 814)
 						else
 							(NotClose)

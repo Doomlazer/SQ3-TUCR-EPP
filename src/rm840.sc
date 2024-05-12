@@ -202,7 +202,7 @@
 			)
 			(7
 				(Print 840 24) ;hands package for quirk
-				(ego get: iMcGuffin)
+				(ego get: iPackage)
 				(LocalSpeak 1 22)
 				(LocalSpeak 1 23)
 				(HandsOn)
