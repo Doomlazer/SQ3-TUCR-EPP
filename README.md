@@ -4,7 +4,7 @@
 
 A mod for the DOS version of Space Quest III. It add several new planets and features to explore while leaving the base game mostly intact. It is currently under development and unfinished in several places. 
 
-Notice: Due to SCI0 memory limitations this mod is supported in ScummVM only. DOSBox will crash with heap errors. It's unfortunate, but I believe the freedom to implement complex new features outweighs DOSBox compatibility for this project. 
+Notice: Due to SCI0 memory limitations this mod can be used with in ScummVM only. DOSBox and retro hardware will crash with heap errors. It's unfortunate, but I believe the freedom to implement complex new features outweighs DOSBox compatibility for this project. 
 
 ## New features
 
