@@ -21,6 +21,7 @@
 	betNumber
 	nagged
 	odoGone
+	dapoEgg
 )
 
 (instance daboSound of Sound
@@ -196,6 +197,7 @@
 						(Print 810 8)
 						(dlight setScript: dLightIdleScript)
 					else
+						(if (== buckazoids 1) (++ dapoEgg) else (= dapoEgg 0))
 						(= buckazoids (- buckazoids betAmount))
 						(= betNumber (GetNumber {Pick a number 1-16}))
 						(if (> betNumber 0) 
@@ -222,7 +224,11 @@
 				(daboSound play:)
 			)
 			(4
-				(if gaveGem
+				(if
+					(and
+						gaveGem
+						dapoEgg
+					)
 					(dlight setCycle: CycleTo betNumber 1 self)
 				else
 					(dlight setCycle: CycleTo (Random 0 15) 1 self)	
@@ -230,7 +236,10 @@
 				(daboSound play:)
 			)
 			(5
-				(if gaveGem
+				(if (and
+						gaveGem
+						dapoEgg
+					)
 					(daboSound stop:)
 					(daboWinMusic number: 403 priority: 15 play:)
 					(Print {DAPO, baby!!})
