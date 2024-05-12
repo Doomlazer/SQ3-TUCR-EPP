@@ -1111,7 +1111,7 @@
 			(= startingRoom 900)
 			(self newRoom: 777)
 		)
-		(ego get: 21 22 iTrap)
+		;(ego get: 21 22 iTrap)
 	)
 	
 	(method (doit &tmp haveMouse)

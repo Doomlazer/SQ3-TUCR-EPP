@@ -233,17 +233,18 @@
 				(if gaveGem
 					(daboSound stop:)
 					(daboWinMusic number: 403 priority: 15 play:)
-					(Print {DAPO!!!!!})
-					(Print {YOU WON 999x your bet!})
+					(Print {DAPO, baby!!})
+					(Print 810 18)
 					(= buckazoids (* betAmount 999))
 					(= gaveGem 0)
-					(= state 100)
+					(= state 98)
 					(= seconds 2)
 					(= odoGone 1)
+					(= gaveGem 0) ;prevent jackpot repeat
 				else
 					(Printf {The number is %d!!} (dlight cel?))
 					(if (== (- betNumber 1) (dlight cel?))
-						(Print {YOU WON 16x your bet!})
+						(Print 810 17)
 						(= buckazoids (* betAmount 16))
 					else
 						(Print {You lost.})
@@ -254,8 +255,20 @@
 			(6
 				(dlight setScript: dLightIdleScript)
 			)
+			(99
+				(quark
+					loop: 2
+					setMotion: MoveTo 305 107 self	
+				)
+			)
+			(100
+				(quark loop: 0 cel: 0)
+				(= cycles 10)
+			)
 			(101
-				(Print 810 9 #at 160 40 #title {Quirk})
+				(Print 810 15 #at 120 25 #title {Quirk})
+				(Print 810 9 #at 150 40 #title {Quirk})
+				(Print 810 16 #at 150 40 #title {Quirk})
 				(dgirl
 					illegalBits: 0
 					ignoreActors: 1

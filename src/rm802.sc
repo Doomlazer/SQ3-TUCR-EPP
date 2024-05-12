@@ -108,7 +108,7 @@
 							)
 							((Said '[/anyword]')
 								(if towed
-									(Print {Well, Roger, based on that No Parking sign it's probably safe to assume that your ship has been towed. Before you cry foul, remember, ignorance of local planety parking laws is no excuse!})
+									(Print {Based on that no-parking sign, it's probably safe to assume that your ship has been towed. Before you cry foul, remember, ignorance of local planety parking laws is no excuse!})
 								else 
 									(Print {You've landed the Mallard in a rather precarious location with steep drops on either side of the path. Thankfully, the reflected light from Ren's moon should provide enough visibility to navigate without killing yourself.})
 								)
