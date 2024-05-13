@@ -84,7 +84,7 @@
 
 (instance rogGirl of Actor
 	(properties
-		x 140
+		x 138
 		y 160
 		loop 4
 		view 299
@@ -93,8 +93,8 @@
 
 (instance SqlPolice of Actor
 	(properties
-		x 160
-		y 162
+		x 158
+		y 161
 		loop 1
 		cel 6
 		view 834
@@ -197,7 +197,7 @@
 						(Print 810 13)	
 					)
 					((Said 'call,converse/quark') (Print 810 14))
-					((Said '(police[<sequel]),man') (if deltWithBarCop (Print 810 24) else (Print 810 23)))
+					((Said '(converse/police[<sequel]),man') (if deltWithBarCop (Print 810 24) else (Print 810 23)))
 					((Said 'call,converse/(woman[<dapo]),alien') (Print 810 19 #at 120 25 #title {Quirk}))
 					((Said 'look>')
 						(cond 
@@ -649,7 +649,8 @@
 				(= seconds (Random 2 5))
 			)
 			(1
-				(= brag (Random 2 20)) ;0 & 1 reserved for escape
+				(= brag (Random 2 30)) ;0 & 1 reserved for escape
+				(SqlPolice view: 299 loop: 5 cel: 0 setCycle: Forward) ;talking, face left
 				(= saveBits
 					(Display 26 brag
 						p_width 250
@@ -664,6 +665,7 @@
 				(= seconds 6)
 			)
 			(2
+				(SqlPolice view: 834 loop: 1 cel: 5 setCycle: 0) ;face left
 				(Display 1 0 p_restore saveBits)
 				(= state -1)
 				(self cue:)
@@ -700,7 +702,7 @@
 			)
 			(103
 				(rogGirl dispose:)
-				(SqlPolice view: 834 loop: 1 cel: 5) ;face left
+				(SqlPolice view: 299 loop: 5 cel: 0 setCycle: Forward) ;talking, face left
 				(= saveBits
 					(Display 26 0 ;no mop
 						p_width 250
@@ -729,7 +731,7 @@
 			)
 			(203
 				(rogGirl dispose:)
-				(SqlPolice view: 834 loop: 1 cel: 5) ;face left
+				(SqlPolice view: 299 loop: 5 cel: 0 setCycle: Forward) ;talking, face left
 				(= saveBits
 					(Display 26 0 ;no mop
 						p_width 250
@@ -743,10 +745,12 @@
 				(= seconds 6)
 			)
 			(204
+				(SqlPolice view: 834 loop: 1 cel: 5 setCycle: 0) ;face left
 				(Display 1 0 p_restore saveBits)
 				(= seconds 3)	
 			)
 			(205
+				(SqlPolice view: 299 loop: 5 cel: 0 setCycle: Forward) ;talking, face left
 				(= saveBits
 					(Display 26 1
 						p_width 250
@@ -760,6 +764,7 @@
 				(= seconds 6)
 			)
 			(206
+				(SqlPolice view: 834 loop: 1 cel: 5 setCycle: 0) ;face left
 				(Display 1 0 p_restore saveBits)
 				(= seconds 3)	
 			)
