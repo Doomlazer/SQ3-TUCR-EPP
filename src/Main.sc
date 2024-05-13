@@ -681,6 +681,8 @@
 	cageHasBug
 	cageX = 1000
 	cageY = 1000
+	
+	deltWithBarCop
 )
 
 (procedure (NormalEgo theLoop theView)
@@ -1250,6 +1252,10 @@
 				(28 ;frozen in space from teleporter on REN
 					(= deathTitle {Brrr... It's Cold Up Here})
 					(= deathMessage {Looks like Roger finally learned to "chill" out! Seriously though, you asphyxiated long before you even started to freeze.})
+				)
+				(29 ;time paradox on quirks
+					(= deathTitle {Yet Another Time/Space Paradox Death})
+					(= deathMessage {It feels like this type of thing just keeps happening over and over again.})
 				)
 				(else
 					(= deathTitle {Congratulations On Your Recent Death !})

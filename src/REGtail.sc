@@ -123,6 +123,7 @@
 
 (instance regtrail of Region
  	(method (init)
+ 		(Load VIEW 294)
 		(super init:)
 		(= PTDCountDown 200) ;global in main
 		(= tdx (ego x?)) 

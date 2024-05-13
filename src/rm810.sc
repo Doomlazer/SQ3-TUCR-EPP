@@ -22,6 +22,22 @@
 	nagged
 	odoGone
 	dapoEgg
+	saveBits
+	ded
+	escape
+	delt
+	timePod
+)
+
+(procedure (Face actor1 actor2)
+	(DirLoop actor1
+		(GetAngle
+			(actor1 x?)
+			(actor1 y?)
+			(actor2 x?)
+			(actor2 y?)
+		)
+	)
 )
 
 (instance daboSound of Sound
@@ -66,6 +82,25 @@
 	)
 )
 
+(instance rogGirl of Actor
+	(properties
+		x 140
+		y 160
+		loop 4
+		view 299
+	)
+)
+
+(instance SqlPolice of Actor
+	(properties
+		x 160
+		y 162
+		loop 1
+		cel 6
+		view 834
+	)
+)
+
 (instance dgirl of Actor
 	(properties
 		x 205
@@ -80,6 +115,11 @@
 		picture 808
 		east 808
 	)
+	
+	(method (newRoom n)
+		(if delt (= deltWithBarCop 1))
+		(super newRoom: n)
+	)	
 	
 	(method (init)
 		(Load SOUND 401)
@@ -116,6 +156,14 @@
 			setScript: dgirlEyeScript
 			init:
 		)
+		(if (not deltWithBarCop)
+			(rogGirl init:)
+			(SqlPolice
+				setScript: SqlScript
+				init:
+			)
+		)
+		;todo: move music to region
 		(theMusic number: 401)
 		(if (and (!= prevRoomNum 27) (!= prevRoomNum 808))
 			(theMusic play: loop: 1)
@@ -149,12 +197,21 @@
 						(Print 810 13)	
 					)
 					((Said 'call,converse/quark') (Print 810 14))
+					((Said '(police[<sequel]),man') (if deltWithBarCop (Print 810 24) else (Print 810 23)))
 					((Said 'call,converse/(woman[<dapo]),alien') (Print 810 19 #at 120 25 #title {Quirk}))
 					((Said 'look>')
 						(cond 
-							((Said '/quark,bartender,man') (Print 810 14))
-							((Said '/quirk,bartender,man') (Print 810 3))
-							((Said '/(woman[<dapo]),alien') (Print 810 2))
+							((Said '/quark,bartender') (Print 810 14))
+							((Said '/quirk,bartender') (Print 810 3))
+							((Said '/(police[<sequel]),man') (if deltWithBarCop (Print 810 24) else (Print 810 22)))
+							((Said '/(woman[<dapo]),alien')
+								(if deltWithBarCop
+									(Print 810 2)
+								else
+									(Print 810 20)
+									(Print 810 21)
+								)	
+							)
 							((Said '/table[<dapo]') (Print 810 1))
 							((Said '/table[<dabo]') (Print 810 12)(Print 810 13))
 							((Said '[<around,at,in][/area,cafe]') (Print 810 0))
@@ -340,6 +397,7 @@
 					(or
 						(== (ego onControl: 0) 2)
 						(== (ego onControl: 0) 3)
+						(== escape 1)
 					)
 					(if (> local0 1)
 						(= local0 1)
@@ -354,7 +412,18 @@
 	(method (cue)
 		(door stopUpd:)
 		(= local0 (if (== local0 1) 0 else 2))
+		(if
+			(and
+				(not escape)
+				(not timePod)
+				ded
+				(== local0 0)
+			)
+			(++ timePod)
+			(Print 810 25)
+		)
 	)
+	
 )
 
 (instance holoDoor of Prop
@@ -544,6 +613,155 @@
 			(2
 				(dgirl setCycle: BegLoop self)
 				(= state -1)
+			)
+		)
+	)	
+) 
+
+(instance SqlScript of Script
+	
+	(method (doit)
+		(super doit:)
+		(if
+			(and
+				(< (ego distanceTo: SqlPolice) 40)
+				(not ded)
+			)
+			(++ ded)
+			(Face SqlPolice ego)
+			(SqlPolice 
+				view: 835
+				cel: 0
+			)
+			(= seconds 0)
+			(= state 99)
+			(HandsOff)
+			(if saveBits
+				(Display 1 0 p_restore saveBits)
+			)
+			(self cue:)
+		)
+	)
+	
+	(method (changeState newState &tmp brag)
+		(switch (= state newState)
+			(0
+				(= seconds (Random 2 5))
+			)
+			(1
+				(= brag (Random 2 20)) ;0 & 1 reserved for escape
+				(= saveBits
+					(Display 26 brag
+						p_width 250
+						p_at 5 170
+						p_mode teJustCenter
+						p_font 600
+						p_color vYELLOW
+						p_save
+					)
+				)
+				
+				(= seconds 6)
+			)
+			(2
+				(Display 1 0 p_restore saveBits)
+				(= state -1)
+				(self cue:)
+			)
+			(100
+				(SqlPolice setCycle: EndLoop self)
+			)
+			(101
+				(ego 
+					view: 79
+					loop: 0
+					cel: 0
+					setCycle: EndLoop self
+				)
+			)
+			(102
+				(if (regions contains: (ScriptID 809)) 
+					; rog escape
+					(theGame changeScore: 50)
+					(rogGirl
+						view: 836
+						setCycle: Walk
+						ignoreControl: $ffff
+						setMotion: MoveTo 125 125 self
+					)
+					(= delt 1)
+					(= state 199)
+					(EgoDead 0 0 11 29)
+				else
+					; rog ceases to exist
+					(rogGirl setCycle: EndLoop)
+					(= seconds 4)
+				)
+			)
+			(103
+				(rogGirl dispose:)
+				(SqlPolice view: 834 loop: 1 cel: 5) ;face left
+				(= saveBits
+					(Display 26 0 ;no mop
+						p_width 250
+						p_at 5 170
+						p_mode teJustCenter
+						p_font 600
+						p_color vYELLOW
+						p_save
+					)
+				)
+				(= seconds 2)
+			)
+			(104	
+				(EgoDead 0 0 11 29)
+			)
+			(200
+				(= escape 1)
+				(rogGirl setMotion: MoveTo 160 100 self)
+			)
+			(201
+				(rogGirl setMotion: MoveTo 135 88 self)
+			)
+			(202
+				(= escape 0)
+				(= seconds 2)
+			)
+			(203
+				(rogGirl dispose:)
+				(SqlPolice view: 834 loop: 1 cel: 5) ;face left
+				(= saveBits
+					(Display 26 0 ;no mop
+						p_width 250
+						p_at 5 170
+						p_mode teJustCenter
+						p_font 600
+						p_color vYELLOW
+						p_save
+					)
+				)
+				(= seconds 6)
+			)
+			(204
+				(Display 1 0 p_restore saveBits)
+				(= seconds 3)	
+			)
+			(205
+				(= saveBits
+					(Display 26 1
+						p_width 250
+						p_at 5 170
+						p_mode teJustCenter
+						p_font 600
+						p_color vYELLOW
+						p_save
+					)
+				)
+				(= seconds 6)
+			)
+			(206
+				(Display 1 0 p_restore saveBits)
+				(= seconds 3)	
 			)
 		)
 	)	
