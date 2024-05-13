@@ -267,8 +267,8 @@
 		(super handleEvent: pEvent)
 		; handle Said's, etc...
 		(if (Said 'look')
-			(= temp0 (GetNumber {Program number:}))
-			(DrawPic temp0 8)
+			(Print {You standard backroom AI HoloFight arena. This type of thing was actually made illegal under DMCA2.0})
+			(Print {However, the authorites always seem happy to look the other way for a cut of the action.})
 		)	
 	)
 	
@@ -312,12 +312,12 @@
 	)
 )
 
-(instance fallSound of Sound
-	(properties
-		number 45
-		priority 3
-	)
-)
+;;;(instance fallSound of Sound
+;;;	(properties
+;;;		number 45
+;;;		priority 3
+;;;	)
+;;;)
 
 (instance HeroScript of Script
 	(method (doit)

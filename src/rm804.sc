@@ -59,8 +59,7 @@
 		)
 		(switch prevRoomNum
 			(803
-				(ego posn: 315 160 loop: 1)
-				;(self setScript: RoomScript)
+				(self setScript: fromEastScript)
 			)
 			(806
 				(ego posn: 170 85 view: 68 loop: 1) ;return from big rock
@@ -93,10 +92,10 @@
 		)
 		(if
 			(and
-				(> (ego x?) 321)
+				(> (ego x?) 318)
 				(== script 0)
 			)
-			(curRoom newRoom: 803) ;return to path
+			(curRoom setScript: toEastScript) ;return to path
 		)
 		(if
 			(and
@@ -446,6 +445,52 @@
 				(HandsOn)
 				(Print {Don't even bother trying to get back there, Roger. That babe was one in a million, not to mention completely out of your league.})
 				(eggReturnScript dispose:)
+			)
+		)
+	)
+)
+
+
+(instance toEastScript of Script
+	(properties)
+	
+	(method (changeState newState)
+		(= state newState)
+		(switch state
+			(0
+				(HandsOff)
+				(ego
+					ignoreControl:
+					setMotion: MoveTo 330 160 self
+				)
+			)
+			(1
+				(RedrawCast)
+				(HandsOn)
+				(curRoom newRoom: 803)
+			)
+		)
+	)
+)
+
+(instance fromEastScript of Script
+	(properties)
+	
+	(method (changeState newState)
+		(= state newState)
+		(switch state
+			(0
+				(HandsOff)
+				(ego
+					posn: 330 160
+					loop: 1
+					ignoreControl:
+					setMotion: MoveTo 295 160 self
+				)
+			)
+			(1
+				(HandsOn)
+				(fromEastScript dispose:)
 			)
 		)
 	)

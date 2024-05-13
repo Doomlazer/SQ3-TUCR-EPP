@@ -37,7 +37,7 @@
 	queueGivePackage
 )
 
-(procedure (DoGivePackage)
+(procedure (DoGivePackage) ; kill quirk
 	(ego put: iPackage 808)
 	(= queueGivePackage 0)
 	(Print
@@ -60,7 +60,8 @@
 (procedure (buyPTDlocal cost &tmp ch [strb 50])
 	(= ch 0)
 	(= ch
-		(Print (Format @strb 808 36 cost)
+		(Print
+			(Format @strb 808 36 cost)
 			#title {Quirk}
 			#mode teJustLeft
 			#button {Yes, I want it.} 1
@@ -68,10 +69,19 @@
 		)
 	)
 	(if (== ch 1)
-		(Print (Format @strb 808 37 cost) #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))
+		(Print
+			(Format @strb 808 37 cost)
+			#title {Quirk}
+			#at (/ (quark x?) 2) (- (quark y?) 60)
+		)
+		(Print
+			808 71
+			#title {Quirk}
+			#at (/ (quark x?) 2) (- (quark y?) 60)
+		)
 		(Print 808 38)
 		(= qtab (+ qtab cost))
-		(ego get: 18)
+		(ego get: iTime_Disruptor)
 	)
 	(if (== ch 2)
 		(Print 808 39 #title {Quirk} #at (/ (quark x?)2) (- (quark y?) 60))	

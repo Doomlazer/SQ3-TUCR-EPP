@@ -113,6 +113,7 @@
 		)
 		(dgirl
 			ignoreActors: 0
+			setScript: dgirlEyeScript
 			init:
 		)
 		(theMusic number: 401)
@@ -148,6 +149,7 @@
 						(Print 810 13)	
 					)
 					((Said 'call,converse/quark') (Print 810 14))
+					((Said 'call,converse/(woman[<dapo]),alien') (Print 810 19 #at 120 25 #title {Quirk}))
 					((Said 'look>')
 						(cond 
 							((Said '/quark,bartender,man') (Print 810 14))
@@ -209,6 +211,9 @@
 							)
 						else
 							(Print 810 7)
+							(if (< buckazoids 1)
+								(ego put: iBuckazoids -1)
+							)
 							(dlight setScript: dLightIdleScript)
 						)
 					)
@@ -294,6 +299,7 @@
 				)	
 			)
 			(103
+				(dgirl dispose:)
 				(dlight setScript: dLightIdleScript)
 			)
 		)
@@ -491,6 +497,7 @@
 		)
 	)	
 )
+
 (instance dLight3Script of Script
 	(method (changeState newState)
 		(switch (= state newState)
@@ -509,6 +516,23 @@
 				(dlight3 setCycle: 0)
 				(= state 0)
 				(= seconds (Random 2 15))
+			)
+		)
+	)	
+) 
+
+(instance dgirlEyeScript of Script
+	(method (changeState newState)
+		(switch (= state newState)
+			(0
+				(= seconds (Random 0 15))
+			)
+			(1
+				(dgirl setCycle: EndLoop self)
+			)
+			(2
+				(dgirl setCycle: BegLoop self)
+				(= state -1)
 			)
 		)
 	)	

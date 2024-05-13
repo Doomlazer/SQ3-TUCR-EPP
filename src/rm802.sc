@@ -33,7 +33,8 @@
 				(self setScript: RoomScript)
 			)
 			(803
-				(ego posn: 266 182 loop: 3)
+				(ego posn: 266 198 loop: 3)
+				(self setScript: fromSouthScript)
 			)
 			(else 
 				(ego posn: 150 100 loop: 1)
@@ -69,10 +70,10 @@
 		)
 		(if
 			(and
-				(> (ego y?) 194)
+				(> (ego y?) 188)
 				(== script 0)
 			)
-			(curRoom newRoom: 803)
+			(curRoom setScript: toSouthScript)
 		)	
 	)
 	
@@ -228,3 +229,46 @@
 ;;;	)
 ;;;)
 ;;;
+
+(instance toSouthScript of Script
+	(properties)
+	
+	(method (changeState newState)
+		(= state newState)
+		(switch state
+			(0
+				(HandsOff)
+				(ego
+					ignoreControl:
+					setMotion: MoveTo (+ (ego x?) 20) 199 self
+				)
+			)
+			(1
+				(RedrawCast)
+				(HandsOn)
+				(curRoom newRoom: 803)
+			)
+		)
+	)
+)
+
+(instance fromSouthScript of Script
+	(properties)
+	
+	(method (changeState newState)
+		(= state newState)
+		(switch state
+			(0
+				(HandsOff)
+				(ego
+					ignoreControl:
+					setMotion: MoveTo 260 185 self
+				)
+			)
+			(1
+				(HandsOn)
+				(fromSouthScript dispose:)
+			)
+		)
+	)
+)

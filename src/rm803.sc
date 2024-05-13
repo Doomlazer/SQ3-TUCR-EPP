@@ -27,11 +27,11 @@
 		(super init:)
 		(switch prevRoomNum
 			(802
-				(ego posn: 50 46 loop: 3)
 				(self setScript: RoomScript)
 			)
 			(804
-				(ego posn: 310 169 loop: 1)
+				(ego posn: 310 198 loop: 1)
+				(self setScript: fromSouthScript)
 			)
 			(else 
 				(ego posn: 150 100 loop: 1)
@@ -60,12 +60,82 @@
 		(if
 			(and
 				(or 
-					(> (ego y?) 194)
-					(> (ego x?) 323)
+					(> (ego y?) 187)
+					(> (ego x?) 317)
 				)
 				(== script 0)
 			)
-			(curRoom newRoom: 804)
+			(curRoom setScript: toSouthScript)
+		)
+	)
+	
+	(method (handleEvent event)
+		(if (event claimed?) (return))
+		(switch (event type?)
+			(saidEvent
+				(cond 
+					((Said 'look>')
+						(cond
+							((Said '/moon')
+								(Print {You can't see Ren's only moon from here.})
+							)
+							((Said '/drop,cliff')
+								(Print {I'd keep a good distance from the edges, Roger. It doesn't seem like safety is a priority here!})
+							)
+							((Said '/face,rock,carving,man')
+								(Print {After awhile all these planet start to look very simmilar, don't they?})
+							)
+							((Said '[/anyword]')
+								(Print {This is a rather precarious path with steep drop-offs on either side. I guess there aren't many safety regulations on this planet.})
+							)
+						)	
+					)
+
+				)
+			)
+		)
+	)
+)
+
+(instance toSouthScript of Script
+	(properties)
+	
+	(method (changeState newState)
+		(= state newState)
+		(switch state
+			(0
+				(HandsOff)
+				(ego
+					ignoreControl:
+					setMotion: MoveTo (ego x?) 199 self
+				)
+			)
+			(1
+				(RedrawCast)
+				(HandsOn)
+				(curRoom newRoom: 804)
+			)
+		)
+	)
+)
+
+(instance fromSouthScript of Script
+	(properties)
+	
+	(method (changeState newState)
+		(= state newState)
+		(switch state
+			(0
+				(HandsOff)
+				(ego
+					ignoreControl:
+					setMotion: MoveTo (- (ego x?) 10) 185 self
+				)
+			)
+			(1
+				(HandsOn)
+				(fromSouthScript dispose:)
+			)
 		)
 	)
 )
