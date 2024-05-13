@@ -252,7 +252,8 @@
 					(= buckazoids (* betAmount 999))
 					(= gaveGem 0)
 					(= state 98)
-					(= seconds 2)
+					;(= seconds 2)
+					(self cue:)
 					(= odoGone 1)
 					(= gaveGem 0) ;prevent jackpot repeat
 				else
@@ -295,10 +296,20 @@
 				(dgirl
 					setLoop: 3 
 					setCycle: Forward
-					setMotion: MoveTo 350 160 self	
+					setMotion: MoveTo 220 170 self	
 				)	
 			)
 			(103
+				(dgirl
+					setMotion: MoveTo 260 160 self	
+				)	
+			)
+			(104
+				(dgirl
+					setMotion: MoveTo 350 160 self	
+				)	
+			)
+			(105
 				(dgirl dispose:)
 				(dlight setScript: dLightIdleScript)
 			)

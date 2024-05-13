@@ -105,7 +105,7 @@
 				)
 			)
 			(8
-				(Print {"WAIT! NO NO No No no no... I didn't even get to tell her about my mop collection!!} #title {Roger} #at 200 80)
+				(Print {"WAIT! NO NO No No no no... I didn't even get to tell her about my golden mop!!} #title {Roger} #at 200 80)
 				(HandsOn)
 				(roomScript dispose:)
 				(curRoom newRoom: 804)

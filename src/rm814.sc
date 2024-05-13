@@ -265,6 +265,9 @@
 						)
 						(if (> buckazoids 0)
 							(-- buckazoids)
+							(if (< buckazoids 0)
+								(ego put: iBuckazoids -1)
+							)
 							(ResetScore)
 							(= isPlaying 1)
 							(ego
@@ -276,6 +279,8 @@
 							)
 							(DrawPic 814 0) ;-1) ;dpOPEN_INSTANTLY
 							(curRoom setScript: levelChangeScript)
+						else
+							(Print {You don't have any buckazoids left.})
 						)
 					)
 					((or (Said 'disembark,quit[/game,device]') (Said '/bye'))

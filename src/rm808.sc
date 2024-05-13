@@ -609,8 +609,8 @@
 			(4
 				(= global206 3)
 				(= inCartoon 0)
-				;handle quirk expoloeds
-				(if (= killedQuirk 1)
+				;handle quirk explodes
+				(if (== killedQuirk 1)
 					(++ killedQuirk)
 					(cast eachElementDo: #dispose)
 					(curRoom setScript: killQuirkScript)

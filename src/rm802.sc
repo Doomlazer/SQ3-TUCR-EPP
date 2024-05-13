@@ -240,7 +240,7 @@
 				(HandsOff)
 				(ego
 					ignoreControl:
-					setMotion: MoveTo (+ (ego x?) 20) 199 self
+					setMotion: MoveTo (+ (ego x?) 5) 199 self
 				)
 			)
 			(1

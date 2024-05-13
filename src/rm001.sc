@@ -93,7 +93,17 @@
 				(= saveBits1
 					(Display {\04 1989 Sierra On-Line, Inc.}
 						p_width 250
-						p_at 35 180
+						p_at 35 0 ;180
+						p_mode teJustCenter
+						p_font 300
+						p_color vYELLOW
+						p_save
+					)
+				)
+				(= saveBits2
+					(Display {The Undiscovered Country Road - Extended Planet's Pack}
+						p_width 250
+						p_at 35 170
 						p_mode teJustCenter
 						p_font 300
 						p_color vYELLOW
@@ -108,6 +118,7 @@
 				(drip3 dispose:)
 				(drip4 dispose:)
 				(Display 1 0 p_restore saveBits1)
+				(Display 1 0 p_restore saveBits2)
 				(curRoom drawPic: 150 WIPEDOWN)
 				(= cycles 2)
 			)

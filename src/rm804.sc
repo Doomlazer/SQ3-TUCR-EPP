@@ -155,7 +155,7 @@
 							(Said 'play/astro,astro,grafitti,game,device[<grafitti]')
 							(Said 'play/astro<astro')
 						)
-						(if (ego inRect: 21 118 42 128)
+						(if (ego inRect: 21 115 42 130)
 							(curRoom newRoom: 814)
 						else
 							(NotClose)
@@ -212,7 +212,11 @@
 								(= buckazoids (- buckazoids 6))
 								(++ ticketed)	
 							else
-								(Print 804 12)
+								(if ticketed
+									(Print 804 33)
+								else	
+									(Print 804 12)
+								)
 							)
 						else
 							(Print 804 13)
