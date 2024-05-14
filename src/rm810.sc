@@ -27,7 +27,50 @@
 	escape
 	delt
 	timePod
+	sSize = 30 ;total number of messages in text.26
+	[seen 30] ;set to sSize
+	arrayI
+	rand
 )
+
+(procedure (nextLine &tmp t)
+	; The cop should randomly speak each unique line available before repeating itself
+	(repeat
+		(= t (Random 2 sSize))
+		;(Printf {nextLine testing: %d} t)
+		(if (inArray t)
+			;(Printf {%d was previously seen} t)
+		else
+			;(Printf {unseen, adding to array: %d} t)
+			(= [seen arrayI] t)
+			;(Printf {[seen arrayI]: %d, arrayI: %d} [seen arrayI] arrayI )
+			(++ arrayI)
+			;reset array if needed
+			(if (== (- sSize 2) arrayI)
+				;(Printf {reset seen array}) 
+				(while (>= arrayI 0)
+					;(Printf {[seen arrayI] was: %d, arrayI: %d} [seen arrayI] arrayI)
+					(= [seen arrayI] 0)
+					(-- arrayI)
+				)
+				(++ arrayI) ; reset to 0
+			)
+			(return t)
+		)
+	)
+)
+
+(procedure (inArray line &tmp s i)
+	(= i sSize)
+	(while (>= i 0) 
+		(if (== [seen i] line)
+			(++ s)
+		)
+		(-- i)
+	)
+	(return s)
+)
+
 
 (procedure (Face actor1 actor2)
 	(DirLoop actor1
@@ -649,7 +692,8 @@
 				(= seconds (Random 2 5))
 			)
 			(1
-				(= brag (Random 2 30)) ;0 & 1 reserved for escape
+				;(= brag (Random 2 30)) ;0 & 1 reserved for escape
+				(= brag (nextLine))
 				(SqlPolice view: 299 loop: 5 cel: 0 setCycle: Forward) ;talking, face left
 				(= saveBits
 					(Display 26 brag
@@ -662,7 +706,7 @@
 					)
 				)
 				
-				(= seconds 6)
+				(= seconds 7)
 			)
 			(2
 				(SqlPolice view: 834 loop: 1 cel: 5 setCycle: 0) ;face left
