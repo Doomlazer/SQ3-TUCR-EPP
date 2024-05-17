@@ -2124,7 +2124,7 @@
 (instance Package of InvItem
 	(properties
 		said '/package'
-		description {A package intended for Quirk.}
+		description {A ordinary looking package. It seems to be making a faint beeping sound.}
 		owner 470
 		view 242
 		loop 1

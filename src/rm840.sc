@@ -80,11 +80,74 @@
 	(method (handleEvent pEvent &tmp i)
 		(super handleEvent: pEvent)
 		
-		(if (Said 'talk/vohaul')
-			(if (< (ego distanceTo: sludge) 20)
-				(LocalSpeak 1 0) ;procedure (LocalSpeak who line)
+		(if (Said 'talk/sludge')
+			(if (< (ego distanceTo: sludge) 40)
+				(LocalSpeak 0 43) ;procedure (LocalSpeak [0=sludge,1=vohaul] line)
+				; need to make sludge quests
 			else 
-				(LocalSpeak 0 0)	
+				(NotClose)	
+			)
+		)
+		(if (Said 'talk/vohaul')
+			(if (< (ego distanceTo: vohaul) 40)
+				(if killedQuirk
+					(if killedElmo
+						(LocalSpeak 1 34) ;completed both murders, need to add more vohaul quests eventually
+						; need to prevent repeated rewards
+						(if (not (ego has: iBuckazoids))
+							(ego get: iBuckazoids)	
+						)
+						(= buckazoids (+ buckazoids 900))
+						(LocalSpeak 1 42)
+					else
+						(if (not (ego has: iPackage))
+							(LocalSpeak 1 26)
+							(LocalSpeak 1 27)
+							(if (not (ego has: iBuckazoids))
+								(ego get: iBuckazoids)	
+							)
+							(= buckazoids (+ buckazoids 500))
+							(LocalSpeak 1 28)
+							(Print 840 29)
+							(ego get: iPackage)
+							(LocalSpeak 1 30)
+							(LocalSpeak 1 31)
+							(LocalSpeak 1 32)
+						else
+							(LocalSpeak 1 33)
+						)
+					)
+				else
+					(if killedElmo
+						(if killedQuirk
+							; copy of 2nd reward above. fix reward duplication and add more vohaul quests
+							(LocalSpeak 1 34) ;completed both murders, need to add more vohaul quests eventually
+							; need to prevent repeated rewards
+							(if (not (ego has: iBuckazoids))
+								(ego get: iBuckazoids)	
+							)
+							(= buckazoids (+ buckazoids 900))
+							(LocalSpeak 1 42)
+						
+						else
+							(if (not (ego has: iPackage))
+								(LocalSpeak 1 35)
+								(LocalSpeak 1 36)
+								(LocalSpeak 1 37)
+								(ego get: iPackage)
+								(LocalSpeak 1 38)
+							else
+								(LocalSpeak 1 39)
+							)	
+						)
+					else
+						; quirk and elmo both alive
+						(LocalSpeak 1 40)
+						(LocalSpeak 1 41)
+					)
+				)
+			else 
+				(NotClose)	
 			)
 		)
 	)
