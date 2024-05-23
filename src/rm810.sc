@@ -23,54 +23,34 @@
 	odoGone
 	dapoEgg
 	saveBits
+	saveBits2
 	ded
 	escape
 	delt
 	timePod
-	sSize = 30 ;total number of messages in text.26
-	[seen 30] ;set to sSize
+	;sSize = 31 ;total number of messages in text.26
+	sI
+	seen = [2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30] ;don't include msg 0 or 1
 	arrayI
 	rand
 )
 
-(procedure (nextLine &tmp t)
-	; The cop should randomly speak each unique line available before repeating itself
-	(repeat
-		(= t (Random 2 sSize))
-		;(Printf {nextLine testing: %d} t)
-		(if (inArray t)
-			;(Printf {%d was previously seen} t)
-		else
-			;(Printf {unseen, adding to array: %d} t)
-			(= [seen arrayI] t)
-			;(Printf {[seen arrayI]: %d, arrayI: %d} [seen arrayI] arrayI )
-			(++ arrayI)
-			;reset array if needed
-			(if (== (- sSize 2) arrayI)
-				;(Printf {reset seen array}) 
-				(while (>= arrayI 0)
-					;(Printf {[seen arrayI] was: %d, arrayI: %d} [seen arrayI] arrayI)
-					(= [seen arrayI] 0)
-					(-- arrayI)
-				)
-				(++ arrayI) ; reset to 0
-			)
-			(return t)
-		)
+(procedure (shuffle &tmp n t r [str 50])
+	(= n 29)
+	(while n
+		(= r (Random 0 n))
+		(= t [seen r])
+		(= [seen r] [seen (- n 1)])
+		(= [seen (- n 1)] t)
+		(-- n)	
 	)
+;;;	(= n 29)
+;;;	(while n
+;;;		(GetFarText 26 [seen (- n 1)] @str)
+;;;		(Printf {n: %d, [seen (- n 1)]: %d, string: %s} n [seen (- n 1)] @str)
+;;;		(-- n)	
+;;;	)
 )
-
-(procedure (inArray line &tmp s i)
-	(= i sSize)
-	(while (>= i 0) 
-		(if (== [seen i] line)
-			(++ s)
-		)
-		(-- i)
-	)
-	(return s)
-)
-
 
 (procedure (Face actor1 actor2)
 	(DirLoop actor1
@@ -228,6 +208,7 @@
 			ignoreActors: 0
 			init:
 		)
+		(shuffle)
 	)
 	
 	(method (handleEvent event &tmp [temp0 50])
@@ -693,8 +674,23 @@
 			)
 			(1
 				;(= brag (Random 2 30)) ;0 & 1 reserved for escape
-				(= brag (nextLine))
+				(= brag [seen sI])
+				(++ sI)
+				(if (> sI 28)
+					(shuffle)
+					(= sI 0)	
+				)
 				(SqlPolice view: 299 loop: 5 cel: 0 setCycle: Forward) ;talking, face left
+				(= saveBits2
+					(Display 26 brag
+						p_width 250
+						p_at 4 171
+						p_mode teJustCenter
+						p_font 600
+						p_color vBLACK
+						p_save
+					)
+				)
 				(= saveBits
 					(Display 26 brag
 						p_width 250
@@ -711,6 +707,7 @@
 			(2
 				(SqlPolice view: 834 loop: 1 cel: 5 setCycle: 0) ;face left
 				(Display 1 0 p_restore saveBits)
+				(Display 1 0 p_restore saveBits2)
 				(= state -1)
 				(self cue:)
 			)
