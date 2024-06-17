@@ -267,8 +267,8 @@
 		(super handleEvent: pEvent)
 		; handle Said's, etc...
 		(if (Said 'look')
-			(Print {You standard backroom AI HoloFight arena. This type of thing was actually made illegal under DMCA2.0})
-			(Print {However, the authorites always seem happy to look the other way for a cut of the action.})
+			(Print {The dining area has been converted into a HoloFight arena. This type of thing was actually made illegal under DMCA2.0})
+			(Print {However, local authorites always seem happy to look the other way for a cut of the action.})
 		)	
 	)
 	

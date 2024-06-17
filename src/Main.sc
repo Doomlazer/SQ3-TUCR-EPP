@@ -666,7 +666,7 @@
 	sValue = [10 130 90 50 200 5]
 	sPosn = [0 0 0 0 0 0]
 	
-	owned = [302 0 0 0 0 0 0 0 0 0 0 0]
+	owned = [0 0 0 0 0 0 0 0 0 0 0 0]
 	bookmark = [3 3 3 3 3 3 3 3 3 3 3 3]
 	readerX
 	readerY
@@ -2073,7 +2073,7 @@
 (instance Time_Disruptor of InvItem
 	(properties
 		said '/disruptor[<time]'
-		description {An illegal personal time disruptor. Useful for being in two places at once. Looks like this one has seen some use.}
+		description {An illegal personal time disruptor (PTD). Looks like this one has seen better days.}
 		view 242
 		loop 1
 		cel 1

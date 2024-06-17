@@ -663,6 +663,9 @@
 			(if saveBits
 				(Display 1 0 p_restore saveBits)
 			)
+			(if saveBits2
+				(Display 1 0 p_restore saveBits2)
+			)
 			(self cue:)
 		)
 	)
