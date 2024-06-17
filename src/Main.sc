@@ -795,35 +795,16 @@
 )
 
 (procedure (EgoDead theView theLoop theCel theDeath)
-	(if (regions contains: (ScriptID 809)) 
-		(if 
-			(or 
-				;(== curRoomNum 12) scrapyard rails not working, check rm13 for clues
-				(== curRoomNum 52)
-				(== curRoomNum 53)
-				(== curRoomNum 60)
-				(== curRoomNum 61)
-				(== curRoomNum 62)
-				(== curRoomNum 63)
-				(== curRoomNum 64)
-				(== curRoomNum 65)
-				(== curRoomNum 66)
-				(== curRoomNum 67)
-				(== curRoomNum 68)
-				(== curRoomNum 69)
-				(== curRoomNum 70)
-				(== curRoomNum 71)
-				(== curRoomNum 75)
-				(== curRoomNum 421) 
-				(== curRoomNum 802)
-				(== curRoomNum 803) 
-			)
+	(if (regions contains: (ScriptID 809))
+		;(== curRoomNum 12) scrapyard rails not working, check rm13 for clues, but the PTD isn't
+		;technically available in this area of the game. low fix priority
+		(if (OneOf curRoomNum 12 52 53 60 61 62 63 64 65 66 67 68 69 70 71 75 421 802 803)
 			(curRoom setScript:(ScriptID 809 1))
 		else
 			(ego setScript:(ScriptID 809 1))
 		)
 	else
-		;ego dies
+		;ego dies normally
 		(HandsOff)
 		(= dead TRUE)
 		(if (not theView)
@@ -922,23 +903,24 @@
 			petActive
 		)
 		(if
-			(and
-				(not (== curRoomNum 9))	;rails
-				(not (== curRoomNum 10)) ;rails
-				(not (== curRoomNum 11)) ;rails
-				(not (== curRoomNum 12)) ;rails
-				(not (== curRoomNum 14)) ;mallard int
-				(not (== curRoomNum 17))
-				(not (== curRoomNum 18))
-				(not (== curRoomNum 19))
-				(not (== curRoomNum 115)) ;an ending scene (pet can be in 116)
-				(not (== curRoomNum 117)) ;an ending scene
-				(not (== curRoomNum 290)) ;arcade game 1
-				(not (== curRoomNum 470)) ;world o wonder
-				(not (== curRoomNum 690)) ;telescope on lava planet
-				(not (== curRoomNum 807)) ;teleport easter egg
-				(not (== curRoomNum 814)) ;arcade game 2
-			)
+			(not (OneOf curRoomNum 9 10 11 12 14 17 18 19 115 117 290 470 690 807 814))
+;;;			(and
+;;;				(not (== curRoomNum 9))	;rails
+;;;				(not (== curRoomNum 10)) ;rails
+;;;				(not (== curRoomNum 11)) ;rails
+;;;				(not (== curRoomNum 12)) ;rails
+;;;				(not (== curRoomNum 14)) ;mallard int
+;;;				(not (== curRoomNum 17))
+;;;				(not (== curRoomNum 18))
+;;;				(not (== curRoomNum 19))
+;;;				(not (== curRoomNum 115)) ;an ending scene (pet can be in 116)
+;;;				(not (== curRoomNum 117)) ;an ending scene
+;;;				(not (== curRoomNum 290)) ;arcade game 1
+;;;				(not (== curRoomNum 470)) ;world o wonder
+;;;				(not (== curRoomNum 690)) ;telescope on lava planet
+;;;				(not (== curRoomNum 807)) ;teleport easter egg
+;;;				(not (== curRoomNum 814)) ;arcade game 2
+;;;			)
 			(if (== (ego script?) 0)
 				(ego setScript: (ScriptID 26 0))
 			else
@@ -1113,7 +1095,7 @@
 			(= startingRoom 900)
 			(self newRoom: 777)
 		)
-		;(ego get: 21 iESlab iTrap)
+		;(ego get: iPetInv iESlab iTrap)
 	)
 	
 	(method (doit &tmp haveMouse)
@@ -1597,6 +1579,8 @@
 						(or
 							(Said 'init,activate/pet')
 							(Said 'pet<on')
+							(Said 'turn<on/pet')
+							(Said 'switch<on/pet')
 						)
 						(cond 
 							((not (ego has: iPetInv))
@@ -1624,6 +1608,8 @@
 						(or
 							(Said 'deactivate/pet')
 							(Said 'pet<off')
+							(Said 'turn<off/pet')
+							(Said 'switch<off/pet')
 						)
 						(cond 
 							((not (ego has: iPetInv))
