@@ -170,6 +170,8 @@
 			setCycle: Walk
 			posn: 163 106
 			loop: 2
+			ignoreControl: $ffff
+			ignoreActors: TRUE 
 			init:
 		)
 		(salesman setScript: salesmanScript)

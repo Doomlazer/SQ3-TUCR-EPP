@@ -666,7 +666,7 @@
 	sValue = [10 130 90 50 200 5]
 	sPosn = [0 0 0 0 0 0]
 	
-	owned = [0 0 0 0 0 0 0 0 0 0 0 0]
+	owned = [302 0 0 0 0 0 0 0 0 0 0 0]
 	bookmark = [3 3 3 3 3 3 3 3 3 3 3 3]
 	readerX
 	readerY
@@ -1113,7 +1113,7 @@
 			(= startingRoom 900)
 			(self newRoom: 777)
 		)
-		;(ego get: 21 22 iTrap)
+		;(ego get: 21 iESlab iTrap)
 	)
 	
 	(method (doit &tmp haveMouse)

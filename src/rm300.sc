@@ -14,7 +14,7 @@
 )
 
 (local
-	textColor = 1
+	textColor = 15
 	textFont = 888
 	itr
 	selected
@@ -194,7 +194,7 @@
 		; handle Said's, etc...
 	)
 	
-	(method (changeState newState &tmp i)
+	(method (changeState newState) ;&tmp i)
 		(= state newState)
 		(switch state
 			(0
@@ -286,6 +286,7 @@
 )
 
 (procedure (redrawTitles &tmp i)
+	(= i 0)
 	(while (< i 12)
 		(Display
 			(if (== [owned i] 0) 300 else [owned i]) 0
