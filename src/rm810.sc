@@ -9,6 +9,7 @@
 (use Actor)
 (use System)
 (use Reverse)
+(use Timer)
 
 (public
 	Room810 0
@@ -216,10 +217,6 @@
 		(switch (event type?)
 			(saidEvent
 				(cond 
-					((Said '[play,bet]/dabo')
-						(Print 810 12)
-						(Print 810 13)	
-					)
 					((Said 'call,converse/quark') (Print 810 14))
 					((Said '(converse/police[<sequel]),man') (if deltWithBarCop (Print 810 24) else (Print 810 23)))
 					((Said 'call,converse/(woman[<dapo]),alien') (Print 810 19 #at 120 25 #title {Quirk}))
@@ -241,11 +238,17 @@
 							((Said '[<around,at,in][/area,cafe]') (Print 810 0))
 						)
 					)
-					((Said 'bet,play,dapo/[dapo]')
+					(
+						(or
+							(Said 'bet,play/dapo')
+							(Said 'place,make/bet')
+							(Said 'place/dapo/bet')
+						)
 						(if odoGone
 							(Print 810 10)
 						else 
 							(if (< (ego distanceTo: dtable) 30)
+								(quarkScript changeState: 100)
 								(dlight setScript: daboScript)
 								(daboScript changeState: 1)
 							else
@@ -283,7 +286,11 @@
 						(if (== buckazoids 1) (++ dapoEgg) else (= dapoEgg 0))
 						(= buckazoids (- buckazoids betAmount))
 						(= betNumber (GetNumber {Pick a number 1-16}))
-						(if (> betNumber 0) 
+						(if
+							(and
+								(> betNumber 0)
+								(< betNumber 17)
+							) 
 							(if nagged
 								(Print 810 11)
 							else
@@ -331,12 +338,11 @@
 					(Print {DAPO, baby!!})
 					(Print 810 18)
 					(= buckazoids (* betAmount 999))
-					(= gaveGem 0)
 					(= state 98)
 					;(= seconds 2)
-					(self cue:)
 					(= odoGone 1)
 					(= gaveGem 0) ;prevent jackpot repeat
+					(self cue:)
 				else
 					(Printf {The number is %d!!} (dlight cel?))
 					(if (== (- betNumber 1) (dlight cel?))
@@ -345,6 +351,7 @@
 					else
 						(Print {You lost.})
 					)
+					(quarkScript changeState: 1)
 					(= seconds 10)
 				)
 			)
@@ -371,14 +378,14 @@
 					setLoop: 2
 					setCel: 0
 					setCycle: EndLoop self
-				)	
+				)
 			)
 			(102
 				(dgirl
 					setLoop: 3 
 					setCycle: Forward
 					setMotion: MoveTo 220 170 self	
-				)	
+				)
 			)
 			(103
 				(dgirl
@@ -392,6 +399,7 @@
 			)
 			(105
 				(dgirl dispose:)
+				(quarkScript changeState: 1)
 				(dlight setScript: dLightIdleScript)
 			)
 		)
@@ -552,6 +560,17 @@
 				(= state -1)
 				(= cycles 1)	
 			)
+			(100
+				;Always watch rager if playing dapo
+				(quark
+					loop: 2
+					setMotion: MoveTo 305 107 self	
+				)
+			)
+			(101
+				(quark loop: 0 cel: 0)
+				(= seconds (Random 2 15))
+			)
 		)
 	)	
 )
@@ -657,7 +676,8 @@
 				view: 835
 				cel: 0
 			)
-			(= seconds 0)
+			;(= seconds 0)
+			(Timer delete:)
 			(= state 99)
 			(HandsOff)
 			(if saveBits
@@ -673,7 +693,8 @@
 	(method (changeState newState &tmp brag)
 		(switch (= state newState)
 			(0
-				(= seconds (Random 2 5))
+				;(= seconds (Random 2 5))
+				(Timer setReal: self (Random 2 5))
 			)
 			(1
 				;(= brag (Random 2 30)) ;0 & 1 reserved for escape
@@ -704,8 +725,8 @@
 						p_save
 					)
 				)
-				
-				(= seconds 7)
+				;(= seconds 7)
+				(Timer setReal: self 7)
 			)
 			(2
 				(SqlPolice view: 834 loop: 1 cel: 5 setCycle: 0) ;face left
@@ -741,7 +762,8 @@
 				else
 					; rog ceases to exist
 					(rogGirl setCycle: EndLoop)
-					(= seconds 4)
+					;(= seconds 4)
+					(Timer setReal: self 4)
 				)
 			)
 			(103
@@ -757,7 +779,8 @@
 						p_save
 					)
 				)
-				(= seconds 2)
+				;(= seconds 2)
+				(Timer setReal: self 2)
 			)
 			(104	
 				(EgoDead 0 0 11 29)
@@ -771,7 +794,8 @@
 			)
 			(202
 				(= escape 0)
-				(= seconds 2)
+				;(= seconds 2)
+				(Timer setReal: self 2)
 			)
 			(203
 				(rogGirl dispose:)
@@ -786,12 +810,14 @@
 						p_save
 					)
 				)
-				(= seconds 6)
+				;(= seconds 6)
+				(Timer setReal: self 6)
 			)
 			(204
 				(SqlPolice view: 834 loop: 1 cel: 5 setCycle: 0) ;face left
 				(Display 1 0 p_restore saveBits)
-				(= seconds 3)	
+				;(= seconds 3)
+				(Timer setReal: self 3)	
 			)
 			(205
 				(SqlPolice view: 299 loop: 5 cel: 0 setCycle: Forward) ;talking, face left
@@ -805,12 +831,14 @@
 						p_save
 					)
 				)
-				(= seconds 6)
+				;(= seconds 6)
+				(Timer setReal: self 6)
 			)
 			(206
 				(SqlPolice view: 834 loop: 1 cel: 5 setCycle: 0) ;face left
 				(Display 1 0 p_restore saveBits)
-				(= seconds 3)	
+				;(= seconds 3)
+				(Timer setReal: self 3)	
 			)
 		)
 	)	
