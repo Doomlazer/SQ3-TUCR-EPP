@@ -675,10 +675,14 @@
 		(super handleEvent: event)
 		(switch (event type?)
 			(saidEvent
-				(cond 
+				(cond
+					((Said 'converse/clerk,man,alien')
+						(salesPrint 823 39)
+						(salesPrint 823 40)
+					) 
 					((Said 'look>')
 						(cond
-							
+							((Said '/clerk,man,alien') (Print 823 41))
 							((Said '/cat') (Print 823 4))
 							((Said '/fish') (Print 823 3))
 							((Said '/hen') (Print 823 7))

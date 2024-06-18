@@ -87,15 +87,30 @@
 		)
 	)
 	
-	(method (handleEvent pEvent)
-		(super handleEvent: pEvent)
-		; handle Said's, etc...
-		(if (Said 'look,use/machine,atm')
-			(if (& (ego onControl:) $4000) ;ctlYellow
-				(curRoom newRoom: 827)
-			else
-				(NotClose)
-			)	
+	(method (handleEvent event)
+		(super handleEvent: event)
+		(switch (event type?)
+			(saidEvent
+				(cond
+					((Said 'look>')
+						(cond
+							((Said '/walkway,floor,down') (Print 821 1))
+							((Said '/store') (Print 821 16))
+							((Said '/machine,atm') (Print 821 18))
+							((Said '/sign, window') (Print 821 17))
+							((Said '[<at,around,in][/area,!*]') (Print 821 15))
+						)
+					)
+					((Said 'read/sign') (Print 821 17))
+					((Said 'look,use/machine,atm')
+						(if (& (ego onControl:) $4000) ;ctlYellow
+							(curRoom newRoom: 827)
+						else
+							(NotClose)
+						)	
+					)
+				)
+			)
 		)
 	)
 )

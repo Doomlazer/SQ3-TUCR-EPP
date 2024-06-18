@@ -97,11 +97,20 @@
 ;;;		)
 	)
 	
-	(method (handleEvent pEvent &tmp i)
-		(super handleEvent: pEvent)
-		
-		(if (Said 'read,look/sign')
-
+	(method (handleEvent event &tmp i)
+		(super handleEvent: event)
+		(switch (event type?)
+			(saidEvent
+				(cond
+					((Said 'look>')
+						(cond
+							((Said '/walkway,floor,down') (Print 821 1))
+							((Said '/window,store,arcade') (Print 821 8))
+							((Said '[<at,around,in][/area,!*]') (Print 821 7))
+						)
+					)
+				)
+			)
 		)
 	)
 )

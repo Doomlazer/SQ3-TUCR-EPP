@@ -68,6 +68,19 @@
 	
 	(method (handleEvent pEvent &tmp i)
 		(super handleEvent: pEvent)
+		(switch (event type?)
+			(saidEvent
+				(cond
+					((Said 'look>')
+						(cond
+							((Said '/walkway,floor,down') (Print 821 1))
+							((Said '/window,store') (Print 821 10))
+							((Said '[<at,around,in][/area,!*]') (Print 821 9))
+						)
+					)
+				)
+			)
+		)
 	)
 )
 

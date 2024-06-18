@@ -306,7 +306,7 @@
 						)
 					)
 				)
-				(= cycles 1)
+				(= cycles 4)
 			)
 			(2
 				(dlight setCel: 0 setCycle: EndLoop self)
@@ -344,7 +344,7 @@
 					(= gaveGem 0) ;prevent jackpot repeat
 					(self cue:)
 				else
-					(Printf {The number is %d!!} (dlight cel?))
+					(Printf {The number is %d!!} (+ (dlight cel?) 1))
 					(if (== (- betNumber 1) (dlight cel?))
 						(Print 810 17)
 						(= buckazoids (* betAmount 16))

@@ -112,14 +112,26 @@
 ;;;		)
 	)
 	
-	(method (handleEvent pEvent &tmp i)
-		(super handleEvent: pEvent)
-		
-		(if (Said 'read,look/sign')
-			(if (ego inRect: 145 45 230 135)
-				(Print {The sign reads, "Thank you to our loyal customers of electronic components and vidPhone subsriptions. This location has been permanently closed".})
-			else
-				(Print {You can't make out the text from here.})
+	(method (handleEvent event &tmp i)
+		(super handleEvent: event)
+		(switch (event type?)
+			(saidEvent
+				(cond
+					((Said 'look>')
+						(cond
+							((Said '/walkway,floor,down') (Print 821 1))
+							((Said '/gate') (Print 821 3))
+							((Said '[<at,around,in][/area,!*]') (Print 821 2))
+							((Said 'read,look/sign')
+								(if (ego inRect: 145 45 230 135)
+									(Print 821 4)
+								else
+									(Print {You can't make out the text from here.})
+								)
+							)
+						)
+					)
+				)
 			)
 		)
 	)

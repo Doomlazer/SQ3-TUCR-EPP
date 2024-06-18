@@ -77,7 +77,27 @@
 	
 	(method (handleEvent pEvent &tmp i)
 		(super handleEvent: pEvent)
-		
+		(switch (event type?)
+			(saidEvent
+				(cond
+					((Said 'look>')
+						(cond
+							((Said '/walkway,floor,down') (Print 821 1))
+							((Said '/window,store') (Print 821 13))
+							((Said '/gate') (Print 821 14))
+							((Said '[<at,around,in][/area,!*]') (Print 821 12))
+						)
+					)
+					((Said 'read,look/sign')
+						(if (ego inRect: 120 80 200 100)
+							(Print 821 11)
+						else
+							(Print {You can't make out the text from here.})
+						)
+					)
+				)
+			)
+		)
 		(if (Said 'read,look/sign')
 			(if (ego inRect: 120 80 200 100)
 				(Print {The sign posted on the gate indicates that this location was closed down some time ago due to health code violations.})

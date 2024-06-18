@@ -110,9 +110,20 @@
 		; code executed each game cycle
 	)
 	
-	(method (handleEvent pEvent)
-		(super handleEvent: pEvent)
-		; handle Said's, etc...
+	(method (handleEvent event)
+		(super handleEvent: event)
+		(switch (event type?)
+			(saidEvent
+				(cond
+					((Said 'look>')
+						(cond
+							((Said '/walkway,floor,down') (Print 821 1))
+							((Said '[<at,around,in][/area,!*]') (Print 821 0))
+						)
+					)
+				)
+			)
+		)
 	)
 	
 	(method (changeState newState)
