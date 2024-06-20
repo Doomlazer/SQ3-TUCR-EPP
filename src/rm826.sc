@@ -66,8 +66,8 @@
 		)
 	)
 	
-	(method (handleEvent pEvent &tmp i)
-		(super handleEvent: pEvent)
+	(method (handleEvent event &tmp i)
+		(super handleEvent: event)
 		(switch (event type?)
 			(saidEvent
 				(cond

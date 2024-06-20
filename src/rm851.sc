@@ -1,5 +1,5 @@
 ;;; Sierra Script 1.0 - (do not remove this comment)
-(script# 93)
+(script# 851)
 (include game.sh)
 (use Main)
 (use Intrface)
@@ -12,23 +12,19 @@
 (use System)
 
 (public
-	rm93 0
+	rm851 0
 )
 
-(instance rm93 of Room
+(instance rm851 of Room
 	(properties
-		picture 93
+		picture 851
 		style HSHUTTER
-		east 94
-		south 91
+		east 850
+		south 850
 	)
 	
 	(method (init)
-		(if killedElmo
-			(= picture 87)
- 		)
 		(super init:)
-		(self setRegions: SCUMSOFT)
 		(Load VIEW 131)
 		(Load VIEW 132)
 		(Load VIEW 133)
@@ -67,26 +63,26 @@
 		(ken init:)
 		(trash1 init:)
 		(ego init:)
-		(if elmoAtDesk
-			(= elmoAtDesk FALSE)
-			(trash1 myNerd: 0)
-			(if ((inventory at: iKeycard) ownedBy: curRoomNum)
-				(if killedElmo
-					; key card is now impossible to get
-				else
-					(keycard init:)
-				)
-			)
-		else
-			(if killedElmo
-				;; ded	
-			else
-				(= elmoAtDesk TRUE)
-				(elmo init:)
-				(trash1 setCel: (= [trashVaporized 0] 0))
-				(trash1 vaporized: 0)
-			)
-		)
+;;;		(if elmoAtDesk
+;;;			(= elmoAtDesk FALSE)
+;;;			(trash1 myNerd: 0)
+;;;			(if ((inventory at: iKeycard) ownedBy: curRoomNum)
+;;;				(if killedElmo
+;;;					; key card is now impossible to get
+;;;				else
+;;;					(keycard init:)
+;;;				)
+;;;			)
+;;;		else
+;;;			(if killedElmo
+;;;				;; ded	
+;;;			else
+;;;				(= elmoAtDesk TRUE)
+;;;				(elmo init:)
+;;;				(trash1 setCel: (= [trashVaporized 0] 0))
+;;;				(trash1 vaporized: 0)
+;;;			)
+;;;		)
 		(self setScript: rmScript)
 	)
 	
@@ -95,90 +91,90 @@
 		(switch (event type?)
 			(saidEvent
 				(cond 
-					((Said 'look[/area]')
-						(if elmoAtDesk
-							(Print 93 0)
-						else
-							(if killedElmo
-								(Print 93 19)
-							else
-								(Print 93 1)
-							)
-						)	
-					)
-					((Said 'look/man,boss')
-						(if (and elmoAtDesk (ego inRect: 225 86 320 149))
-							(Print 93 2)
-						else
-							(Print 93 3)
-						)
-					)
-					((Said 'give/package')
-						(if (ego has: iPackage)
-							(if elmoAtDesk
-								(if (ego inRect: 225 86 320 149)
-									(ego put: iPackage 93)
-									(Print 93 18)
-									(Print 93 17)
-									(= killedElmo 1)
-								else
-									(NotClose)
-								)
-							else
-								(Print 93 16)
-							)
-						)
-					)
-					((Said '*/complex')
-						(Print 93 4)
-					)
-					((Said 'converse/man,boy,elmo,boss,bystander')
-						(if (and elmoAtDesk (ego inRect: 225 86 320 149))
-							(Print 93 5)
-						else
-							(Print 93 6)
-						)
-					)
-					((Said 'look,open,explore,unlock/desk,drawer')
-						(if (ego inRect: 225 86 320 149)
-							(cond 
-								(elmoAtDesk
-									(Print 93 7)
-								)
-								(((inventory at: iKeycard) ownedBy: curRoomNum)
-									(Print 93 8)
-								)
-								(else
-									(Print 93 9)
-								)
-							)
-						else
-							(Print 93 10)
-						)
-					)
-					((Said 'get/key,card')
-						(cond 
-							(elmoAtDesk
-								(Print 93 11)
-							)
-							(((inventory at: iKeycard) ownedBy: curRoomNum)
-								(if (ego inRect: 275 89 300 104)
-									(ego get: iKeycard)
-									(keycard dispose:)
-									(Print 93 12)
-									(theGame changeScore: 5)
-								else
-									(Print 93 13)
-								)
-							)
-							((ego has: iKeycard)
-								(Print 93 14)
-							)
-							(else
-								(Print 93 15)
-							)
-						)
-					)
+;;;					((Said 'look[/area]')
+;;;						(if elmoAtDesk
+;;;							(Print 93 0)
+;;;						else
+;;;							(if killedElmo
+;;;								(Print 93 19)
+;;;							else
+;;;								(Print 93 1)
+;;;							)
+;;;						)	
+;;;					)
+;;;					((Said 'look/man,boss')
+;;;						(if (and elmoAtDesk (ego inRect: 225 86 320 149))
+;;;							(Print 93 2)
+;;;						else
+;;;							(Print 93 3)
+;;;						)
+;;;					)
+;;;					((Said 'give/package')
+;;;						(if (ego has: iPackage)
+;;;							(if elmoAtDesk
+;;;								(if (ego inRect: 225 86 320 149)
+;;;									(ego put: iPackage 93)
+;;;									(Print 93 18)
+;;;									(Print 93 17)
+;;;									(= killedElmo 1)
+;;;								else
+;;;									(NotClose)
+;;;								)
+;;;							else
+;;;								(Print 93 16)
+;;;							)
+;;;						)
+;;;					)
+;;;					((Said '*/complex')
+;;;						(Print 93 4)
+;;;					)
+;;;					((Said 'converse/man,boy,elmo,boss,bystander')
+;;;						(if (and elmoAtDesk (ego inRect: 225 86 320 149))
+;;;							(Print 93 5)
+;;;						else
+;;;							(Print 93 6)
+;;;						)
+;;;					)
+;;;					((Said 'look,open,explore,unlock/desk,drawer')
+;;;						(if (ego inRect: 225 86 320 149)
+;;;							(cond 
+;;;								(elmoAtDesk
+;;;									(Print 93 7)
+;;;								)
+;;;								(((inventory at: iKeycard) ownedBy: curRoomNum)
+;;;									(Print 93 8)
+;;;								)
+;;;								(else
+;;;									(Print 93 9)
+;;;								)
+;;;							)
+;;;						else
+;;;							(Print 93 10)
+;;;						)
+;;;					)
+;;;					((Said 'get/key,card')
+;;;						(cond 
+;;;							(elmoAtDesk
+;;;								(Print 93 11)
+;;;							)
+;;;							(((inventory at: iKeycard) ownedBy: curRoomNum)
+;;;								(if (ego inRect: 275 89 300 104)
+;;;									(ego get: iKeycard)
+;;;									(keycard dispose:)
+;;;									(Print 93 12)
+;;;									(theGame changeScore: 5)
+;;;								else
+;;;									(Print 93 13)
+;;;								)
+;;;							)
+;;;							((ego has: iKeycard)
+;;;								(Print 93 14)
+;;;							)
+;;;							(else
+;;;								(Print 93 15)
+;;;							)
+;;;						)
+;;;					)
 				)
 			)
 		)
@@ -200,7 +196,7 @@
 			(ego posn: 318 65 view: 113)
 		)
 		(ego init:)
-		(if (== prevRoomNum 94)
+		(if (== prevRoomNum 850)
 			(ego setMotion: MoveTo 288 65 self)
 		)
 	)
