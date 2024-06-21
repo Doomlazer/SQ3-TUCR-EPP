@@ -79,7 +79,7 @@
 					(petActor
 						setCycle: Forward
 						ignoreActors: TRUE
-						illegalBits: 0
+						illegalBits: (if (== curRoomNum 14) cWHITE else 0)
 						;cycleSpeed: 2
 					)
 				)
@@ -177,7 +177,7 @@
 			view: (+ (+ petView shrink) petGoggles)
 			setCycle: (if (== petView 311) Forward else Walk)
 			ignoreActors: (if (== petView 311) TRUE else FALSE) ;ghost walks through walls
-			illegalBits: (if (== petView 311) 0 else cWHITE)
+			illegalBits: (if (and (== petView 311) (!= curRoomNum 14)) 0 else cWHITE)
 			posn: (if (cast contains: ego) (ego x?) else 1000) (if (cast contains: ego) (ego y?) else 1000)
 			setStep: (if shrink 1 else 2) (if shrink 1 else 2)
 			setMotion: Follow ego (if shrink 10 else 20)
@@ -193,6 +193,9 @@
 		(petActor setScript: petScript)
 		(if (not (cast contains: ego))
 			(= petMode 3) ;stay
+		)
+		(if (== curRoomNum 14)
+			(petActor posn: 195 140 loop: 2 setPri: 10)
 		)
 		(self dispose:)
 	)

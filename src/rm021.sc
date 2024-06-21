@@ -56,6 +56,31 @@
 		)
 		(super init:)
 	)
+	
+	(method (handleEvent event)
+		(if (event claimed?) (return))
+		(super handleEvent: event)
+		(switch (event type?)
+			(mouseDown
+				(if (== local0 1)
+					(curRoom newRoom: 14)
+				else
+					(if  (Print {Skip Cutscene?} #mode teJustLeft #button {No, I'll watch it.} 0 #button {Yes, skip it.} 1)
+						(curRoom newRoom: 14)		
+					)
+				)
+			)
+			(keyDown
+				(if (== local0 1)
+					(curRoom newRoom: 14)
+				else
+					(if  (Print {Skip Cutscene?} #mode teJustLeft #button {No, I'll watch it.} 0 #button {Yes, skip it.} 1)
+						(curRoom newRoom: 14)		
+					)
+				)
+			)
+		)
+	)
 )
 
 (instance PhleebScript of Script
@@ -64,7 +89,10 @@
 	(method (doit)
 		(super doit:)
 		(if
-		(and (== local0 1) (== (warpOut prevSignal?) -1))
+			(and
+				(== local0 1)
+				(== (warpOut prevSignal?) -1)
+			)
 			(= local0 0)
 			(curRoom newRoom: 14)
 		)
@@ -93,7 +121,9 @@
 			(3
 				(ship setMotion: MoveTo 199 100 self)
 			)
-			(4 (= local0 1))
+			(4
+				(= local0 1)
+			)
 		)
 	)
 )
@@ -104,7 +134,10 @@
 	(method (doit)
 		(super doit:)
 		(if
-		(and (== local0 1) (== (warpOut prevSignal?) -1))
+			(and
+				(== local0 1)
+				(== (warpOut prevSignal?) -1)
+			)
 			(= local0 0)
 			(curRoom newRoom: 14)
 		)

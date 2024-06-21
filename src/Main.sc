@@ -903,13 +903,12 @@
 			petActive
 		)
 		(if
-			(not (OneOf curRoomNum 9 10 11 12 14 17 18 19 115 117 290 470 690 807 814))
+			(not (OneOf curRoomNum 9 10 11 12 17 18 19 115 117 290 470 690 807 814))
 ;;;			(and
 ;;;				(not (== curRoomNum 9))	;rails
 ;;;				(not (== curRoomNum 10)) ;rails
 ;;;				(not (== curRoomNum 11)) ;rails
 ;;;				(not (== curRoomNum 12)) ;rails
-;;;				(not (== curRoomNum 14)) ;mallard int
 ;;;				(not (== curRoomNum 17))
 ;;;				(not (== curRoomNum 18))
 ;;;				(not (== curRoomNum 19))
@@ -1578,6 +1577,7 @@
 					(
 						(or
 							(Said 'init,activate/pet')
+							(Said 'pet<init')
 							(Said 'pet<on')
 							(Said 'turn<on/pet')
 							(Said 'switch<on/pet')
