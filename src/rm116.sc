@@ -63,7 +63,19 @@
 		(HandsOff)
 		(= inCartoon TRUE)
 		(super init:)
-		(self setScript: Actions)
+		(= selectedSector 68) ; black hole
+		(switch prevRoomNum
+			(115
+				(if completedEnding
+					(self setScript: arriveActions)
+				else
+					(self setScript: Actions)
+				)
+			)
+			(850
+				(self setScript: leaveActions)
+			)
+		)
 	)
 	
 	(method (newRoom n)
@@ -553,6 +565,218 @@
 			)
 			(1
 				(Scott setMotion: MoveTo 182 115)
+			)
+		)
+	)
+)
+
+(instance arriveActions of Script
+	(method (changeState newState)
+		(switch (= state newState)
+			(0
+				(= completedEnding 1)
+				(= selectedSector 68) ; black hole
+				(if petActive
+					(WarpOffScreen)	
+				)
+				(ship
+					view: 215
+					setLoop: 0
+					posn: 0 -10
+					setCel: 0
+					setPri: 13
+					ignoreActors:
+					setMotion: MoveTo 0 39 self
+					init:
+				)
+			)
+			(1
+				(theMusic number: 83 loop: 1 play:)
+				(ship setCel: 1 setMotion: MoveTo 0 92 self)
+			)
+			(2
+				(ship setCel: 2 setMotion: MoveTo 0 132 self)
+			)
+			(3
+				(shadow
+					view: 215
+					setLoop: 1
+					setCel: 0
+					posn: 5 191
+					ignoreActors:
+					setPri: 0
+					setStep: 2 1
+					setMotion: MoveTo 5 165
+					init:
+				)
+				(ship setStep: 2 1 setMotion: MoveTo 0 158 self)
+			)
+			(4
+				(theMusic fade:)
+				(shadow setMotion: 0)
+				(= seconds 5)
+			)
+			(5
+				(ship stopUpd:)
+				(shadow stopUpd:)
+				(ramp
+					view: 215
+					setLoop: 3
+					posn: 67 169
+					cel: 255
+					ignoreActors:
+					setPri: 11
+					setCycle: EndLoop self
+					init:
+				)
+			)
+			(6
+				(cockPit
+					view: 215
+					setLoop: 2
+					cel: 255
+					cycleSpeed: 3
+					setPri: 13
+					posn: 70 157
+					setCycle: EndLoop self
+					init:
+				)
+			)
+			(7
+				(ego
+					view: 68
+					setStep: 1 1
+					posn: 54 167 ;110 176
+					setPri: 12
+					setLoop: -1
+					loop: 0
+					setCel: -1
+					setCycle: Walk
+					setAvoider: Avoider
+					init:
+				)
+				(ego setMotion: MoveTo 90 176 self)
+				(WarpToEgo)
+			)
+			(8
+				(ego setMotion: MoveTo 180 130 self)
+			)
+			(9
+				(curRoom newRoom: 850)
+			)
+		)
+	)
+)
+
+(instance leaveActions of Script
+	(method (changeState newState)
+		(switch (= state newState)
+			(0
+				(ship
+					posn: 0 158
+					view: 215
+					setLoop: 0
+					setCel: 2
+					setPri: 13
+					ignoreActors:
+					init:
+					stopUpd:
+				)
+				(shadow 
+					view: 215
+					setLoop: 1
+					setCel: 0
+					posn: 5 165
+					ignoreActors:
+					setPri: 0
+					setStep: 2 1
+					init:
+					stopUpd:
+				)
+				(ramp
+					view: 215
+					setLoop: 3
+					posn: 67 169
+					cel: -1
+					ignoreActors:
+					setPri: 11
+					init:
+				)
+				(cockPit
+					view: 215
+					setLoop: 2
+					cel: 4
+					cycleSpeed: 3
+					setPri: 13
+					posn: 70 157
+					init:
+				)
+				(ego
+					view: 68
+					posn: 180 130
+					setCycle: Walk
+					setAvoider: Avoider
+					ignoreActors:
+					setMotion: MoveTo 90 176 self
+					init:
+				)
+				(WarpToEgo)
+			)
+			(1
+				(ego setMotion: MoveTo 54 167 self)
+			)
+			(2
+				(= seconds 7)
+				(WarpOffScreen)
+			)
+			(3
+				(cockPit setCycle: BegLoop self)
+			)
+			(4
+				(cls)
+				(ego dispose:)
+				(ramp setCycle: BegLoop)
+				(= seconds 2)
+			)
+			(5
+				(ramp dispose:)
+				(cockPit dispose:)
+				(ship setMotion: MoveTo 0 132 self)
+				(theMusic number: 40 loop: 1 play:)
+				(shadow setMotion: MoveTo 5 199)
+			)
+			(6
+				(shadow dispose:)
+				(ship setStep: 1 5 setMotion: MoveTo 0 92 self)
+			)
+			(7
+				(ship setCel: 1 setMotion: MoveTo 0 39 self)
+			)
+			(8
+				(ship setCel: 0 setMotion: MoveTo 0 -20 self)
+			)
+			(9
+				(theMusic number: 38 loop: 1 play:)
+				(ship
+					setLoop: 8
+					setCel: 0
+					posn: 279 -14
+					setStep: 4 6
+					setMotion: MoveTo 243 15 self
+				)
+			)
+			(10
+				(cls)
+				(ship setCycle: EndLoop setMotion: MoveTo 215 43 self)
+			)
+			(11
+				(ship setMotion: MoveTo 215 -5 self)
+			)
+			(12
+				(= seconds 2)
+			)
+			(13
+				(curRoom newRoom: 117)
 			)
 		)
 	)

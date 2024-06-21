@@ -19,8 +19,7 @@
 	(properties
 		picture 851
 		style HSHUTTER
-		east 850
-		south 850
+		east 852
 	)
 	
 	(method (init)
@@ -192,44 +191,49 @@
 (instance rmScript of Script
 	(method (init)
 		(super init: &rest)
-		(if (== prevRoomNum 94)
-			(ego posn: 318 65 view: 113)
-		)
-		(ego init:)
+		(ego posn: init:)
 		(if (== prevRoomNum 850)
-			(ego setMotion: MoveTo 288 65 self)
+			(ego posn: 240 200 setMotion: MoveTo 240 180 self)
+		)
+		(if (== prevRoomNum 852) ; TODO: add basement 
+			(ego posn: 315 70 setMotion: MoveTo 275 70 self)
 		)
 	)
 	
 	(method (doit)
 		(super doit:)
-		(if (not scumSoftAlerted)
-			(if
-				(and
-					(== (ken loop?) 0)
-					(< (rick loop?) 2)
-					(== 10 (Random 1 20))
-				)
-				(if (== (kenScript state?) 1)
-					(kenScript start: 1)
-				else
-					(kenScript start: 0)
-				)
-				(ken setScript: kenWhip)
+		(if
+			(and
+				(> (ego y?) 200)
+				(== (ego script?) 0) 
 			)
-			(if
-				(and
-					(== (rick loop?) 0)
-					(< (ken loop?) 2)
-					(== 10 (Random 1 20))
-				)
-				(if (== (rickScript state?) 0)
-					(rickScript start: 0)
-				else
-					(rickScript start: 1)
-				)
-				(rick setScript: rickWhip)
+			(curRoom newRoom: 850)
+		)
+		(if
+			(and
+				(== (ken loop?) 0)
+				(< (rick loop?) 2)
+				(== 10 (Random 1 20))
 			)
+			(if (== (kenScript state?) 1)
+				(kenScript start: 1)
+			else
+				(kenScript start: 0)
+			)
+			(ken setScript: kenWhip)
+		)
+		(if
+			(and
+				(== (rick loop?) 0)
+				(< (ken loop?) 2)
+				(== 10 (Random 1 20))
+			)
+			(if (== (rickScript state?) 0)
+				(rickScript start: 0)
+			else
+				(rickScript start: 1)
+			)
+			(rick setScript: rickWhip)
 		)
 	)
 )

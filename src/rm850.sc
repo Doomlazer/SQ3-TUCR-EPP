@@ -19,13 +19,12 @@
 	(properties
 		picture 850
 		style WIPEUP
-		north 851
 	)
 	
 	(method (init)
 		(super init:)
 		(ego
-			;view: (if (ego has: iVaporizer) 113 else 0)
+			view: 0
 			setPri: -1
 			setCycle: Walk
 			setStep: 3 2
@@ -70,6 +69,20 @@
 			)
 			(ego setScript: walkScript)
 		)
+		(if
+			(and
+				(> (ego y?) 200)
+				(== (ego script?) 0) 
+			)
+			(curRoom newRoom: 116)
+		)
+				(if
+			(and
+				(< (ego y?) 0)
+				(== (ego script?) 0) 
+			)
+			(curRoom newRoom: 851)
+		)
 	)
 	
 	(method (handleEvent event)
@@ -108,34 +121,22 @@
 	(method (changeState newState)
 		(switch (= state newState)
 			(0
+				(HandsOff)
 				(cond 
-					((== prevRoomNum 93)
-						(if (== killedElmo 1)
-							(++ killedElmo)
-							(= state 99)
-						)
-						(ego posn: 245 1 setMotion: MoveTo 245 30 self)
+					((== prevRoomNum 116)
+						(ego posn: 157 200 setMotion: MoveTo 157 185 self)
 					)
-					((== prevRoomNum 90)
-						(HandsOff)
-						(ego posn: 158 190 setMotion: MoveTo 158 183 self)
+					((== prevRoomNum 851)
+						
+						(ego posn: 230 0 setMotion: MoveTo 230 20 self)
 					)
-					(else (self changeState: 1))
+					(else
+						(self cue:)
+					)
 				)
 			)
 			(1
-				(rm850 south: 116)
 				(HandsOn)
-				(if
-					(and (== prevRoomNum 90) (not scumSoftAlerted))
-					(fink1 setScript: finkScript)
-				)
-			)
-			(100
-				(rm850 south: 116)
-				(ShakeScreen 3 3)
-				(HandsOn)
-				(Print 93 20)	
 			)
 		)
 	)
